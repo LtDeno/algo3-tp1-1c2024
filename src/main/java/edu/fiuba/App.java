@@ -1,5 +1,6 @@
 package edu.fiuba;
 
+import edu.configpackage.Configurator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +13,8 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-    // hola mundo
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /* Cosas que vienen por defecto*/
     private static Scene scene;
 
     @Override
@@ -30,6 +32,10 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Configurator config = new Configurator();
+    Game game = new Game(config);
 
     public static void main(String[] args) {
         launch();

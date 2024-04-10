@@ -1,0 +1,16 @@
+configuraciones para que el configurador.
+el archivo de config va a ser muy util para la modularidad de cambiar:
+- alto N de la grilla (filas)
+- ancho M de la grilla (columnas)
+- cuenta regresiva (0 = infinito)
+- jugador:
+    - posicion inicial?
+    - cantidad inicial de teletransportes azarosos (0 = infinito) (default 0)
+    - step de adiciion de teletransportes azarosos (default 0)
+    - cantidad inicial de teletransportes seguros (0 = infinito) (default 1)
+    - step de adicion de teletransportes seguros (default 1)
+    - longitud de movimiento
+- enemigo:
+    - cantidad inicial
+    - step de cantidad enemigo (cantidad de enemigos que se agregan por nivel)
+    - longitud de movimiento
