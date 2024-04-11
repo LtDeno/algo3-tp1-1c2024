@@ -3,13 +3,16 @@ package edu.fiuba;
 abstract class GameElement {
 
     private final String name;
-    private Coordinate coords;
-    private final int dMove;
+    protected Coordinate coords;
+    protected final int dMove;
+    private final boolean destructible;
 
-    GameElement(String name, Coordinate coords, int dMove) {
+
+    GameElement(String name, Coordinate coords, int dMove, boolean destructible) {
         this.name = name;
         this.coords = coords;
         this.dMove = dMove;
+        this.destructible = destructible;
     }
 
     String getName() {
@@ -20,6 +23,6 @@ abstract class GameElement {
         return this.coords;
     }
 
-    abstract void move();
 
+    abstract void move(int dx, int dy);
 }

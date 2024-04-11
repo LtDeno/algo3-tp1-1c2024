@@ -22,7 +22,7 @@ class Coordinate {
         return this.xCoord;
     }
 
-    int getxyoord() {
+    int getyCoord() {
         return this.yCoord;
     }
 }
