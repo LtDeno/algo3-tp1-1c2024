@@ -2,15 +2,17 @@ package edu.fiuba;
 
 public class ActionTeleport implements Action {
 
-    private final Grid grid;
+    private final int x;
+    private final int y;
+    private final boolean safe;
 
-    ActionTeleport(Grid grid) {
-        this.grid = grid;
+    ActionTeleport(int x, int y, boolean safe) {
+        this.x = x;
+        this.y = y;
+        this.safe = safe;
     }
     @Override
     public void apply(Player player) {
-        var x = (int)(grid.getnColumns() * Math.random());
-        var y = (int)(grid.getnRows() * Math.random());
-        player.teleport(x, y, false);
+        player.teleport(x, y, safe);
     }
 }

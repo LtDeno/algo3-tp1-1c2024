@@ -16,11 +16,4 @@ class Grid {
     void addGameElement(GameElement E) {
         this.gameElements.addLast(E);
     }
-    boolean checkPlayerCollision() {
-        return false;
-    }
-
-    public int getnRows() { return nRows; }
-    public int getnColumns() { return nColumns; }
-
 }
