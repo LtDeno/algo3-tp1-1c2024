@@ -34,7 +34,7 @@ public class App extends Application {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Configurator config = new Configurator();
+    Configurator config = new Configurator("config.json");
     Game game = new Game(config);
 
     public static void main(String[] args) {
