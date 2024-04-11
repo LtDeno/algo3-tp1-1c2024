@@ -1,5 +1,6 @@
 package edu.fiuba;
 
-public interface Action {
-    void apply(Player player);
+interface Action {
+
+    void actuate();
 }

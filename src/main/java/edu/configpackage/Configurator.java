@@ -11,7 +11,7 @@ public class Configurator {
     private int nRow;
     private int nCol;
     private CConfig cConfig;
-    private final LinkedList<EConfig> eConfigs = new LinkedList<EConfig>();
+    private final LinkedList<EConfig> eConfigs = new LinkedList<>();
 
     public Configurator(String configFileName) {
         this.fileName = configFileName;
@@ -32,8 +32,11 @@ public class Configurator {
             this.addEnemiesToList(enemiesConfig, this.eConfigs);
 
         } catch (IOException e) {
-            this.createDefaultConfigFile();
-            System.out.printf("\nConfig file could not be opened \nCause: %s", e.getCause());
+            if (this.createDefaultConfigFile()) {
+                System.out.println("Successfully created 'config.json'.");
+            } else {
+                this.readWriteError(e);
+            }
         }
     }
 
@@ -43,26 +46,27 @@ public class Configurator {
                 characterConfig.get("addRandomTPOnLevelUpAmount").getAsInt(),
                 characterConfig.get("startingSafeTPAmount").getAsInt(),
                 characterConfig.get("addSafeTPOnLevelUpAmount").getAsInt(),
-                characterConfig.get("moveDistance").getAsInt()
+                characterConfig.get("moveDistance").getAsInt(),
+                characterConfig.get("isDestructible").getAsBoolean()
         );
     }
 
     private void addEnemiesToList(JsonObject enemiesConfig, LinkedList<EConfig> list) {
         String[] enemiesKeys = enemiesConfig.keySet().toArray(new String[0]);
-        System.out.println(enemiesConfig);
+
         for (String k : enemiesKeys) {
             JsonObject enemy = enemiesConfig.getAsJsonObject(k);
-            System.out.println("\n" + k);
-            System.out.printf("%d %d %d", enemy.get("startingAmount").getAsInt(), enemy.get("addOnLevelUpAmount").getAsInt(), enemy.get("moveDistance").getAsInt());
+            System.out.printf("%s %d %d %d %b\n", k, enemy.get("startingAmount").getAsInt(), enemy.get("addOnLevelUpAmount").getAsInt(), enemy.get("moveDistance").getAsInt(), enemy.get("isDestructible").getAsBoolean());
             list.addLast(new EConfig(k,
                     enemy.get("startingAmount").getAsInt(),
                     enemy.get("addOnLevelUpAmount").getAsInt(),
-                    enemy.get("moveDistance").getAsInt()
+                    enemy.get("moveDistance").getAsInt(),
+                    enemy.get("isDestructible").getAsBoolean()
             ));
         }
     }
 
-    private void createDefaultConfigFile() {
+    private boolean createDefaultConfigFile() {
         try (FileWriter fileWriter = new FileWriter(this.fileName)){
             JsonObject defaultConfig = new JsonObject();
             defaultConfig.add("game", this.createDefaultGameConfig());
@@ -71,9 +75,11 @@ public class Configurator {
 
             fileWriter.close();
         } catch (IOException e) {
-            System.out.println("\nCould not write config.json \nProcess terminated");
-            System.exit(-1);
+            System.out.println("\nCould not write 'config.json'." +
+                    "\nProcess will be terminated.");
+            return false;
         }
+        return true;
     }
 
     private JsonObject createDefaultGameConfig() {
@@ -100,26 +106,36 @@ public class Configurator {
         characterConfig.addProperty("startingSafeTPAmount", 1);
         characterConfig.addProperty("addSafeTPOnLevelUpAmount", 1);
         characterConfig.addProperty("moveDistance", 1);
+        characterConfig.addProperty("isDestructible", true);
 
         return characterConfig;
     }
 
     private JsonObject createDefaultEnemiesConfig() {
         JsonObject enemiesConfig = new JsonObject();
-        enemiesConfig.add("1x", this.createEnemyConfig(4, 2, 1));
-        enemiesConfig.add("2x", this.createEnemyConfig(2, 1, 2));
-        enemiesConfig.add("fueguito", this.createEnemyConfig(0, 0, 0));
+        enemiesConfig.add("1x", this.createEnemyConfig(4, 2, 1, true));
+        enemiesConfig.add("2x", this.createEnemyConfig(2, 1, 2, true));
+        enemiesConfig.add("fueguito", this.createEnemyConfig(0, 0, 0, false));
 
         return enemiesConfig;
     }
 
-    private JsonObject createEnemyConfig(int startingAmount, int addOnLevelUpAmount, int moveDistance) {
+    private JsonObject createEnemyConfig(int startingAmount, int addOnLevelUpAmount, int moveDistance, Boolean destructible) {
         JsonObject enemyConfig = new JsonObject();
         enemyConfig.addProperty("startingAmount", startingAmount);
         enemyConfig.addProperty("addOnLevelUpAmount", addOnLevelUpAmount);
         enemyConfig.addProperty("moveDistance", moveDistance);
+        enemyConfig.addProperty("isDestructible", destructible);
 
         return enemyConfig;
+    }
+
+    private void readWriteError(IOException e) {
+        System.out.printf("\nConfig file could not be opened, read or written." +
+                "\nCause: %s." +
+                "\nIf the cause is unknown, please relaunch the app." +
+                "\nIf error continues please proceed to deleting file 'config.json'.", e.getCause());
+        System.exit(-1);
     }
 
     public int getnRow() {
@@ -137,5 +153,4 @@ public class Configurator {
     public LinkedList<EConfig> geteConfigs() {
         return this.eConfigs;
     }
-
 }

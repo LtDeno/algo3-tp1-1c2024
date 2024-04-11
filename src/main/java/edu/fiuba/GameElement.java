@@ -2,10 +2,10 @@ package edu.fiuba;
 
 abstract class GameElement {
 
-    private final String name;
+    protected final String name;
     protected Coordinate coords;
     protected final int dMove;
-    private final boolean destructible;
+    protected final boolean destructible;
 
 
     GameElement(String name, Coordinate coords, int dMove, boolean destructible) {
@@ -23,6 +23,17 @@ abstract class GameElement {
         return this.coords;
     }
 
+    void setCoords(Coordinate newCoords) {
+        this.coords = newCoords;
+    }
 
-    abstract void move(int dx, int dy);
+    int getdMove() {
+        return this.dMove;
+    }
+
+    boolean isDestructible() {
+        return this.destructible;
+    }
+
+    abstract void move(Grid grid);
 }

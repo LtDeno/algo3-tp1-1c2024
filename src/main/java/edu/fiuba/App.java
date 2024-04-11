@@ -35,10 +35,14 @@ public class App extends Application {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     Configurator config = new Configurator("config.json");
-    Game game = new Game(config);
+    Game game = new Game(config, this.getCharacterName());
 
     public static void main(String[] args) {
         launch();
     }
 
+    String getCharacterName() {
+        String name = "";
+        return name;
+    }
 }

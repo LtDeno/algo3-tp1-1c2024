@@ -7,13 +7,15 @@ public class CConfig {
     private final int nSafeTP;
     private final int nStepSTP;
     private final int dPlayerMove;
+    private final boolean destructible;
 
-    CConfig(int nRandomTP, int nStepRTP, int nSafeTP, int nStepSTP, int dPlayerMove) {
+    CConfig(int nRandomTP, int nStepRTP, int nSafeTP, int nStepSTP, int dPlayerMove, boolean destructible) {
         this.nRandomTP = nRandomTP;
         this.nStepRTP = nStepRTP;
         this.nSafeTP = nSafeTP;
         this.nStepSTP = nStepSTP;
         this.dPlayerMove = dPlayerMove;
+        this.destructible = destructible;
     }
 
     public int getnRandomTP() {
@@ -34,5 +36,9 @@ public class CConfig {
 
     public int getdPlayerMove() {
         return this.dPlayerMove;
+    }
+
+    public boolean isDestructible() {
+        return this.destructible;
     }
 }
