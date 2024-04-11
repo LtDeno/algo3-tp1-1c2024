@@ -3,9 +3,8 @@ juego: objeto comun, atributos de estadisticas, atributo objeto Config, atributo
     input le dice a la grilla que mueva al jugador y despues a los enemigos.
 grilla: objeto comun, atributo de una lista de elementoDeJuego (enemigos) y al jugador, metodos de manejo de dichos
     elementos (como decirle a cada elemento que se mueva segun un objeto movimiento).
-elementoDeJuego: objeto interfaz, atributos de coordenadas x y, atributo de distancia de movimiento, metodos para
-    moverse y verificar si se va a mover a una
-    posicion valida.
+elementoDeJuego: objeto abstracto, atributos de coordenadas x y, atributo de distancia de movimiento, metodos para
+    moverse y verificar si se va a mover a una posicion valida.
 jugador: objeto comun que implementa elementoDeJuego, atributos de cantidad de teletransportes seguros.
 enemigo: objeto comun que implementa elementoDeJuego.
 movimiento: elemento comun, atributos de coordenadas x y que van a usar los elementoDeJuego para modificar su posicion.

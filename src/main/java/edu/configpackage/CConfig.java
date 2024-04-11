@@ -1,13 +1,14 @@
 package edu.configpackage;
 
-public class PConfig {
+public class CConfig {
+
     private final int nRandomTP;
     private final int nStepRTP;
     private final int nSafeTP;
     private final int nStepSTP;
     private final int dPlayerMove;
 
-    public PConfig(int nRandomTP, int nStepRTP, int nSafeTP, int nStepSTP, int dPlayerMove) {
+    CConfig(int nRandomTP, int nStepRTP, int nSafeTP, int nStepSTP, int dPlayerMove) {
         this.nRandomTP = nRandomTP;
         this.nStepRTP = nStepRTP;
         this.nSafeTP = nSafeTP;
@@ -20,18 +21,18 @@ public class PConfig {
     }
 
     public int getnStepRTP() {
-        return nStepRTP;
+        return this.nStepRTP;
     }
 
     public int getnSafeTP() {
-        return nSafeTP;
+        return this.nSafeTP;
     }
 
     public int getnStepSTP() {
-        return nStepSTP;
+        return this.nStepSTP;
     }
 
     public int getdPlayerMove() {
-        return dPlayerMove;
+        return this.dPlayerMove;
     }
 }

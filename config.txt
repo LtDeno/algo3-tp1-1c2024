@@ -11,6 +11,7 @@ el archivo de config va a ser muy util para la modularidad de cambiar:
     - step de adicion de teletransportes seguros (default 1)
     - longitud de movimiento
 - enemigo:
+    - nombre (defaults 1x, 2x, fueguito)
     - cantidad inicial
     - step de cantidad enemigo (cantidad de enemigos que se agregan por nivel)
     - longitud de movimiento
