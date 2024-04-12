@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Button?>
+<GridPane fx:id="grid" xmlns:fx="http://javafx.com/fxml" fx:controller="edu.fiuba.GameController"
+          prefHeight="200" prefWidth="320"
+          alignment="center" hgap="2" vgap="2">
+
+    <Button onAction="#renderGrid" text="Start"/>
+</GridPane>
