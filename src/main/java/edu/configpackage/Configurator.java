@@ -34,6 +34,7 @@ public class Configurator {
         } catch (IOException e) {
             if (this.createDefaultConfigFile()) {
                 System.out.println("Successfully created 'config.json'.");
+                this.readConfigFile();
             } else {
                 this.readWriteError(e);
             }
@@ -67,6 +68,8 @@ public class Configurator {
     }
 
     private boolean createDefaultConfigFile() {
+        if (new File(this.fileName).isFile()) return false;
+
         try (FileWriter fileWriter = new FileWriter(this.fileName)){
             JsonObject defaultConfig = new JsonObject();
             defaultConfig.add("game", this.createDefaultGameConfig());
