@@ -35,5 +35,5 @@ abstract class GameElement {
         return this.destructible;
     }
 
-    abstract void move(Grid grid);
+    abstract void move(int dx, int dy);
 }

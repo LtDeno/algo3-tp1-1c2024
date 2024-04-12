@@ -12,13 +12,11 @@ class Player extends GameElement {
     }
 
     @Override
-    void move(Grid grid) {
-        /* no me dio la matematica para hacer el movimiento ni para entender la forma en la que lo habias hecho vos
-        dx = dx/(Math.abs(dx)/dMove);
-        dy = dy/(Math.abs(dy)/dMove);
-        coords.setxCoord(coords.getxCoord() + dx);
-        coords.setyCoord(coords.getyCoord() + dy);
-        */
+    void move(int dx, int dy) {
+        int movementX = dx != 0 ? (dx / Math.abs(dx)) * dMove : 0;
+        int movementY = dy != 0 ? (dy / Math.abs(dy)) * dMove : 0;
+        coords.setxCoord(coords.getxCoord() + movementX);
+        coords.setyCoord(coords.getyCoord() + movementY);
     }
 
     void teleport(Grid grid) {
