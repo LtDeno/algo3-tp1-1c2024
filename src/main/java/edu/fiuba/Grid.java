@@ -25,21 +25,21 @@ class Grid {
         return this.nColumns;
     }
 
-    Coordinate getMiddleCoords() {
-        return new Coordinate(this.nColumns/2, this.nRows/2);
+    Coordinates getMiddleCoords() {
+        return new Coordinates(this.nColumns/2, this.nRows/2);
     }
 
-    Coordinate getRandomValidCoords() {
-        Coordinate coords;
+    Coordinates getRandomValidCoords() {
+        Coordinates coords;
         do  {
-            coords = new Coordinate((int) (Math.random() * this.nColumns), (int) (Math.random() * this.nRows));
+            coords = new Coordinates((int) (Math.random() * this.nColumns), (int) (Math.random() * this.nRows));
         } while (!this.areCoordsInsideGrid(coords));
 
         return coords;
     }
 
-    Coordinate getUnoccupiedValidCoords() {
-        Coordinate coords;
+    Coordinates getUnoccupiedValidCoords() {
+        Coordinates coords;
         do {
             coords = this.getRandomValidCoords();
         } while (this.areCoordsOccupied(coords));
@@ -47,7 +47,7 @@ class Grid {
         return coords;
     }
 
-    boolean areCoordsOccupied(Coordinate coords) {
+    boolean areCoordsOccupied(Coordinates coords) {
         boolean coordsAreOccupied = false;
         for (GameElement e : gameElements){
             coordsAreOccupied = (e.getCoords().getxCoord() == coords.getxCoord()) && (e.getCoords().getyCoord() == coords.getyCoord()) ;
@@ -56,7 +56,7 @@ class Grid {
         return coordsAreOccupied;
     }
 
-    boolean areCoordsInsideGrid(Coordinate coords) {
+    boolean areCoordsInsideGrid(Coordinates coords) {
         return !(coords.getxCoord() >= nColumns || coords.getxCoord() < 0 || coords.getyCoord() >= nRows || coords.getyCoord() < 0);
     }
 }

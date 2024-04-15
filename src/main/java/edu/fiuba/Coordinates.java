@@ -1,11 +1,11 @@
 package edu.fiuba;
 
-class Coordinate {
+class Coordinates {
 
     private int xCoord;
     private int yCoord;
 
-    Coordinate(int xCoord, int yCoord) {
+    Coordinates(int xCoord, int yCoord) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
     }

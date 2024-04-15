@@ -20,7 +20,7 @@ class ActionMove implements Action{
     }
 
     private void move() {
-        Coordinate newCoords = new Coordinate(this.e.getCoords().getxCoord() + this.dX, this.e.getCoords().getyCoord() + this.dY);
+        Coordinates newCoords = new Coordinates(this.e.getCoords().getxCoord() + this.dX, this.e.getCoords().getyCoord() + this.dY);
         if (this.grid.areCoordsInsideGrid(newCoords)) this.e.setCoords(newCoords);
     }
 }

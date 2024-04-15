@@ -3,12 +3,12 @@ package edu.fiuba;
 abstract class GameElement {
 
     protected final String name;
-    protected Coordinate coords;
+    protected Coordinates coords;
     protected final int dMove;
     protected final boolean destructible;
 
 
-    GameElement(String name, Coordinate coords, int dMove, boolean destructible) {
+    GameElement(String name, Coordinates coords, int dMove, boolean destructible) {
         this.name = name;
         this.coords = coords;
         this.dMove = dMove;
@@ -19,11 +19,11 @@ abstract class GameElement {
         return this.name;
     }
 
-    Coordinate getCoords() {
+    Coordinates getCoords() {
         return this.coords;
     }
 
-    void setCoords(Coordinate newCoords) {
+    void setCoords(Coordinates newCoords) {
         this.coords = newCoords;
     }
 
@@ -35,5 +35,5 @@ abstract class GameElement {
         return this.destructible;
     }
 
-    abstract void move(int dx, int dy);
+    abstract void move(int dx, int dy, Grid grid);
 }

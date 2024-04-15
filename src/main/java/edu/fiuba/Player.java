@@ -5,18 +5,17 @@ class Player extends GameElement {
     private int randomTeleportsLeft;
     private int safeTeleportsLeft;
 
-    Player(String name, Coordinate coords, int dMove, boolean destructible, int initialnRandomTP, int initialnSafeTP) {
+    Player(String name, Coordinates coords, int dMove, boolean destructible, int initialnRandomTP, int initialnSafeTP) {
         super(name, coords, dMove, destructible);
         this.randomTeleportsLeft = initialnRandomTP;
         this.safeTeleportsLeft = initialnSafeTP;
     }
 
     @Override
-    void move(int dx, int dy) {
+    void move(int dx, int dy, Grid grid) {
         int movementX = dx != 0 ? (dx / Math.abs(dx)) * dMove : 0;
         int movementY = dy != 0 ? (dy / Math.abs(dy)) * dMove : 0;
-        coords.setxCoord(coords.getxCoord() + movementX);
-        coords.setyCoord(coords.getyCoord() + movementY);
+        new ActionMove(this, movementX, movementY, grid);
     }
 
     void teleport(Grid grid) {
