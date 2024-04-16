@@ -2,11 +2,8 @@ package edu.fiuba;
 
 class Enemy extends GameElement {
 
-    private final int amount;
-
-    Enemy(String name, Coordinates coords, int dMove, boolean destructible, int amountOf) {
+    Enemy(String name, Coordinates coords, int dMove, boolean destructible) {
         super(name, coords, dMove, destructible);
-        this.amount = amountOf;
     }
 
     @Override
@@ -19,9 +16,5 @@ class Enemy extends GameElement {
 
             new ActionMove(this, movementVector, grid).actuate();
         }
-    }
-
-    int getAmount(){
-        return this.amount;
     }
 }

@@ -22,7 +22,7 @@ public class CConfig {
         return nRandomTP;
     }
 
-    public int getnStepRTP() {
+    public int getnStepRandomTP() {
         return this.nStepRTP;
     }
 
@@ -30,7 +30,7 @@ public class CConfig {
         return this.nSafeTP;
     }
 
-    public int getnStepSTP() {
+    public int getnStepSafeTP() {
         return this.nStepSTP;
     }
 
