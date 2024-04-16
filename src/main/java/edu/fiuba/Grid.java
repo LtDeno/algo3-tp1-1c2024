@@ -59,4 +59,5 @@ class Grid {
     boolean areCoordsInsideGrid(Coordinates coords) {
         return !(coords.getxCoord() >= nColumns || coords.getxCoord() < 0 || coords.getyCoord() >= nRows || coords.getyCoord() < 0);
     }
+
 }

@@ -35,5 +35,5 @@ abstract class GameElement {
         return this.destructible;
     }
 
-    abstract void move(int dx, int dy, Grid grid);
+    abstract void moveInDirection(Coordinates coords, Grid grid);
 }

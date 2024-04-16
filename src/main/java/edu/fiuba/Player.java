@@ -12,10 +12,14 @@ class Player extends GameElement {
     }
 
     @Override
-    void move(int dx, int dy, Grid grid) {
-        int movementX = dx != 0 ? (dx / Math.abs(dx)) * dMove : 0;
-        int movementY = dy != 0 ? (dy / Math.abs(dy)) * dMove : 0;
-        new ActionMove(this, movementX, movementY, grid);
+    void moveInDirection(Coordinates movementVector, Grid grid) {
+        if (movementVector.getxCoord() == 0 && movementVector.getyCoord() == 0) return;
+
+        for (int i = 0; i < this.dMove; i++) {
+            movementVector.normalizeCoords();
+
+            new ActionMove(this, movementVector, grid).actuate();
+        }
     }
 
     void teleport(Grid grid) {

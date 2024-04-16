@@ -16,6 +16,6 @@ class ActionTeleportRandomly implements Action {
     }
 
     private void teleport() {
-        e.setCoords(grid.getRandomValidCoords());
+        this.e.setCoords(grid.getRandomValidCoords());
     }
 }

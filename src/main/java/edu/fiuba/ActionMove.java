@@ -4,14 +4,12 @@ class ActionMove implements Action{
 
     private final GameElement e;
     private final Grid grid;
-    private final int dX;
-    private final int dY;
+    private final Coordinates vectorToMove;
 
-    ActionMove(GameElement e, int dX, int dY, Grid grid) {
+    ActionMove(GameElement e, Coordinates vectorToMove, Grid grid) {
         this.e = e;
         this.grid = grid;
-        this.dX = dX;
-        this.dY = dY;
+        this.vectorToMove = vectorToMove;
     }
 
     @Override
@@ -20,7 +18,7 @@ class ActionMove implements Action{
     }
 
     private void move() {
-        Coordinates newCoords = new Coordinates(this.e.getCoords().getxCoord() + this.dX, this.e.getCoords().getyCoord() + this.dY);
-        if (this.grid.areCoordsInsideGrid(newCoords)) this.e.setCoords(newCoords);
+        this.vectorToMove.addCoords(this.e.getCoords());
+        if (this.grid.areCoordsInsideGrid(this.vectorToMove)) this.e.setCoords(this.vectorToMove);
     }
 }

@@ -10,11 +10,8 @@ class Coordinates {
         this.yCoord = yCoord;
     }
 
-    void setxCoord(int xCoord) {
+    void setCoords(int xCoord, int yCoord) {
         this.xCoord = xCoord;
-    }
-
-    void setyCoord(int yCoord) {
         this.yCoord = yCoord;
     }
 
@@ -24,5 +21,15 @@ class Coordinates {
 
     int getyCoord() {
         return this.yCoord;
+    }
+
+    void addCoords(Coordinates coordsToAdd) {
+        this.xCoord += coordsToAdd.getxCoord();
+        this.yCoord += coordsToAdd.getyCoord();
+    }
+
+    void normalizeCoords() {
+        if (this.xCoord != 0) this.xCoord /= Math.abs(this.xCoord);
+        if (this.yCoord != 0) this.yCoord /= Math.abs(this.yCoord);
     }
 }

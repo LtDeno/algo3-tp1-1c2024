@@ -1,8 +1,6 @@
 package edu.fiuba;
 
-
-
-public class Enemy extends GameElement {
+class Enemy extends GameElement {
 
     private final int amount;
 
@@ -12,11 +10,14 @@ public class Enemy extends GameElement {
     }
 
     @Override
-    void move(int dx, int dy, Grid grid) {
-        for (int i = 0; i < dMove; i++) {
-            int movementX = dx != 0 ? dx / Math.abs(dx) : 0;
-            int movementY = dy != 0 ? dy / Math.abs(dy) : 0;
-            new ActionMove(this, movementX, movementY, grid);
+    void moveInDirection(Coordinates playerCoords, Grid grid) {
+        if (playerCoords.getxCoord() == this.coords.getxCoord() && playerCoords.getyCoord() == this.coords.getyCoord()) return;
+
+        for (int i = 0; i < this.dMove; i++) {
+            Coordinates movementVector = new Coordinates(playerCoords.getxCoord() - this.coords.getxCoord(), playerCoords.getyCoord() - this.coords.getyCoord());
+            movementVector.normalizeCoords();
+
+            new ActionMove(this, movementVector, grid).actuate();
         }
     }
 
