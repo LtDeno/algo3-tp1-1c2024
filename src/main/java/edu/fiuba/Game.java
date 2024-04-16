@@ -44,7 +44,7 @@ class Game {
         }
     }
 
-    private void levelUp() {
+    void levelUp() {
         this.grid.addGameElement(this.player);
         this.player.addRandomTP(this.config.getcConfig().getnStepRandomTP());
         this.player.addSafeTP(this.config.getcConfig().getnStepSafeTP());
@@ -62,5 +62,9 @@ class Game {
                         ((EConfig) this.enemiesCurrentConfig.get(i)).getDestructible()));
             }
         }
+    }
+
+    void moveEnemies() {
+        this.grid.moveEnemies();
     }
 }

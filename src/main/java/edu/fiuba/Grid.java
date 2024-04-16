@@ -60,4 +60,11 @@ class Grid {
         return !(coords.getxCoord() >= nColumns || coords.getxCoord() < 0 || coords.getyCoord() >= nRows || coords.getyCoord() < 0);
     }
 
+    void moveEnemies() {
+        Coordinates playerCoords = this.gameElements.get(0).getCoords();
+
+        for (int i = 1; i < gameElements.size(); i++) {
+            this.gameElements.get(i).moveInDirection(playerCoords, this);
+        }
+    }
 }
