@@ -44,6 +44,7 @@ public class App extends Application {
     }
 
     String getCharacterName() {
+        //placeholder para cuando obtengamos el nombre del personaje por pantalla
         String name = "";
         return name;
     }

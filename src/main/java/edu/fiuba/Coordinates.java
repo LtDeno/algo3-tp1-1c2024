@@ -32,4 +32,8 @@ class Coordinates {
         if (this.xCoord != 0) this.xCoord /= Math.abs(this.xCoord);
         if (this.yCoord != 0) this.yCoord /= Math.abs(this.yCoord);
     }
+
+    boolean areCoordsEqual(Coordinates coords) {
+        return ((this.xCoord == coords.getxCoord()) && (this.yCoord == this.getyCoord()));
+    }
 }

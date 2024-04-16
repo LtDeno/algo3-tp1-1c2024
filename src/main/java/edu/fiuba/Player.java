@@ -1,11 +1,11 @@
 package edu.fiuba;
 
-class Player extends GameElement {
+class Character extends GameElement {
 
     private int randomTeleportsLeft;
     private int safeTeleportsLeft;
 
-    Player(String name, Coordinates coords, int dMove, boolean destructible, int initialnRandomTP, int initialnSafeTP) {
+    Character(String name, Coordinates coords, int dMove, boolean destructible, int initialnRandomTP, int initialnSafeTP) {
         super(name, coords, dMove, destructible);
         this.randomTeleportsLeft = initialnRandomTP;
         this.safeTeleportsLeft = initialnSafeTP;
@@ -43,4 +43,5 @@ class Player extends GameElement {
     void addSafeTP(int nToAdd) {
         this.safeTeleportsLeft += nToAdd;
     }
+
 }

@@ -7,11 +7,11 @@ class Enemy extends GameElement {
     }
 
     @Override
-    void moveInDirection(Coordinates playerCoords, Grid grid) {
-        if (playerCoords.getxCoord() == this.coords.getxCoord() && playerCoords.getyCoord() == this.coords.getyCoord()) return;
+    void moveInDirection(Coordinates characterCoords, Grid grid) {
+        if (this.coords.areCoordsEqual(characterCoords)) return;
 
         for (int i = 0; i < this.dMove; i++) {
-            Coordinates movementVector = new Coordinates(playerCoords.getxCoord() - this.coords.getxCoord(), playerCoords.getyCoord() - this.coords.getyCoord());
+            Coordinates movementVector = new Coordinates(characterCoords.getxCoord() - this.coords.getxCoord(), characterCoords.getyCoord() - this.coords.getyCoord());
             movementVector.normalizeCoords();
 
             new ActionMove(this, movementVector, grid).actuate();

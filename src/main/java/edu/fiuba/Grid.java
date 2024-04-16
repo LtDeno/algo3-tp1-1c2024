@@ -1,12 +1,12 @@
 package edu.fiuba;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 class Grid {
 
     private final int nColumns;
     private final int nRows;
-    private final LinkedList<GameElement> gameElements = new LinkedList<>();
+    private final ArrayList<GameElement> gameElements = new ArrayList<>();
 
     Grid(int nRows, int nColumns) {
         this.nRows = nRows;
@@ -14,7 +14,7 @@ class Grid {
     }
 
     void addGameElement(GameElement E) {
-        this.gameElements.addLast(E);
+        this.gameElements.add(E);
     }
 
     int getnRows() {
@@ -23,6 +23,10 @@ class Grid {
 
     int getnColumns() {
         return this.nColumns;
+    }
+
+    ArrayList<GameElement> getGameElements() {
+        return this.gameElements;
     }
 
     Coordinates getMiddleCoords() {
@@ -50,7 +54,7 @@ class Grid {
     boolean areCoordsOccupied(Coordinates coords) {
         boolean coordsAreOccupied = false;
         for (GameElement e : gameElements){
-            coordsAreOccupied = (e.getCoords().getxCoord() == coords.getxCoord()) && (e.getCoords().getyCoord() == coords.getyCoord()) ;
+            coordsAreOccupied = e.getCoords().areCoordsEqual(coords);
         }
 
         return coordsAreOccupied;
@@ -61,10 +65,10 @@ class Grid {
     }
 
     void moveEnemies() {
-        Coordinates playerCoords = this.gameElements.get(0).getCoords();
+        Coordinates characterCoords = this.gameElements.get(0).getCoords();
 
         for (int i = 1; i < gameElements.size(); i++) {
-            this.gameElements.get(i).moveInDirection(playerCoords, this);
+            this.gameElements.get(i).moveInDirection(characterCoords, this);
         }
     }
 }
