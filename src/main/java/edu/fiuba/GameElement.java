@@ -9,6 +9,7 @@ abstract class GameElement {
     protected boolean collided = false;
 
 
+
     GameElement(String name, Coordinates coords, int dMove, boolean destructible) {
         this.name = name;
         this.coords = coords;
@@ -37,4 +38,7 @@ abstract class GameElement {
     }
 
     abstract void moveInDirection(Coordinates coords, Grid grid);
+
 }
+
+

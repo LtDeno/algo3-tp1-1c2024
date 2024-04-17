@@ -40,8 +40,14 @@ class Grid {
         return this.nColumns;
     }
 
+    // tuve que hacer esto porque al hacer un foreach en gameelements para mover cada elemento
+    // el metodo moveInDirection de los enemigos llama a repositionElementAndItsCoords, que modifica
+    // el hashmap sobre el cual se esta haciendo el foreach, entonces tira error
+    @Deprecated
     Collection<GameElement> getGameElements() {
-        return this.gameElements.values();
+        HashMap<String, GameElement> copy = new HashMap<>();
+        copy.putAll(this.gameElements);
+        return copy.values();
     }
 
     ArrayList<GameElement> getCollidedElements() {

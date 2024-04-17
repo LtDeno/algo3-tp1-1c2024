@@ -17,7 +17,10 @@ class Character extends GameElement {
         movementVector.normalizeCoords();
 
         for (int i = 0; i < this.dMove; i++) {
-            new ActionMove(this, movementVector, grid).actuate();
+            Coordinates newPosition = Coordinates.sumCoords(this.getCoords(), movementVector);
+            if (grid.areCoordsInsideGrid(newPosition)) {
+                grid.repositionElementAndItsCoords(this, newPosition);
+            }
         }
     }
 

@@ -38,10 +38,14 @@ class Coordinates {
 
         return index;
     }
-
+    /*
     void addCoords(Coordinates coordsToAdd) {
         this.xCoord += coordsToAdd.getxCoord();
         this.yCoord += coordsToAdd.getyCoord();
+    }
+    */
+    static Coordinates sumCoords(Coordinates coords_1, Coordinates coords_2) {
+        return new Coordinates(coords_1.getxCoord() + coords_2.getxCoord(), coords_1.getyCoord() + coords_2.getyCoord());
     }
 
     void normalizeCoords() {

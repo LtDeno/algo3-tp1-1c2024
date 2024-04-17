@@ -119,4 +119,7 @@ class Game {
             }
         }
     }
+
+    public Character getCharacter(){ return character; }
+    public Grid getGrid() { return grid; }
 }
