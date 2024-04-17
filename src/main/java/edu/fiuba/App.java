@@ -59,7 +59,9 @@ public class App extends Application {
         scene = new Scene(fxmlLoader.load());
         this.gameController = fxmlLoader.getController();
         gameController.renderGrid();
-        this.update();
+        game.getGrid().getGameElements().forEach(e -> {
+            gameController.renderGameElement(e);
+        });
         scene.setOnKeyPressed(e -> {
             KeyCode keyPressed = e.getCode();
             Action action = keyboardControls.get(keyPressed);
