@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.google.gson.*;
 
+//falta deshacerse de los numeros magicos de la config default
 public class Configurator {
 
     private final String fileName;
@@ -31,9 +32,10 @@ public class Configurator {
             JsonObject enemiesConfig =  fileConfig.getAsJsonObject("game").getAsJsonObject("enemies");
             this.addEnemiesToList(enemiesConfig, this.eConfigs);
 
+            System.out.println("Successfully loaded 'config.json'.");
         } catch (IOException e) {
             if (this.createDefaultConfigFile()) {
-                System.out.println("Successfully created 'config.json'.");
+                System.out.println("Successfully created default 'config.json'.");
                 this.readConfigFile();
             } else {
                 this.readWriteError(e);
@@ -57,7 +59,6 @@ public class Configurator {
 
         for (String k : enemiesKeys) {
             JsonObject enemy = enemiesConfig.getAsJsonObject(k);
-            System.out.printf("%s %d %d %d %b\n", k, enemy.get("startingAmount").getAsInt(), enemy.get("addOnLevelUpAmount").getAsInt(), enemy.get("moveDistance").getAsInt(), enemy.get("isDestructible").getAsBoolean());
             list.addLast(new EConfig(k,
                     enemy.get("startingAmount").getAsInt(),
                     enemy.get("addOnLevelUpAmount").getAsInt(),

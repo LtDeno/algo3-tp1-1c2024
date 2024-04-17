@@ -17,4 +17,5 @@ class Enemy extends GameElement {
             new ActionMove(this, movementVector, grid).actuate();
         }
     }
+
 }

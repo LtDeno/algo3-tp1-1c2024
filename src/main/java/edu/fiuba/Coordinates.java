@@ -10,9 +10,9 @@ class Coordinates {
         this.yCoord = yCoord;
     }
 
-    void setCoords(int xCoord, int yCoord) {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
+    void setCoords(Coordinates newCoords) {
+        this.xCoord = newCoords.getxCoord();
+        this.yCoord = newCoords.getyCoord();
     }
 
     int getxCoord() {
@@ -21,6 +21,22 @@ class Coordinates {
 
     int getyCoord() {
         return this.yCoord;
+    }
+
+    String getAsIndexFromMaxValues(int maxX, int maxY) {
+        String index = "";
+
+        for (int i = 0; i < (String.valueOf(maxX).length() - String.valueOf(this.xCoord).length()); i++) {
+            index = index.concat("0");
+        }
+        index = index.concat(String.valueOf(this.xCoord));
+
+        for (int i = 0; i < (String.valueOf(maxY).length() - String.valueOf(this.yCoord).length()); i++) {
+            index = index.concat("0");
+        }
+        index = index.concat(String.valueOf(this.yCoord));
+
+        return index;
     }
 
     void addCoords(Coordinates coordsToAdd) {

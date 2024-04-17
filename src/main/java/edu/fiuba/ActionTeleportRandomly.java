@@ -2,11 +2,11 @@ package edu.fiuba;
 
 class ActionTeleportRandomly implements Action {
 
-    protected final GameElement e;
+    protected final GameElement element;
     protected final Grid grid;
 
-    ActionTeleportRandomly(GameElement e, Grid grid) {
-        this.e = e;
+    ActionTeleportRandomly(GameElement element, Grid grid) {
+        this.element = element;
         this.grid = grid;
     }
 
@@ -16,6 +16,6 @@ class ActionTeleportRandomly implements Action {
     }
 
     private void teleport() {
-        this.e.setCoords(grid.getRandomValidCoords());
+        this.grid.repositionElementAndItsCoords(element, grid.getRandomValidCoords());
     }
 }

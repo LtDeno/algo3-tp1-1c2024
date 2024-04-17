@@ -2,12 +2,12 @@ package edu.fiuba;
 
 class ActionMove implements Action{
 
-    private final GameElement e;
+    private final GameElement element;
     private final Grid grid;
     private final Coordinates vectorToMove;
 
-    ActionMove(GameElement e, Coordinates vectorToMove, Grid grid) {
-        this.e = e;
+    ActionMove(GameElement element, Coordinates vectorToMove, Grid grid) {
+        this.element = element;
         this.grid = grid;
         this.vectorToMove = vectorToMove;
     }
@@ -18,7 +18,9 @@ class ActionMove implements Action{
     }
 
     private void move() {
-        this.vectorToMove.addCoords(this.e.getCoords());
-        if (this.grid.areCoordsInsideGrid(this.vectorToMove)) this.e.setCoords(this.vectorToMove);
+        this.vectorToMove.addCoords(this.element.getCoords());
+        if (this.grid.areCoordsInsideGrid(this.vectorToMove)) {
+            this.grid.repositionElementAndItsCoords(element, this.vectorToMove);
+        }
     }
 }

@@ -3,9 +3,10 @@ package edu.fiuba;
 abstract class GameElement {
 
     protected final String name;
-    protected Coordinates coords;
+    protected final Coordinates coords;
     protected final int dMove;
     protected final boolean destructible;
+    protected boolean collided = false;
 
 
     GameElement(String name, Coordinates coords, int dMove, boolean destructible) {
@@ -24,15 +25,15 @@ abstract class GameElement {
     }
 
     void setCoords(Coordinates newCoords) {
-        this.coords = newCoords;
+        this.coords.setCoords(newCoords);
     }
 
-    int getdMove() {
-        return this.dMove;
+    void collide() {
+        if (destructible) collided = true;
     }
 
-    boolean isDestructible() {
-        return this.destructible;
+    boolean getCollided() {
+        return this.collided;
     }
 
     abstract void moveInDirection(Coordinates coords, Grid grid);

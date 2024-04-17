@@ -14,9 +14,14 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /* Cosas que vienen por defecto*/
+
     private static Scene scene;
+    private final Configurator config = new Configurator("config.json");
+    private final Game game = new Game(config, this.getCharacterName());
+
+    public static void main(String[] args) {
+        launch();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -34,19 +39,16 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    Configurator config = new Configurator("config.json");
-    Game game = new Game(config, this.getCharacterName());
-
-    public static void main(String[] args) {
-        launch();
-    }
 
     String getCharacterName() {
         //placeholder para cuando obtengamos el nombre del personaje por pantalla
-        String name = "";
+        String name = "Marito";
         return name;
+    }
+
+    Configurator getConfig() {
+        return this.config;
     }
 
 }

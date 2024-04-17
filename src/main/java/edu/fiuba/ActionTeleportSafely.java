@@ -2,8 +2,8 @@ package edu.fiuba;
 
 class ActionTeleportSafely extends ActionTeleportRandomly {
 
-    ActionTeleportSafely(GameElement e, Grid grid) {
-        super(e, grid);
+    ActionTeleportSafely(GameElement element, Grid grid) {
+        super(element, grid);
     }
 
     @Override
@@ -12,6 +12,6 @@ class ActionTeleportSafely extends ActionTeleportRandomly {
     }
 
     private void teleport() {
-        this.e.setCoords(grid.getUnoccupiedValidCoords());
+        this.grid.repositionElementAndItsCoords(element, grid.getUnoccupiedValidCoords());
     }
 }

@@ -14,10 +14,9 @@ class Character extends GameElement {
     @Override
     void moveInDirection(Coordinates movementVector, Grid grid) {
         if (movementVector.getxCoord() == 0 && movementVector.getyCoord() == 0) return;
+        movementVector.normalizeCoords();
 
         for (int i = 0; i < this.dMove; i++) {
-            movementVector.normalizeCoords();
-
             new ActionMove(this, movementVector, grid).actuate();
         }
     }
