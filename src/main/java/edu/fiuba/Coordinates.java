@@ -49,7 +49,7 @@ class Coordinates {
     }
 
     boolean areCoordsEqual(Coordinates coords) {
-        return ((this.xCoord == coords.getxCoord()) && (this.yCoord == this.getyCoord()));
+        return (this.xCoord == coords.getxCoord() && this.yCoord == coords.getyCoord());
     }
 
     void printCoords() {

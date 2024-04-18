@@ -13,7 +13,6 @@ class ActionTeleportSafely extends ActionTeleportRandomly {
 
     private void teleport() {
         Coordinates newCoords = this.grid.getUnoccupiedValidCoords();
-        newCoords.printCoords();
         this.grid.repositionElementAndItsCoords(this.element, newCoords);
     }
 }

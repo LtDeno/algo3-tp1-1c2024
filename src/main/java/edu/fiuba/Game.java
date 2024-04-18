@@ -21,21 +21,20 @@ class Game {
         this.createEnemiesIntoGridAndListThem();
     }
 
-    boolean isGameEnded() {
-        return this.gameEnded;
-    }
-
     void characterMove(Coordinates characterMoveDirection) {
+        if (this.gameEnded) return;
         this.character.moveInDirection(characterMoveDirection, this.grid);
         this.moveEnemiesTowardsCharacter();
     }
 
     void characterTeleport() {
+        if (this.gameEnded) return;
         this.character.teleport(this.grid);
         this.moveEnemiesTowardsCharacter();
     }
 
     void characterTeleportSafely() {
+        if (this.gameEnded) return;
         this.character.teleportSafely(this.grid);
         this.moveEnemiesTowardsCharacter();
     }
@@ -91,16 +90,16 @@ class Game {
         }
 
         for (GameElement element : collidedElements) {
-            element.collide();
-            if (!element.equals(this.character) && fueguitoConfig != null) this.grid.addGameElement(new Enemy(
+            if (element instanceof Character) {
+                System.out.println("\nGG EZ");
+                this.gameEnded = true;
+            } else if (!(element.getKiller() instanceof Character) && fueguitoConfig != null) this.grid.addGameElement(new Enemy(
                     fueguitoConfig.getName(),
                     element.getCoords(),
                     fueguitoConfig.getdEnemyMove(),
                     fueguitoConfig.getDestructible()));
         }
         this.grid.clearCollidedElements();
-
-        this.gameEnded = this.character.getCollided();
     }
 
     private void createEnemiesIntoGridWithStep() {

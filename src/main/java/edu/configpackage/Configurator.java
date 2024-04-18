@@ -76,8 +76,6 @@ public class Configurator {
             defaultConfig.add("game", this.createDefaultGameConfig());
 
             fileWriter.append("\n").append(String.valueOf(defaultConfig));
-
-            fileWriter.close();
         } catch (IOException e) {
             System.out.println("\nCould not write 'config.json'." +
                     "\nProcess will be terminated.");
@@ -97,8 +95,8 @@ public class Configurator {
 
     private JsonObject createDefaultGridConfig() {
         JsonObject gridConfig = new JsonObject();
-        gridConfig.addProperty("height", 15);
-        gridConfig.addProperty("width", 20);
+        gridConfig.addProperty("height", 20);
+        gridConfig.addProperty("width", 25);
 
         return gridConfig;
     }

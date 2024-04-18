@@ -42,5 +42,4 @@ class Character extends GameElement {
     void addSafeTP(int nToAdd) {
         this.safeTeleportsLeft += nToAdd;
     }
-
 }

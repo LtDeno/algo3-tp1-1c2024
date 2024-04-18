@@ -6,7 +6,7 @@ abstract class GameElement {
     protected final Coordinates coords;
     protected final int dMove;
     protected final boolean destructible;
-    protected boolean collided = false;
+    protected GameElement killer;
 
     GameElement(String name, Coordinates coords, int dMove, boolean destructible) {
         this.name = name;
@@ -27,12 +27,12 @@ abstract class GameElement {
         this.coords.setCoords(newCoords);
     }
 
-    void collide() {
-        if (destructible) collided = true;
+    void setKiller(GameElement killer) {
+        this.killer = killer;
     }
 
-    boolean getCollided() {
-        return this.collided;
+    GameElement getKiller() {
+        return this.killer;
     }
 
     abstract void moveInDirection(Coordinates direction, Grid grid);

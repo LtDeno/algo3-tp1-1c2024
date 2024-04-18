@@ -23,7 +23,9 @@ class Grid {
         GameElement collidee = this.gameElements.put(element.getCoords().getAsIndexFromMaxValues(this.nColumns, this.nRows), element);
         if (collidee != null){
             this.collidedElements.add(collidee);
+            collidee.setKiller(element);
             this.collidedElements.add(element);
+            element.setKiller(collidee);
         }
     }
 
@@ -33,9 +35,7 @@ class Grid {
 
     ArrayList<GameElement> getGameElements() {
         ArrayList<GameElement> copiedElements = new ArrayList<>();
-        this.gameElements.forEach((key, gameElement) -> {
-            copiedElements.add(gameElement);
-        });
+        this.gameElements.forEach((key, gameElement) -> copiedElements.add(gameElement));
         return copiedElements;
     }
 
@@ -74,7 +74,7 @@ class Grid {
     }
 
     boolean areCoordsInsideGrid(Coordinates coords) {
-        return !(coords.getxCoord() >= this.nColumns || coords.getxCoord() < 0 || coords.getyCoord() >= this.nRows || coords.getyCoord() < 0);
+        return (coords.getxCoord() <= this.nColumns && coords.getxCoord() > 0 && coords.getyCoord() <= this.nRows && coords.getyCoord() > 0);
     }
 
     void repositionElementAndItsCoords(GameElement element, Coordinates coords) {
@@ -85,8 +85,6 @@ class Grid {
 
     void printElements() {
         System.out.print("\nElements: ");
-        this.gameElements.values().forEach(e -> {
-            System.out.printf("%s x=%d y=%d || ", e.getName(), e.getCoords().getxCoord(), e.getCoords().getyCoord());
-        });
+        this.gameElements.values().forEach(e -> System.out.printf("%s x=%d y=%d || ", e.getName(), e.getCoords().getxCoord(), e.getCoords().getyCoord()));
     }
 }

@@ -17,7 +17,6 @@ class ActionTeleportRandomly implements Action {
 
     private void teleport() {
         Coordinates newCoords = this.grid.getRandomValidCoords();
-        newCoords.printCoords();
         this.grid.repositionElementAndItsCoords(this.element, newCoords);
     }
 }
