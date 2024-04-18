@@ -17,10 +17,12 @@ class ActionMove implements Action{
         this.move();
     }
 
-
     private void move() {
-        element.moveInDirection(vectorToMove, grid);
+        vectorToMove.printCoords();
+        this.vectorToMove.addCoords(this.element.getCoords());
+        vectorToMove.printCoords();
+        if (this.grid.areCoordsInsideGrid(this.vectorToMove)) {
+            this.grid.repositionElementAndItsCoords(element, this.vectorToMove);
+        }
     }
-
-
 }

@@ -4,7 +4,6 @@ import edu.configpackage.Configurator;
 import edu.configpackage.EConfig;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 class Game {
 
@@ -76,11 +75,9 @@ class Game {
     }
 
     private void moveEnemiesTowardsCharacter() {
-        Collection<GameElement> gameElements = this.grid.getGameElements();
-
-        for (GameElement element : gameElements) {
-            if (!element.equals(this.character)) element.moveInDirection(this.character.getCoords(), this.grid);
-        }
+        this.grid.getGameElements().forEach(gameElement -> {
+            if (!gameElement.equals(this.character)) gameElement.moveInDirection(this.character.getCoords(), this.grid);
+        });
 
         this.checkCollisions();
     }
@@ -120,6 +117,13 @@ class Game {
         }
     }
 
-    public Character getCharacter(){ return character; }
-    public Grid getGrid() { return grid; }
+    Character getCharacter(){ return this.character; }
+
+    Grid getGrid() { return this.grid; }
+
+    void printGameElements() {
+        this.grid.getGameElements().forEach(e -> {
+            System.out.printf("\n%s x=%d y=%d", e.getName(), e.getCoords().getxCoord(), e.getCoords().getyCoord());
+        });
+    }
 }

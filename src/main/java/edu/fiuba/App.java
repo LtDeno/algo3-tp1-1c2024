@@ -21,39 +21,35 @@ public class App extends Application {
     Configurator config = new Configurator("config.json");
     Game game = new Game(config, this.getCharacterName());
     GameController gameController;
-
-    private final Map<KeyCode, Action> keyboardControls = Map.of(
-            KeyCode.NUMPAD7, new ActionMove(game.getCharacter(), new Coordinates(-1, -1), game.getGrid()),
-            KeyCode.NUMPAD8, new ActionMove(game.getCharacter(), new Coordinates(0, -1), game.getGrid()),
-            KeyCode.NUMPAD9, new ActionMove(game.getCharacter(), new Coordinates(1, -1), game.getGrid()),
-            KeyCode.NUMPAD4, new ActionMove(game.getCharacter(), new Coordinates(-1, 0), game.getGrid()),
-            KeyCode.NUMPAD5, new ActionMove(game.getCharacter(), new Coordinates(0, 0), game.getGrid()),
-            KeyCode.NUMPAD6, new ActionMove(game.getCharacter(), new Coordinates(1, 0), game.getGrid()),
-            KeyCode.NUMPAD1, new ActionMove(game.getCharacter(), new Coordinates(-1, 1), game.getGrid()),
-            KeyCode.NUMPAD2, new ActionMove(game.getCharacter(), new Coordinates(0, 1), game.getGrid()),
-            KeyCode.NUMPAD3, new ActionMove(game.getCharacter(), new Coordinates(1, 1), game.getGrid())
-    );
-
-    private final Map<Double, Action> mouseControls = Map.of(
-            Math.PI/8, new ActionMove(game.getCharacter(), new Coordinates(1, -1), game.getGrid()),
-            3*Math.PI/8, new ActionMove(game.getCharacter(), new Coordinates(0, -1), game.getGrid()),
-            5*Math.PI/8, new ActionMove(game.getCharacter(), new Coordinates(-1, -1), game.getGrid()),
-            7*Math.PI/8, new ActionMove(game.getCharacter(), new Coordinates(-1, 0), game.getGrid()),
-            9*Math.PI/8, new ActionMove(game.getCharacter(), new Coordinates(-1, 1), game.getGrid()),
-            11*Math.PI/8, new ActionMove(game.getCharacter(), new Coordinates(0, 1), game.getGrid()),
-            13*Math.PI/8, new ActionMove(game.getCharacter(), new Coordinates(1, 1), game.getGrid()),
-            15*Math.PI/8, new ActionMove(game.getCharacter(), new Coordinates(1, 0), game.getGrid()),
-            -1.0, new ActionMove(game.getCharacter(), new Coordinates(0, 0), game.getGrid())
-    );
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /* Cosas que vienen por defecto*/
     private static Scene scene;
+    private final Map<KeyCode, Coordinates> keyboardControls = Map.of(
+            KeyCode.NUMPAD7, new Coordinates(-1, -1),
+            KeyCode.NUMPAD8, new Coordinates(0, -1),
+            KeyCode.NUMPAD9, new Coordinates(1, -1),
+            KeyCode.NUMPAD4, new Coordinates(-1, 0),
+            KeyCode.NUMPAD5, new Coordinates(0, 0),
+            KeyCode.NUMPAD6, new Coordinates(1, 0),
+            KeyCode.NUMPAD1, new Coordinates(-1, 1),
+            KeyCode.NUMPAD2, new Coordinates(0, 1),
+            KeyCode.NUMPAD3, new Coordinates(1, 1)
+    );
+    private final Map<Double, Coordinates> mouseControls = Map.of(
+            Math.PI/8, new Coordinates(1, -1),
+            3*Math.PI/8, new Coordinates(0, -1),
+            5*Math.PI/8, new Coordinates(-1, -1),
+            7*Math.PI/8, new Coordinates(-1, 0),
+            9*Math.PI/8, new Coordinates(-1, 1),
+            11*Math.PI/8, new Coordinates(0, 1),
+            13*Math.PI/8, new Coordinates(1, 1),
+            15*Math.PI/8, new Coordinates(1, 0),
+            -1.0, new Coordinates(0, 0)
+    );
 
     @Override
     public void start(Stage stage) throws IOException {
         //scene = new Scene(loadFXML("primary"), 640, 480);
+
+        this.game.printGameElements();
 
         var fxmlLoader = getFXMLLoader("grid");
         scene = new Scene(fxmlLoader.load());
@@ -62,26 +58,26 @@ public class App extends Application {
         game.getGrid().getGameElements().forEach(e -> {
             gameController.renderGameElement(e);
         });
+
         scene.setOnKeyPressed(e -> {
             KeyCode keyPressed = e.getCode();
-            Action action = keyboardControls.get(keyPressed);
-            if (action == null) {
-                return;
-            }
-            action.actuate();
+            Coordinates coordinatesToMove = keyboardControls.get(keyPressed);
+            if (coordinatesToMove == null) return;
+
+            this.game.characterMove(coordinatesToMove);
             this.update();
         });
+
         scene.setOnMouseClicked(e -> {
-            Double dy = (gameController.getCellSize() * (game.getCharacter().getCoords().getyCoord() - 0.5)) - e.getSceneY();
-            Double dx = e.getSceneX() - (gameController.getCellSize() * (game.getCharacter().getCoords().getxCoord() - 0.5));
-            Double clickAngle = Math.abs(dy) - gameController.getCellSize()/2.0 < 0 && Math.abs(dx) - gameController.getCellSize()/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
+            double dy = (gameController.getCellSize() * (game.getCharacter().getCoords().getyCoord() - 0.5)) - e.getSceneY();
+            double dx = e.getSceneX() - (gameController.getCellSize() * (game.getCharacter().getCoords().getxCoord() - 0.5));
+            double clickAngle = Math.abs(dy) - gameController.getCellSize()/2.0 < 0 && Math.abs(dx) - gameController.getCellSize()/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
             Set<Double> keys = mouseControls.keySet();
             Double result = clickAngle < Math.PI/8 ? (clickAngle < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > clickAngle - Math.PI/4).sorted().findFirst().get();
-            Action action = mouseControls.get(result);
-            if (action == null) {
-                return;
-            }
-            action.actuate();
+            Coordinates coordinatesToMove = mouseControls.get(result);
+            if (coordinatesToMove == null) return;
+
+            this.game.characterMove(coordinatesToMove);
             this.update();
         });
 
@@ -100,13 +96,8 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     private static FXMLLoader getFXMLLoader(String fxml){
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader;
+        return new FXMLLoader(App.class.getResource(fxml + ".fxml"));
     }
 
     public static void main(String[] args) {
@@ -119,15 +110,8 @@ public class App extends Application {
     }
 
     void update() {
-
         gameController.resetCanvas();
         game.getGrid().getGameElements().forEach(e -> {
-            if (e.getClass() != game.getCharacter().getClass()) {
-                e.moveInDirection(
-                        new Coordinates(game.getCharacter().getCoords().getxCoord() - e.getCoords().getxCoord(), game.getCharacter().getCoords().getyCoord() - e.getCoords().getyCoord()),
-                        game.getGrid()
-                );
-            }
             gameController.renderGameElement(e);
         });
     }

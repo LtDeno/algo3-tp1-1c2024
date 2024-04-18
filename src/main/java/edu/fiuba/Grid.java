@@ -1,7 +1,6 @@
 package edu.fiuba;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 class Grid {
@@ -32,22 +31,13 @@ class Grid {
         this.gameElements.remove(element.getCoords().getAsIndexFromMaxValues(this.nColumns, this.nRows));
     }
 
-    int getnRows() {
-        return this.nRows;
-    }
-
-    int getnColumns() {
-        return this.nColumns;
-    }
-
-    // tuve que hacer esto porque al hacer un foreach en gameelements para mover cada elemento
-    // el metodo moveInDirection de los enemigos llama a repositionElementAndItsCoords, que modifica
-    // el hashmap sobre el cual se esta haciendo el foreach, entonces tira error
-    @Deprecated
-    Collection<GameElement> getGameElements() {
-        HashMap<String, GameElement> copy = new HashMap<>();
-        copy.putAll(this.gameElements);
-        return copy.values();
+    ArrayList<GameElement> getGameElements() {
+        ArrayList<GameElement> copiedElements = new ArrayList<>();
+        this.gameElements.forEach((key, gameElement) -> {
+            System.out.printf("\nCopying: %s with key: %s", gameElement.getName(), key);
+            copiedElements.add(gameElement);
+        });
+        return copiedElements;
     }
 
     ArrayList<GameElement> getCollidedElements() {

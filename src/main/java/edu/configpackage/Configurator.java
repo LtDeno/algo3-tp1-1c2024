@@ -32,10 +32,10 @@ public class Configurator {
             JsonObject enemiesConfig =  fileConfig.getAsJsonObject("game").getAsJsonObject("enemies");
             this.addEnemiesToList(enemiesConfig, this.eConfigs);
 
-            System.out.println("Successfully loaded 'config.json'.");
+            System.out.println("\nSuccessfully loaded 'config.json'.");
         } catch (IOException e) {
             if (this.createDefaultConfigFile()) {
-                System.out.println("Successfully created default 'config.json'.");
+                System.out.println("\nSuccessfully created default 'config.json'.");
                 this.readConfigFile();
             } else {
                 this.readWriteError(e);
