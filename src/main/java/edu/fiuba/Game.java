@@ -102,6 +102,7 @@ class Game {
         for (GameElement gameElement : collidedElements) {
             if (gameElement instanceof Character) {
                 System.out.println("\nGG EZ");
+                this.grid.addGameElement(gameElement.getKiller());
                 this.gameEnded = true;
             } else if (!(gameElement.getKiller() instanceof Character) && fueguitoConfig != null) this.grid.addGameElement(new Enemy(
                     fueguitoConfig.getName(),
