@@ -85,7 +85,7 @@ class Game {
 
     private void moveEnemiesTowardsCharacter() {
         this.grid.getGameElements().forEach(gameElement -> {
-            if (!(gameElement instanceof Character)) gameElement.moveInDirection(this.character.getCoords(), this.grid);
+            if ( !(gameElement instanceof Character) && !gameElement.isCollided() ) gameElement.moveInDirection(this.character.getCoords(), this.grid);
         });
 
         this.checkCollisions();

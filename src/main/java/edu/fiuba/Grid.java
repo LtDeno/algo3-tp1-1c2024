@@ -22,11 +22,15 @@ class Grid {
     private void addGameElementWithCollision(GameElement element) {
         GameElement collidee = this.gameElements.put(element.getCoords().getAsIndexFromMaxValues(this.nColumns, this.nRows), element);
         if (collidee != null){
-            this.collidedElements.add(collidee);
-            collidee.setKiller(element);
-            this.collidedElements.add(element);
-            element.setKiller(collidee);
+            this.executeCollisionOfGameElement(collidee, element);
+            this.executeCollisionOfGameElement(element, collidee);
         }
+    }
+
+    private void executeCollisionOfGameElement(GameElement gameElement, GameElement killer) {
+        this.collidedElements.add(gameElement);
+        gameElement.setCollided();
+        gameElement.setKiller(killer);
     }
 
     void removeGameElement(GameElement element) {
