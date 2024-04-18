@@ -46,8 +46,8 @@ class Game {
         this.attemptToLevelUp();
     }
 
-    void levelUp() {
-        if (!readyForLevelUp) return;
+    boolean levelUp() {
+        if (!readyForLevelUp) return false;
 
         this.readyForLevelUp = false;
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
@@ -55,6 +55,8 @@ class Game {
         this.character.addRandomTP(this.config.getcConfig().getnStepRandomTP());
         this.character.addSafeTP(this.config.getcConfig().getnStepSafeTP());
         this.createEnemiesIntoGridWithStep();
+
+        return true;
     }
 
     private Character createCharacterFromConfig(String characterName) {

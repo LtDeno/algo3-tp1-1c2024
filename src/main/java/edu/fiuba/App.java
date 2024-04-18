@@ -57,7 +57,7 @@ public class App extends Application {
         this.game.getGrid().getGameElements().forEach(e -> this.gameController.renderGameElement(e));
 
         scene.setOnKeyPressed(e -> {
-            this.game.levelUp();
+            if (this.game.levelUp()) return;
 
             KeyCode keyPressed = e.getCode();
             Coordinates coordinatesToMove = this.keyboardControls.get(keyPressed);
@@ -68,7 +68,7 @@ public class App extends Application {
         });
 
         scene.setOnMouseClicked(e -> {
-            this.game.levelUp();
+            if (this.game.levelUp()) return;
 
             double dy = (this.gameController.getCellSize() * (this.game.getCharacter().getCoords().getyCoord() - 0.5)) - e.getSceneY();
             double dx = e.getSceneX() - (this.gameController.getCellSize() * (this.game.getCharacter().getCoords().getxCoord() - 0.5));
