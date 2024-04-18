@@ -49,8 +49,7 @@ public class Configurator {
                 characterConfig.get("addRandomTPOnLevelUpAmount").getAsInt(),
                 characterConfig.get("startingSafeTPAmount").getAsInt(),
                 characterConfig.get("addSafeTPOnLevelUpAmount").getAsInt(),
-                characterConfig.get("moveDistance").getAsInt(),
-                characterConfig.get("isDestructible").getAsBoolean()
+                characterConfig.get("moveDistance").getAsInt()
         );
     }
 
@@ -62,8 +61,7 @@ public class Configurator {
             list.addLast(new EConfig(k,
                     enemy.get("startingAmount").getAsInt(),
                     enemy.get("addOnLevelUpAmount").getAsInt(),
-                    enemy.get("moveDistance").getAsInt(),
-                    enemy.get("isDestructible").getAsBoolean()
+                    enemy.get("moveDistance").getAsInt()
             ));
         }
     }
@@ -108,26 +106,24 @@ public class Configurator {
         characterConfig.addProperty("startingSafeTPAmount", 1);
         characterConfig.addProperty("addSafeTPOnLevelUpAmount", 1);
         characterConfig.addProperty("moveDistance", 1);
-        characterConfig.addProperty("isDestructible", true);
 
         return characterConfig;
     }
 
     private JsonObject createDefaultEnemiesConfig() {
         JsonObject enemiesConfig = new JsonObject();
-        enemiesConfig.add("1x", this.createEnemyConfig(4, 2, 1, true));
-        enemiesConfig.add("2x", this.createEnemyConfig(2, 1, 2, true));
-        enemiesConfig.add("fueguito", this.createEnemyConfig(0, 0, 0, false));
+        enemiesConfig.add("1x", this.createEnemyConfig(4, 2, 1));
+        enemiesConfig.add("2x", this.createEnemyConfig(2, 1, 2));
+        enemiesConfig.add("fueguito", this.createEnemyConfig(0, 0, 0));
 
         return enemiesConfig;
     }
 
-    private JsonObject createEnemyConfig(int startingAmount, int addOnLevelUpAmount, int moveDistance, Boolean destructible) {
+    private JsonObject createEnemyConfig(int startingAmount, int addOnLevelUpAmount, int moveDistance) {
         JsonObject enemyConfig = new JsonObject();
         enemyConfig.addProperty("startingAmount", startingAmount);
         enemyConfig.addProperty("addOnLevelUpAmount", addOnLevelUpAmount);
         enemyConfig.addProperty("moveDistance", moveDistance);
-        enemyConfig.addProperty("isDestructible", destructible);
 
         return enemyConfig;
     }

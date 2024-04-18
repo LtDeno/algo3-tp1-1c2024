@@ -5,14 +5,12 @@ abstract class GameElement {
     protected final String name;
     protected final Coordinates coords;
     protected final int dMove;
-    protected final boolean destructible;
     protected GameElement killer;
 
-    GameElement(String name, Coordinates coords, int dMove, boolean destructible) {
+    GameElement(String name, Coordinates coords, int dMove) {
         this.name = name;
         this.coords = coords;
         this.dMove = dMove;
-        this.destructible = destructible;
     }
 
     String getName() {

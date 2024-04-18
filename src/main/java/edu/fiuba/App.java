@@ -54,11 +54,11 @@ public class App extends Application {
         this.gameController.setConfig(this.config);
         this.gameController.renderGrid();
 
-        this.game.getGrid().getGameElements().forEach(e -> {
-            this.gameController.renderGameElement(e);
-        });
+        this.game.getGrid().getGameElements().forEach(e -> this.gameController.renderGameElement(e));
 
         scene.setOnKeyPressed(e -> {
+            this.game.levelUp();
+
             KeyCode keyPressed = e.getCode();
             Coordinates coordinatesToMove = this.keyboardControls.get(keyPressed);
             if (coordinatesToMove == null) return;
@@ -68,6 +68,8 @@ public class App extends Application {
         });
 
         scene.setOnMouseClicked(e -> {
+            this.game.levelUp();
+
             double dy = (this.gameController.getCellSize() * (this.game.getCharacter().getCoords().getyCoord() - 0.5)) - e.getSceneY();
             double dx = e.getSceneX() - (this.gameController.getCellSize() * (this.game.getCharacter().getCoords().getxCoord() - 0.5));
             double clickAngle = Math.abs(dy) - this.gameController.getCellSize()/2.0 < 0 && Math.abs(dx) - this.gameController.getCellSize()/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
@@ -104,14 +106,11 @@ public class App extends Application {
     }
 
     String getCharacterName() {
-        String name = "marito";
-        return name;
+        return "marito";
     }
 
     void update() {
         gameController.resetCanvas();
-        game.getGrid().getGameElements().forEach(e -> {
-            gameController.renderGameElement(e);
-        });
+        game.getGrid().getGameElements().forEach(e -> gameController.renderGameElement(e));
     }
 }

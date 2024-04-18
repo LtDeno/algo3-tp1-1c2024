@@ -5,8 +5,8 @@ class Character extends GameElement {
     private int randomTeleportsLeft;
     private int safeTeleportsLeft;
 
-    Character(String name, Coordinates coords, int dMove, boolean destructible, int initialnRandomTP, int initialnSafeTP) {
-        super(name, coords, dMove, destructible);
+    Character(String name, Coordinates coords, int dMove, int initialnRandomTP, int initialnSafeTP) {
+        super(name, coords, dMove);
         this.randomTeleportsLeft = initialnRandomTP;
         this.safeTeleportsLeft = initialnSafeTP;
     }

@@ -2,8 +2,8 @@ package edu.fiuba;
 
 class Enemy extends GameElement {
 
-    Enemy(String name, Coordinates coords, int dMove, boolean destructible) {
-        super(name, coords, dMove, destructible);
+    Enemy(String name, Coordinates coords, int dMove) {
+        super(name, coords, dMove);
     }
 
     @Override

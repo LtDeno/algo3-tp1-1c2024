@@ -12,6 +12,7 @@ class Game {
     private Grid grid;
     private final ArrayList<Object> enemiesCurrentConfig = new ArrayList<>();
     private boolean gameEnded = false;
+    private boolean readyForLevelUp = false;
 
     Game(Configurator c, String characterName) {
         this.config = c;
@@ -23,23 +24,32 @@ class Game {
 
     void characterMove(Coordinates characterMoveDirection) {
         if (this.gameEnded) return;
+
         this.character.moveInDirection(characterMoveDirection, this.grid);
         this.moveEnemiesTowardsCharacter();
+        this.attemptToLevelUp();
     }
 
     void characterTeleport() {
         if (this.gameEnded) return;
+
         this.character.teleport(this.grid);
         this.moveEnemiesTowardsCharacter();
+        this.attemptToLevelUp();
     }
 
     void characterTeleportSafely() {
         if (this.gameEnded) return;
+
         this.character.teleportSafely(this.grid);
         this.moveEnemiesTowardsCharacter();
+        this.attemptToLevelUp();
     }
 
     void levelUp() {
+        if (!readyForLevelUp) return;
+
+        this.readyForLevelUp = false;
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
         this.grid.addGameElement(this.character);
         this.character.addRandomTP(this.config.getcConfig().getnStepRandomTP());
@@ -52,7 +62,6 @@ class Game {
                characterName,
                this.grid.getMiddleCoords(),
                this.config.getcConfig().getdCharacterMove(),
-               this.config.getcConfig().isDestructible(),
                this.config.getcConfig().getnRandomTP(),
                this.config.getcConfig().getnSafeTP()
        );
@@ -67,15 +76,14 @@ class Game {
                 this.grid.addGameElement(new Enemy(
                         eConfig.getName(),
                         this.grid.getUnoccupiedValidCoords(),
-                        eConfig.getdEnemyMove(),
-                        eConfig.getDestructible()));
+                        eConfig.getdEnemyMove()));
             }
         }
     }
 
     private void moveEnemiesTowardsCharacter() {
         this.grid.getGameElements().forEach(gameElement -> {
-            if (!gameElement.equals(this.character)) gameElement.moveInDirection(this.character.getCoords(), this.grid);
+            if (!(gameElement instanceof Character)) gameElement.moveInDirection(this.character.getCoords(), this.grid);
         });
 
         this.checkCollisions();
@@ -89,17 +97,28 @@ class Game {
             if (eConfig.getName().equalsIgnoreCase("fueguito")) fueguitoConfig = eConfig;
         }
 
-        for (GameElement element : collidedElements) {
-            if (element instanceof Character) {
+        for (GameElement gameElement : collidedElements) {
+            if (gameElement instanceof Character) {
                 System.out.println("\nGG EZ");
                 this.gameEnded = true;
-            } else if (!(element.getKiller() instanceof Character) && fueguitoConfig != null) this.grid.addGameElement(new Enemy(
+            } else if (!(gameElement.getKiller() instanceof Character) && fueguitoConfig != null) this.grid.addGameElement(new Enemy(
                     fueguitoConfig.getName(),
-                    element.getCoords(),
-                    fueguitoConfig.getdEnemyMove(),
-                    fueguitoConfig.getDestructible()));
+                    gameElement.getCoords(),
+                    fueguitoConfig.getdEnemyMove()));
         }
         this.grid.clearCollidedElements();
+    }
+
+    private void attemptToLevelUp() {
+        boolean successful = true;
+        for (GameElement gameElement : this.getGrid().getGameElements()) {
+            if (!(gameElement instanceof Character || gameElement.getName().equalsIgnoreCase("fueguito"))) {
+                successful = false;
+                break;
+            }
+        }
+
+        this.readyForLevelUp = successful;
     }
 
     private void createEnemiesIntoGridWithStep() {
@@ -110,8 +129,7 @@ class Game {
                 this.grid.addGameElement(new Enemy(
                         ((EConfig) this.enemiesCurrentConfig.get(i)).getName(),
                         this.grid.getUnoccupiedValidCoords(),
-                        ((EConfig) this.enemiesCurrentConfig.get(i)).getdEnemyMove(),
-                        ((EConfig) this.enemiesCurrentConfig.get(i)).getDestructible()));
+                        ((EConfig) this.enemiesCurrentConfig.get(i)).getdEnemyMove()));
             }
         }
     }
