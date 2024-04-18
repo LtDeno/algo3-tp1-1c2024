@@ -39,9 +39,8 @@ class Coordinates {
         return index;
     }
 
-    void addCoords(Coordinates coordsToAdd) {
-        this.xCoord += coordsToAdd.getxCoord();
-        this.yCoord += coordsToAdd.getyCoord();
+    Coordinates getAsSum(Coordinates coordsToAdd) {
+        return new Coordinates(this.xCoord + coordsToAdd.getxCoord(), this.yCoord + coordsToAdd.getyCoord());
     }
 
     void normalizeCoords() {

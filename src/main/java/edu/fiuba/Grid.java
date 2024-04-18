@@ -34,7 +34,6 @@ class Grid {
     ArrayList<GameElement> getGameElements() {
         ArrayList<GameElement> copiedElements = new ArrayList<>();
         this.gameElements.forEach((key, gameElement) -> {
-            System.out.printf("\nCopying: %s with key: %s", gameElement.getName(), key);
             copiedElements.add(gameElement);
         });
         return copiedElements;
@@ -82,5 +81,12 @@ class Grid {
         this.removeGameElement(element);
         element.setCoords(coords);
         this.addGameElementWithCollision(element);
+    }
+
+    void printElements() {
+        System.out.print("\nElements: ");
+        this.gameElements.values().forEach(e -> {
+            System.out.printf("%s x=%d y=%d || ", e.getName(), e.getCoords().getxCoord(), e.getCoords().getyCoord());
+        });
     }
 }

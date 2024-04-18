@@ -18,11 +18,9 @@ class ActionMove implements Action{
     }
 
     private void move() {
-        vectorToMove.printCoords();
-        this.vectorToMove.addCoords(this.element.getCoords());
-        vectorToMove.printCoords();
-        if (this.grid.areCoordsInsideGrid(this.vectorToMove)) {
-            this.grid.repositionElementAndItsCoords(element, this.vectorToMove);
+        Coordinates finalPosition = this.vectorToMove.getAsSum(this.element.getCoords());
+        if (this.grid.areCoordsInsideGrid(finalPosition)) {
+            this.grid.repositionElementAndItsCoords(element, finalPosition);
         }
     }
 }

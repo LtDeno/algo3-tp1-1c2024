@@ -23,7 +23,7 @@ public class GameController {
     private final int cellSize = 24;
     private final Color cellColor_1 = new Color(0.44, 0.66, 0.88, 1);
     private final Color cellColor_2 = new Color(0.65, 0.82, 1, 1);
-    Configurator config = new Configurator("config.json");
+    private Configurator config;
     private final String spritesheet = String.valueOf(getClass().getResource("robots.png"));
     private final int spriteSize = 32;
 
@@ -65,6 +65,10 @@ public class GameController {
                 grid.getChildren().add(newRect);
             }
         }
+    }
+
+    public void setConfig(Configurator config) {
+        this.config = config;
     }
 
     public int getCellSize() { return cellSize;}

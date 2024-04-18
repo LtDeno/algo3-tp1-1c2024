@@ -120,10 +120,4 @@ class Game {
     Character getCharacter(){ return this.character; }
 
     Grid getGrid() { return this.grid; }
-
-    void printGameElements() {
-        this.grid.getGameElements().forEach(e -> {
-            System.out.printf("\n%s x=%d y=%d", e.getName(), e.getCoords().getxCoord(), e.getCoords().getyCoord());
-        });
-    }
 }

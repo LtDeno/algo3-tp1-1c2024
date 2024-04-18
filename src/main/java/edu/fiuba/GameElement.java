@@ -36,4 +36,8 @@ abstract class GameElement {
     }
 
     abstract void moveInDirection(Coordinates direction, Grid grid);
+
+    void print() {
+        System.out.printf("\n%s x=%d y=%d", this.name, this.coords.getxCoord(), this.coords.getyCoord());
+    }
 }
