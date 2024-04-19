@@ -1,22 +1,26 @@
 package edu.fiuba;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 
 public class GameController {
 
+    @FXML
+    public DialogPane deathDialog;
     @FXML
     private Button safeTeleportButton;
     @FXML
@@ -44,16 +48,28 @@ public class GameController {
             "2x", 9,
             "fueguito", 13
     );
-    private final Map<KeyCode, Coordinates> keyboardControls = Map.of(
-            KeyCode.NUMPAD7, new Coordinates(-1, -1),
-            KeyCode.NUMPAD8, new Coordinates(0, -1),
-            KeyCode.NUMPAD9, new Coordinates(1, -1),
+    private final HashMap<KeyCode, Coordinates> keyboardControls = new HashMap<>();
+    private final Map<KeyCode, Coordinates> numericControls = Map.of(
+            KeyCode.NUMPAD1, new Coordinates(-1, 1),
+            KeyCode.NUMPAD2, new Coordinates(0, 1),
+            KeyCode.NUMPAD3, new Coordinates(1, 1),
             KeyCode.NUMPAD4, new Coordinates(-1, 0),
             KeyCode.NUMPAD5, Coordinates.ZERO,
             KeyCode.NUMPAD6, new Coordinates(1, 0),
-            KeyCode.NUMPAD1, new Coordinates(-1, 1),
-            KeyCode.NUMPAD2, new Coordinates(0, 1),
-            KeyCode.NUMPAD3, new Coordinates(1, 1)
+            KeyCode.NUMPAD7, new Coordinates(-1, -1),
+            KeyCode.NUMPAD8, new Coordinates(0, -1),
+            KeyCode.NUMPAD9, new Coordinates(1, -1)
+    );
+    private final Map<KeyCode, Coordinates> alphaControls = Map.of(
+            KeyCode.W, new Coordinates(0, -1),
+            KeyCode.A, new Coordinates(-1, 0),
+            KeyCode.S, new Coordinates(0, 1),
+            KeyCode.D, new Coordinates(1, 0),
+            KeyCode.Q, new Coordinates(-1, -1),
+            KeyCode.E, new Coordinates(1, -1),
+            KeyCode.Z, new Coordinates(-1, 1),
+            KeyCode.C, new Coordinates(1, 1),
+            KeyCode.X, Coordinates.ZERO
     );
     private final Map<Double, Coordinates> mouseControls = Map.of(
             Math.PI/8, new Coordinates(1, -1),
@@ -75,9 +91,11 @@ public class GameController {
         this.scene = scene;
     }
 
-    public void load() {
+    void load() {
         this.renderGrid();
         this.assignEvents();
+        this.keyboardControls.putAll(numericControls);
+        this.keyboardControls.putAll(alphaControls);
     }
 
     private void renderGrid() {
@@ -123,11 +141,27 @@ public class GameController {
             this.game.characterMove(coordinatesToMove);
             this.update();
         });
+
+        this.randomTeleportButton.setOnAction(event -> {
+            this.game.characterTeleport();
+            this.update();
+        });
+
+        this.safeTeleportButton.setOnAction(event -> {
+            this.game.characterTeleportSafely();
+            this.update();
+        });
+
+        this.waitForRobotsButton.setOnAction(event -> {
+            this.game.characterMove(Coordinates.ZERO);
+            this.update();
+        });
     }
 
     private void update() {
         this.resetCanvas();
         this.game.getGrid().getGameElements().forEach(this::renderGameElement);
+        if (this.game.hasGameEnded()) deathDialog.setVisible(true);
     }
 
     private void resetCanvas() {
@@ -139,10 +173,12 @@ public class GameController {
         var gc = this.canvas.getGraphicsContext2D();
         Image sprite = new Image(this.spriteSheet);
         gc.drawImage(sprite, this.sprites.get(E.getName()) * this.spriteSize, 0, this.spriteSize, this.spriteSize, (E.getCoords().getxCoord() - 1) * this.cellSize, (E.getCoords().getyCoord() - 1) * this.cellSize, this.cellSize, this.cellSize);
-
     }
 
-    public void buttonPressedAction(ActionEvent actionEvent) {
-
+    public void restartGame() throws IOException {
+        App.changeSceneToGame();
+    }
+    public void endGame() {
+        System.exit(0);
     }
 }

@@ -2,7 +2,7 @@ package edu.fiuba;
 
 abstract class GameElement {
 
-    protected final String name;
+    protected String name;
     protected final Coordinates coords;
     protected final int dMove;
     protected boolean collided = false;

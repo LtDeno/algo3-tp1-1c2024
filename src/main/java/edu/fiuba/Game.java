@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 class Game {
 
-    private final String characterName = "marito";
+    private final String defaultCharacterName = "marito";
     private final Configurator config;
     private final Character character;
     private Grid grid;
@@ -23,6 +23,10 @@ class Game {
         this.createEnemiesIntoGridAndListThem();
     }
 
+    boolean hasGameEnded() {
+        return this.gameEnded;
+    }
+
     void characterMove(Coordinates characterMoveDirection) {
         if (this.gameEnded) return;
         if (this.levelUp()) return;
@@ -35,8 +39,8 @@ class Game {
     void characterTeleport() {
         if (this.gameEnded) return;
         if (this.levelUp()) return;
+        if (!this.character.teleport(this.grid)) return;
 
-        this.character.teleport(this.grid);
         this.moveEnemiesTowardsCharacter();
         this.attemptToLevelUp();
     }
@@ -44,8 +48,8 @@ class Game {
     void characterTeleportSafely() {
         if (this.gameEnded) return;
         if (this.levelUp()) return;
+        if (!this.character.teleportSafely(this.grid)) return;
 
-        this.character.teleportSafely(this.grid);
         this.moveEnemiesTowardsCharacter();
         this.attemptToLevelUp();
     }
@@ -66,7 +70,7 @@ class Game {
 
     private Character createCharacterFromConfig() {
        return new Character(
-               this.characterName,
+               this.defaultCharacterName,
                this.grid.getMiddleCoords(),
                this.config.getcConfig().getdCharacterMove(),
                this.config.getcConfig().getnRandomTP(),

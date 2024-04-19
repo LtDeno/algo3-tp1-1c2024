@@ -8,39 +8,39 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-
-/**
- * JavaFX App
- */
 public class App extends Application {
 
-    private final Configurator config = new Configurator("config.json");
-    private GameController gameController;
+    private static final Configurator config = new Configurator("config.json");
+    private static GameController gameController;
+    private static Stage stage;
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = getFXMLLoader("grid");
-        scene = new Scene(fxmlLoader.load());
+    public void start(Stage newStage) throws IOException {
+        stage = newStage;
 
-        this.gameController = fxmlLoader.getController();
-        this.gameController.setGame(new Game(config));
-        this.gameController.setScene(scene);
-        this.gameController.load();
+        FXMLLoader startLoader = getFXMLLoader("start");
+        scene = new Scene(startLoader.load());
 
+        stage.setTitle("Robots Chasing You Until You Pass Out");
         stage.setResizable(false);
-        stage.sizeToScene();
         stage.setScene(scene);
+        stage.sizeToScene();
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
+    public static void changeSceneToGame() throws IOException {
+        FXMLLoader gridLoader = getFXMLLoader("grid");
+        scene = new Scene(gridLoader.load());
+        gameController = gridLoader.getController();
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+        gameController.setGame(new Game(config));
+        gameController.setScene(scene);
+        gameController.load();
+
+        stage.setScene(scene);
+        stage.sizeToScene();
+        stage.show();
     }
 
     private static FXMLLoader getFXMLLoader(String fxml){

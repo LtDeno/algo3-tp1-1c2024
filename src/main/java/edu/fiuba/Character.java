@@ -23,18 +23,22 @@ class Character extends GameElement {
         new ActionMove(this, movementVector, grid).actuate();
     }
 
-    void teleport(Grid grid) {
-        if (randomTeleportsLeft > 0) {
+    boolean teleport(Grid grid) {
+        if (randomTeleportsLeft != 0) {
             new ActionTeleportRandomly(this, grid).actuate();
             randomTeleportsLeft--;
+            return true;
         }
+        return false;
     }
 
-    void teleportSafely(Grid grid) {
-        if (safeTeleportsLeft > 0) {
+    boolean teleportSafely(Grid grid) {
+        if (safeTeleportsLeft != 0) {
             new ActionTeleportSafely(this, grid).actuate();
             safeTeleportsLeft--;
+            return true;
         }
+        return false;
     }
 
     void addRandomTP(int nToAdd) {
