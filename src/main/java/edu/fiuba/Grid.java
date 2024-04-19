@@ -16,6 +16,14 @@ class Grid {
         this.nColumns = nColumns;
     }
 
+    int getnColumns() {
+        return this.nColumns;
+    }
+
+    int getnRows() {
+        return this.nRows;
+    }
+
     void addGameElement(GameElement element) {
         this.gameElements.put(element.getCoords().getAsIndexFromMaxValues(this.nColumns, this.nRows), element);
     }
@@ -91,7 +99,6 @@ class Grid {
     }
 
     void reviseChangedElements() {
-        System.out.println(this.elementsToReposition.size());
         for (GameElement gameElement : this.elementsToReposition) {
             this.addGameElementWithCollision(gameElement);
         }

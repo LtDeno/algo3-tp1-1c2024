@@ -1,7 +1,8 @@
 package edu.fiuba;
 
-class Coordinates {
+public class Coordinates {
 
+    static final Coordinates ZERO = new Coordinates(0, 0);
     private int xCoord;
     private int yCoord;
 

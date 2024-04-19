@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 class Game {
 
+    private final String characterName = "marito";
     private final Configurator config;
     private final Character character;
     private Grid grid;
@@ -14,16 +15,17 @@ class Game {
     private boolean gameEnded = false;
     private boolean readyForLevelUp = false;
 
-    Game(Configurator c, String characterName) {
+    Game(Configurator c) {
         this.config = c;
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
-        this.character = this.createCharacterFromConfig(characterName);
+        this.character = this.createCharacterFromConfig();
         this.grid.addGameElement(this.character);
         this.createEnemiesIntoGridAndListThem();
     }
 
     void characterMove(Coordinates characterMoveDirection) {
         if (this.gameEnded) return;
+        if (this.levelUp()) return;
 
         this.character.moveInDirection(characterMoveDirection, this.grid);
         this.moveEnemiesTowardsCharacter();
@@ -32,6 +34,7 @@ class Game {
 
     void characterTeleport() {
         if (this.gameEnded) return;
+        if (this.levelUp()) return;
 
         this.character.teleport(this.grid);
         this.moveEnemiesTowardsCharacter();
@@ -40,6 +43,7 @@ class Game {
 
     void characterTeleportSafely() {
         if (this.gameEnded) return;
+        if (this.levelUp()) return;
 
         this.character.teleportSafely(this.grid);
         this.moveEnemiesTowardsCharacter();
@@ -51,6 +55,7 @@ class Game {
 
         this.readyForLevelUp = false;
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
+        this.character.setCoords(this.grid.getMiddleCoords());
         this.grid.addGameElement(this.character);
         this.character.addRandomTP(this.config.getcConfig().getnStepRandomTP());
         this.character.addSafeTP(this.config.getcConfig().getnStepSafeTP());
@@ -59,9 +64,9 @@ class Game {
         return true;
     }
 
-    private Character createCharacterFromConfig(String characterName) {
+    private Character createCharacterFromConfig() {
        return new Character(
-               characterName,
+               this.characterName,
                this.grid.getMiddleCoords(),
                this.config.getcConfig().getdCharacterMove(),
                this.config.getcConfig().getnRandomTP(),

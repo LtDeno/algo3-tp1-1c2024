@@ -22,14 +22,15 @@
 
    <HBox alignment="CENTER" prefHeight="70.0">
       <children>
-         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#teleportSafely" text="Teleport Safely" HBox.hgrow="ALWAYS" />
-         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#teleportRandomly" text="Teleport Randomly" HBox.hgrow="ALWAYS" />
-         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#waitForRobots" text="Wait for Robots" HBox.hgrow="ALWAYS" />
+         <Button fx:id="safeTeleportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonPressedAction" text="Teleport Safely" HBox.hgrow="ALWAYS" />
+         <Button fx:id="randomTeleportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonPressedAction" text="Teleport Randomly" HBox.hgrow="ALWAYS" />
+         <Button fx:id="waitForRobotsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonPressedAction" text="Wait for Robots" HBox.hgrow="ALWAYS" />
       </children></HBox>
 
     <!--
    <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="70.0">
      <buttons>
+
          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#teleportSafely" text="Teleport Safely" />
          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#teleportRandomly" text="Teleport Randomly" />
          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#waitForRobots" text="Wait for Robots" />

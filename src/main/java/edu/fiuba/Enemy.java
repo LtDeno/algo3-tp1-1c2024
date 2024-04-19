@@ -10,7 +10,7 @@ class Enemy extends GameElement {
     void moveInDirection(Coordinates characterCoords, Grid grid) {
         if (this.coords.areCoordsEqual(characterCoords)) return;
 
-        Coordinates finalMovement = new Coordinates(0, 0);
+        Coordinates finalMovement = Coordinates.ZERO;
         for (int i = 0; i < this.dMove; i++) {
             Coordinates expectedPosition = this.getCoords().getAsSum(finalMovement);
             Coordinates movementVector = new Coordinates(characterCoords.getxCoord() - expectedPosition.getxCoord(), characterCoords.getyCoord() - expectedPosition.getyCoord());
