@@ -16,9 +16,11 @@ class Character extends GameElement {
         if (movementVector.getxCoord() == 0 && movementVector.getyCoord() == 0) return;
         movementVector.normalizeCoords();
 
-        for (int i = 0; i < this.dMove; i++) {
-            new ActionMove(this, movementVector, grid).actuate();
+        for (int i = 1; i < this.dMove; i++) {
+            movementVector = movementVector.getAsSum(movementVector);
         }
+
+        new ActionMove(this, movementVector, grid).actuate();
     }
 
     void teleport(Grid grid) {

@@ -20,7 +20,7 @@ class ActionMove implements Action{
     private void move() {
         Coordinates finalPosition = this.vectorToMove.getAsSum(this.element.getCoords());
         if (this.grid.areCoordsInsideGrid(finalPosition)) {
-            this.grid.repositionElementAndItsCoords(element, finalPosition);
+            this.grid.repositionElement(element, finalPosition);
         }
     }
 }

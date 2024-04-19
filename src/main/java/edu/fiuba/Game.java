@@ -88,6 +88,7 @@ class Game {
             if ( !(gameElement instanceof Character) && !gameElement.isCollided() ) gameElement.moveInDirection(this.character.getCoords(), this.grid);
         });
 
+        this.grid.reviseChangedElements();
         this.checkCollisions();
     }
 
@@ -104,6 +105,7 @@ class Game {
                 System.out.println("\nGG EZ");
                 this.grid.addGameElement(gameElement.getKiller());
                 this.gameEnded = true;
+                break;
             } else if (!(gameElement.getKiller() instanceof Character) && fueguitoConfig != null) this.grid.addGameElement(new Enemy(
                     fueguitoConfig.getName(),
                     gameElement.getCoords(),

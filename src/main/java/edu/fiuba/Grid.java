@@ -8,6 +8,7 @@ class Grid {
     private final int nColumns;
     private final int nRows;
     private final HashMap<String, GameElement> gameElements = new HashMap<>();
+    private final ArrayList<GameElement> elementsToReposition = new ArrayList<>();
     private final ArrayList<GameElement> collidedElements = new ArrayList<>();
 
     Grid(int nRows, int nColumns) {
@@ -31,10 +32,6 @@ class Grid {
         this.collidedElements.add(gameElement);
         gameElement.setCollided();
         gameElement.setKiller(killer);
-    }
-
-    void removeGameElement(GameElement element) {
-        this.gameElements.remove(element.getCoords().getAsIndexFromMaxValues(this.nColumns, this.nRows));
     }
 
     ArrayList<GameElement> getGameElements() {
@@ -81,10 +78,24 @@ class Grid {
         return (coords.getxCoord() <= this.nColumns && coords.getxCoord() > 0 && coords.getyCoord() <= this.nRows && coords.getyCoord() > 0);
     }
 
-    void repositionElementAndItsCoords(GameElement element, Coordinates coords) {
-        this.removeGameElement(element);
-        element.setCoords(coords);
-        this.addGameElementWithCollision(element);
+    void repositionElement(GameElement gameElement, Coordinates coords) {
+        GameElement elementToReposition = this.gameElements.remove(gameElement.getCoords().getAsIndexFromMaxValues(this.nColumns, this.nRows));
+
+        this.elementsToReposition.add(elementToReposition);
+        elementToReposition.setCoords(coords);
+
+        if (elementToReposition instanceof Character) {
+            this.addGameElementWithCollision(elementToReposition);
+            this.elementsToReposition.remove(this.elementsToReposition.size()-1);
+        }
+    }
+
+    void reviseChangedElements() {
+        System.out.println(this.elementsToReposition.size());
+        for (GameElement gameElement : this.elementsToReposition) {
+            this.addGameElementWithCollision(gameElement);
+        }
+        this.elementsToReposition.clear();
     }
 
     void printElements() {
