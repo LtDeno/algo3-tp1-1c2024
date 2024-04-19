@@ -24,18 +24,18 @@ class Character extends GameElement {
     }
 
     boolean teleport(Grid grid) {
-        if (randomTeleportsLeft != 0) {
+        if (this.randomTeleportsLeft != 0) {
             new ActionTeleportRandomly(this, grid).actuate();
-            randomTeleportsLeft--;
+            if (this.randomTeleportsLeft > 0) randomTeleportsLeft--;
             return true;
         }
         return false;
     }
 
     boolean teleportSafely(Grid grid) {
-        if (safeTeleportsLeft != 0) {
+        if (this.safeTeleportsLeft != 0) {
             new ActionTeleportSafely(this, grid).actuate();
-            safeTeleportsLeft--;
+            if (this.safeTeleportsLeft > 0) safeTeleportsLeft--;
             return true;
         }
         return false;
@@ -47,5 +47,13 @@ class Character extends GameElement {
 
     void addSafeTP(int nToAdd) {
         this.safeTeleportsLeft += nToAdd;
+    }
+
+    String getRandomTeleportsLeft() {
+        return (this.randomTeleportsLeft < 0 ? "$.$ " : String.valueOf(this.randomTeleportsLeft));
+    }
+
+    String getSafeTeleportsLeft() {
+        return (this.safeTeleportsLeft < 0 ? "$.$ " : String.valueOf(this.safeTeleportsLeft));
     }
 }

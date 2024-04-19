@@ -22,9 +22,9 @@ public class GameController {
     @FXML
     public DialogPane deathDialog;
     @FXML
-    private Button safeTeleportButton;
-    @FXML
     private Button randomTeleportButton;
+    @FXML
+    private Button safeTeleportButton;
     @FXML
     private Button waitForRobotsButton;
     @FXML
@@ -96,6 +96,8 @@ public class GameController {
         this.assignEvents();
         this.keyboardControls.putAll(numericControls);
         this.keyboardControls.putAll(alphaControls);
+        this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacter().getRandomTeleportsLeft() + ")");
+        this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
     }
 
     private void renderGrid() {
@@ -144,11 +146,13 @@ public class GameController {
 
         this.randomTeleportButton.setOnAction(event -> {
             this.game.characterTeleport();
+            this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacter().getRandomTeleportsLeft() + ")");
             this.update();
         });
 
         this.safeTeleportButton.setOnAction(event -> {
             this.game.characterTeleportSafely();
+            this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
             this.update();
         });
 
@@ -178,6 +182,7 @@ public class GameController {
     public void restartGame() throws IOException {
         App.changeSceneToGame();
     }
+
     public void endGame() {
         System.exit(0);
     }

@@ -46,8 +46,8 @@
 
    <HBox alignment="CENTER" prefHeight="70.0">
       <children>
-         <Button fx:id="randomTeleportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Teleport Randomly" HBox.hgrow="ALWAYS" />
-         <Button fx:id="safeTeleportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Teleport Safely" HBox.hgrow="ALWAYS" />
+         <Button fx:id="randomTeleportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" HBox.hgrow="ALWAYS" />
+         <Button fx:id="safeTeleportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" HBox.hgrow="ALWAYS" />
          <Button fx:id="waitForRobotsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Wait for Robots" HBox.hgrow="ALWAYS" />
       </children>
    </HBox>
