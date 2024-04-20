@@ -121,8 +121,6 @@ public class GameController {
 
     private void assignEvents() {
         scene.setOnKeyPressed(e -> {
-            if (this.game.levelUp()) return;
-
             KeyCode keyPressed = e.getCode();
             Coordinates coordinatesToMove = this.keyboardControls.get(keyPressed);
             if (coordinatesToMove == null) return;
@@ -146,13 +144,11 @@ public class GameController {
 
         this.randomTeleportButton.setOnAction(event -> {
             this.game.characterTeleport();
-            this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacter().getRandomTeleportsLeft() + ")");
             this.update();
         });
 
         this.safeTeleportButton.setOnAction(event -> {
             this.game.characterTeleportSafely();
-            this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
             this.update();
         });
 
@@ -165,6 +161,8 @@ public class GameController {
     private void update() {
         this.resetCanvas();
         this.game.getGrid().getGameElements().forEach(this::renderGameElement);
+        this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacter().getRandomTeleportsLeft() + ")");
+        this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
         if (this.game.hasGameEnded()) deathDialog.setVisible(true);
     }
 
