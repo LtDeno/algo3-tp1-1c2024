@@ -35,52 +35,50 @@ public class GameController {
     private Game game;
     private Scene scene;
 
-    private final int cellSize = 24;
-    private final Color cellColor_1 = new Color(0.44, 0.66, 0.88, 1);
-    private final Color cellColor_2 = new Color(0.65, 0.82, 1, 1);
-    private final String spriteSheet = String.valueOf(getClass().getResource("robots.png"));
-    private final int spriteSize = 32;
-    //creo que seria mejor agregarle un atributo imageX a GameElement para que cada elemento
-    //sepa donde esta su sprite en el spritesheet, pero no se si califica como mezclar logica con graficos
+    private final int cellSize = Constants.CELLSIZE;
+    private final Color cellColor_1 = Constants.CELLONECOLOR;
+    private final Color cellColor_2 = Constants.CELLTWOCOLOR;
+    private final String spriteSheet = String.valueOf(getClass().getResource(Constants.ELEMENTSPRITESFILE));
+    private final int spriteSize = Constants.SPRITESIZE;
     private final Map<String, Integer> sprites = Map.of(
-            "marito", 0,
-            "1x", 5,
-            "2x", 9,
-            "fueguito", 13
+            Constants.CHARACTERNAME, 0,
+            Constants.SLOWROBOTNAME, 5,
+            Constants.FASTROBOTNAME, 9,
+            Constants.FIRENAME, 13
     );
     private final HashMap<KeyCode, Coordinates> keyboardControls = new HashMap<>();
     private final Map<KeyCode, Coordinates> numericControls = Map.of(
-            KeyCode.NUMPAD1, new Coordinates(-1, 1),
-            KeyCode.NUMPAD2, new Coordinates(0, 1),
-            KeyCode.NUMPAD3, new Coordinates(1, 1),
-            KeyCode.NUMPAD4, new Coordinates(-1, 0),
-            KeyCode.NUMPAD5, Coordinates.ZERO,
-            KeyCode.NUMPAD6, new Coordinates(1, 0),
-            KeyCode.NUMPAD7, new Coordinates(-1, -1),
-            KeyCode.NUMPAD8, new Coordinates(0, -1),
-            KeyCode.NUMPAD9, new Coordinates(1, -1)
+            KeyCode.NUMPAD1, Constants.DOWNLEFTCOORDINATES,
+            KeyCode.NUMPAD2, Constants.DOWNCOORDINATES,
+            KeyCode.NUMPAD3, Constants.DOWNRIGHTCOORDINATES,
+            KeyCode.NUMPAD4, Constants.LEFTCOORDINATES,
+            KeyCode.NUMPAD5, Constants.MIDDLECOORDINATES,
+            KeyCode.NUMPAD6, Constants.RIGHTCOORDINATES,
+            KeyCode.NUMPAD7, Constants.UPLEFTCOORDINATES,
+            KeyCode.NUMPAD8, Constants.UPCOORDINATES,
+            KeyCode.NUMPAD9, Constants.UPRIGHTCOORDINATES
     );
     private final Map<KeyCode, Coordinates> alphaControls = Map.of(
-            KeyCode.W, new Coordinates(0, -1),
-            KeyCode.A, new Coordinates(-1, 0),
-            KeyCode.S, new Coordinates(0, 1),
-            KeyCode.D, new Coordinates(1, 0),
-            KeyCode.Q, new Coordinates(-1, -1),
-            KeyCode.E, new Coordinates(1, -1),
-            KeyCode.Z, new Coordinates(-1, 1),
-            KeyCode.C, new Coordinates(1, 1),
-            KeyCode.X, Coordinates.ZERO
+            KeyCode.W, Constants.UPCOORDINATES,
+            KeyCode.A, Constants.LEFTCOORDINATES,
+            KeyCode.S, Constants.DOWNCOORDINATES,
+            KeyCode.D, Constants.RIGHTCOORDINATES,
+            KeyCode.Q, Constants.UPLEFTCOORDINATES,
+            KeyCode.E, Constants.UPRIGHTCOORDINATES,
+            KeyCode.Z, Constants.DOWNLEFTCOORDINATES,
+            KeyCode.C, Constants.DOWNRIGHTCOORDINATES,
+            KeyCode.X, Constants.MIDDLECOORDINATES
     );
     private final Map<Double, Coordinates> mouseControls = Map.of(
-            Math.PI/8, new Coordinates(1, -1),
-            3*Math.PI/8, new Coordinates(0, -1),
-            5*Math.PI/8, new Coordinates(-1, -1),
-            7*Math.PI/8, new Coordinates(-1, 0),
-            9*Math.PI/8, new Coordinates(-1, 1),
-            11*Math.PI/8, new Coordinates(0, 1),
-            13*Math.PI/8, new Coordinates(1, 1),
-            15*Math.PI/8, new Coordinates(1, 0),
-            -1.0, Coordinates.ZERO
+            Math.PI/8, Constants.UPRIGHTCOORDINATES,
+            3*Math.PI/8, Constants.UPCOORDINATES,
+            5*Math.PI/8, Constants.UPLEFTCOORDINATES,
+            7*Math.PI/8, Constants.LEFTCOORDINATES,
+            9*Math.PI/8, Constants.DOWNLEFTCOORDINATES,
+            11*Math.PI/8, Constants.DOWNCOORDINATES,
+            13*Math.PI/8, Constants.DOWNRIGHTCOORDINATES,
+            15*Math.PI/8, Constants.RIGHTCOORDINATES,
+            -1.0, Constants.MIDDLECOORDINATES
     );
 
     void setGame(Game game) {

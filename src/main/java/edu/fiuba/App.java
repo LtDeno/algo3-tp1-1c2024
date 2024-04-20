@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class App extends Application {
 
-    private static final Configurator config = new Configurator("config.json");
+    private static final Configurator config = new Configurator(Constants.CONFIGURATIONFILE);
     private static GameController gameController;
     private static Stage stage;
     private static Scene scene;
@@ -19,10 +19,10 @@ public class App extends Application {
     public void start(Stage newStage) throws IOException {
         stage = newStage;
 
-        FXMLLoader startLoader = getFXMLLoader("start");
+        FXMLLoader startLoader = getFXMLLoader(Constants.STARTSCENEFXML);
         scene = new Scene(startLoader.load());
 
-        stage.setTitle("Robots Chasing You Until You Pass Out");
+        stage.setTitle(Constants.GAMENAME);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.sizeToScene();
@@ -30,7 +30,7 @@ public class App extends Application {
     }
 
     public static void changeSceneToGame() throws IOException {
-        FXMLLoader gridLoader = getFXMLLoader("grid");
+        FXMLLoader gridLoader = getFXMLLoader(Constants.GAMESCENEFXML);
         scene = new Scene(gridLoader.load());
         gameController = gridLoader.getController();
 
@@ -44,7 +44,7 @@ public class App extends Application {
     }
 
     private static FXMLLoader getFXMLLoader(String fxml){
-        return new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        return new FXMLLoader(App.class.getResource(fxml + Constants.FXMLFILEEXTENSION));
     }
 
     public static void main(String[] args) {

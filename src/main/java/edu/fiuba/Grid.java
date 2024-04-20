@@ -104,9 +104,4 @@ class Grid {
         }
         this.elementsToReposition.clear();
     }
-
-    void printElements() {
-        System.out.print("\nElements: ");
-        this.gameElements.values().forEach(e -> System.out.printf("%s x=%d y=%d || ", e.getName(), e.getCoords().getxCoord(), e.getCoords().getyCoord()));
-    }
 }

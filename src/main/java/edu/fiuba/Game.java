@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 class Game {
 
-    private final String defaultCharacterName = "marito";
     private final Configurator config;
     private final Character character;
     private Grid grid;
@@ -70,7 +69,7 @@ class Game {
 
     private Character createCharacterFromConfig() {
        return new Character(
-               this.defaultCharacterName,
+               Constants.CHARACTERNAME,
                this.grid.getMiddleCoords(),
                this.config.getcConfig().getdCharacterMove(),
                this.config.getcConfig().getnRandomTP(),
@@ -106,12 +105,11 @@ class Game {
 
         EConfig fueguitoConfig = null;
         for (EConfig eConfig : this.config.geteConfigs()) {
-            if (eConfig.getName().equalsIgnoreCase("fueguito")) fueguitoConfig = eConfig;
+            if (eConfig.getName().equalsIgnoreCase(Constants.FIRENAME)) fueguitoConfig = eConfig;
         }
 
         for (GameElement gameElement : collidedElements) {
             if (gameElement instanceof Character) {
-                System.out.println("\nGG EZ");
                 this.grid.addGameElement(gameElement.getKiller());
                 this.gameEnded = true;
                 break;

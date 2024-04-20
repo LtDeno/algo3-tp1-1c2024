@@ -52,8 +52,4 @@ public class Coordinates {
     boolean areCoordsEqual(Coordinates coords) {
         return (this.xCoord == coords.getxCoord() && this.yCoord == coords.getyCoord());
     }
-
-    void printCoords() {
-        System.out.printf("\nx=%d y=%d", this.xCoord, this.yCoord);
-    }
 }
