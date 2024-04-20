@@ -17,13 +17,13 @@ public class Constants {
     public static Color CELLTWOCOLOR = new Color(0.65, 0.82, 1, 1);
     public static int CELLSIZE = 24;
     public static int SPRITESIZE = 32;
-    public static Coordinates UPRIGHTCOORDINATES = new Coordinates(1, 1);
-    public static Coordinates UPCOORDINATES = new Coordinates(0, 1);
-    public static Coordinates UPLEFTCOORDINATES = new Coordinates(-1, 1);
+    public static Coordinates UPRIGHTCOORDINATES = new Coordinates(1, -1);
+    public static Coordinates UPCOORDINATES = new Coordinates(0, -1);
+    public static Coordinates UPLEFTCOORDINATES = new Coordinates(-1, -1);
     public static Coordinates RIGHTCOORDINATES = new Coordinates(1, 0);
     public static Coordinates MIDDLECOORDINATES = new Coordinates(0, 0);
     public static Coordinates LEFTCOORDINATES = new Coordinates(-1, 0);
-    public static Coordinates DOWNRIGHTCOORDINATES = new Coordinates(1, -1);
-    public static Coordinates DOWNCOORDINATES = new Coordinates(0, -1);
-    public static Coordinates DOWNLEFTCOORDINATES = new Coordinates(-1, -1);
+    public static Coordinates DOWNRIGHTCOORDINATES = new Coordinates(1, 1);
+    public static Coordinates DOWNCOORDINATES = new Coordinates(0, 1);
+    public static Coordinates DOWNLEFTCOORDINATES = new Coordinates(-1, 1);
 }

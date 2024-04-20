@@ -1,5 +1,6 @@
 package edu.fiuba;
 
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -40,11 +41,14 @@ public class GameController {
     private final Color cellColor_2 = Constants.CELLTWOCOLOR;
     private final String spriteSheet = String.valueOf(getClass().getResource(Constants.ELEMENTSPRITESFILE));
     private final int spriteSize = Constants.SPRITESIZE;
-    private final Map<String, Integer> sprites = Map.of(
-            Constants.CHARACTERNAME, 0,
-            Constants.SLOWROBOTNAME, 5,
-            Constants.FASTROBOTNAME, 9,
-            Constants.FIRENAME, 13
+
+    // fueguito en realidad no tiene animacion, es solo un sprite, asi que puede que cree una clase
+    // aparte para los sprites, que tenga como superclase un clase que tambien tenga de subclase Animation
+    private final Map<String, Animation> animations = Map.of(
+            Constants.CHARACTERNAME, new Animation(0, spriteSize, 150, 3000),
+            Constants.SLOWROBOTNAME, new Animation(5 * spriteSize, spriteSize, 100, 0),
+            Constants.FASTROBOTNAME, new Animation(9 * spriteSize, spriteSize, 100, 0),
+            Constants.FIRENAME, new Animation(13 * spriteSize, spriteSize, 100, 0)
     );
     private final HashMap<KeyCode, Coordinates> keyboardControls = new HashMap<>();
     private final Map<KeyCode, Coordinates> numericControls = Map.of(
@@ -90,6 +94,46 @@ public class GameController {
     }
 
     void load() {
+
+        //////////////////////////////////////////////////////////////
+        // hay que mover esto de lugar
+        this.animations.get(Constants.CHARACTERNAME).addFrame(0);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(1);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(2);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(3);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(2);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(1);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(0);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(1);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(2);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(3);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(2);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(1);
+        this.animations.get(Constants.CHARACTERNAME).addFrame(0);
+        this.animations.get(Constants.FASTROBOTNAME).addFrame(0);
+        this.animations.get(Constants.FASTROBOTNAME).addFrame(1);
+        this.animations.get(Constants.FASTROBOTNAME).addFrame(2);
+        this.animations.get(Constants.FASTROBOTNAME).addFrame(3);
+        this.animations.get(Constants.SLOWROBOTNAME).addFrame(0);
+        this.animations.get(Constants.SLOWROBOTNAME).addFrame(1);
+        this.animations.get(Constants.SLOWROBOTNAME).addFrame(2);
+        this.animations.get(Constants.SLOWROBOTNAME).addFrame(3);
+        this.animations.get(Constants.FIRENAME).addFrame(0);
+
+        //////////////////////////////////////////////////////////////
+
+        this.animations.get(Constants.CHARACTERNAME).run();
+        this.animations.get(Constants.FASTROBOTNAME).run();
+        this.animations.get(Constants.SLOWROBOTNAME).run();
+        this.animations.get(Constants.FIRENAME).run();
+
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                updateGraphics();
+            }
+        }.start();
+
         this.renderGrid();
         this.assignEvents();
         this.keyboardControls.putAll(numericControls);
@@ -155,13 +199,14 @@ public class GameController {
             this.update();
         });
     }
-
     private void update() {
-        this.resetCanvas();
-        this.game.getGrid().getGameElements().forEach(this::renderGameElement);
         this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacter().getRandomTeleportsLeft() + ")");
         this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
         if (this.game.hasGameEnded()) deathDialog.setVisible(true);
+    }
+    private void updateGraphics() {
+        this.resetCanvas();
+        this.game.getGrid().getGameElements().forEach(this::renderGameElement);
     }
 
     private void resetCanvas() {
@@ -172,7 +217,7 @@ public class GameController {
     private void renderGameElement(GameElement E) {
         var gc = this.canvas.getGraphicsContext2D();
         Image sprite = new Image(this.spriteSheet);
-        gc.drawImage(sprite, this.sprites.get(E.getName()) * this.spriteSize, 0, this.spriteSize, this.spriteSize, (E.getCoords().getxCoord() - 1) * this.cellSize, (E.getCoords().getyCoord() - 1) * this.cellSize, this.cellSize, this.cellSize);
+        gc.drawImage(sprite, this.animations.get(E.getName()).getCurrentX(), 0, this.spriteSize, this.spriteSize, (E.getCoords().getxCoord() - 1) * this.cellSize, (E.getCoords().getyCoord() - 1) * this.cellSize, this.cellSize, this.cellSize);
     }
 
     public void restartGame() throws IOException {
