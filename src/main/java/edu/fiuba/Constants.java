@@ -2,6 +2,9 @@ package edu.fiuba;
 
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Constants {
     public static String GAMENAME = "Robots Chasing You Until You Pass Out";
     public static String STARTSCENEFXML = "start";
@@ -26,4 +29,8 @@ public class Constants {
     public static Coordinates DOWNRIGHTCOORDINATES = new Coordinates(1, 1);
     public static Coordinates DOWNCOORDINATES = new Coordinates(0, 1);
     public static Coordinates DOWNLEFTCOORDINATES = new Coordinates(-1, 1);
+    public static ArrayList<Integer> CHARACTERANIMATIONFRAMES = new ArrayList(List.of(0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 2, 1, 0));
+    public static ArrayList<Integer> SLOWROBOTANIMATIONFRAMES = new ArrayList(List.of(0, 1, 2, 3));
+    public static ArrayList<Integer> FASTROBOTANIMATIONFRAMES = new ArrayList(List.of(0, 1, 2, 3));
+
 }

@@ -39,6 +39,7 @@ public class App extends Application {
 
         stage.setScene(scene);
         stage.sizeToScene();
+        stage.centerOnScreen();
         stage.show();
     }
 

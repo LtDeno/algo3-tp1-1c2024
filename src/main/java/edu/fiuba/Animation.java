@@ -47,7 +47,6 @@ public class Animation {
         this.timeBetweenLoops = 0;
 
     }
-    @Deprecated
     Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops, ArrayList<Integer> frames) {
         this.timeBetweenFrames = timeBetweenFrames;
         this.frames.addAll(frames);
@@ -57,7 +56,7 @@ public class Animation {
         this.timeBetweenLoops = timeBetweenLoops;
 
     }
-    @Deprecated
+
     Animation(int startingX, int spriteSize, int timeBetweenFrames, ArrayList<Integer> frames) {
         this.timeBetweenFrames = timeBetweenFrames;
         this.frames.addAll(frames);
