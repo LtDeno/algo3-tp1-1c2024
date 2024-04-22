@@ -5,11 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -22,13 +22,13 @@ import java.util.Set;
 public class GameController {
 
     @FXML
+    public VBox deathVBox;
+    @FXML
     private Label levelLabel;
     @FXML
     private Label scoreLabel;
     @FXML
     private Label levelUpLabel;
-    @FXML
-    public DialogPane deathDialog;
     @FXML
     private Button randomTeleportButton;
     @FXML
@@ -185,7 +185,7 @@ public class GameController {
         this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
         this.levelLabel.setText("Level: " + this.game.getLevel());
         this.scoreLabel.setText("Score: " + this.game.getScore());
-        if (this.game.hasGameEnded()) deathDialog.setVisible(true);
+        if (this.game.hasGameEnded()) deathVBox.setVisible(true);
         levelUpLabel.setVisible(this.game.isReadyForLevelUp());
     }
     private void updateGraphics() {

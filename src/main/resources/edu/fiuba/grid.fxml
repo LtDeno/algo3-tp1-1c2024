@@ -28,9 +28,9 @@
          </Label>
       </children>
    </HBox>
+
    <StackPane>
       <children>
-
          <GridPane fx:id="grid">
             <columnConstraints>
                <ColumnConstraints />
@@ -43,29 +43,42 @@
 
          <Canvas fx:id="canvas" height="200.0" width="320.0" StackPane.alignment="TOP_LEFT" />
 
-         <DialogPane fx:id="deathDialog" expanded="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="76.0" prefWidth="202.0" visible="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-             <effect>
-                 <DropShadow radius="12.25" width="30.0" />
-             </effect>
-             <content>
-               <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="202.0" scaleShape="false">
+         <VBox fx:id="deathVBox" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="202.0" scaleShape="false" visible="false">
+            <children>
+               <Label alignment="CENTER" prefHeight="38.0" prefWidth="306.0" text="Wow you are so dead!" textAlignment="CENTER">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+                  <effect>
+                     <DropShadow />
+                  </effect></Label>
+               <Label prefHeight="27.0" prefWidth="297.0" text="What would you like to do now?" textAlignment="CENTER">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+                  <effect>
+                     <DropShadow />
+                  </effect></Label>
+               <HBox alignment="CENTER" prefHeight="41.0" prefWidth="309.0">
                   <children>
-                     <Label alignment="CENTER" prefHeight="124.0" prefWidth="306.0" text="Wow you are so dead!" textAlignment="CENTER" />
-                     <Label text="What would you like to do now?" />
-                     <HBox alignment="CENTER" prefHeight="41.0" prefWidth="309.0">
-                        <children>
-                           <Button contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#restartGame" text="Restart" textAlignment="CENTER" translateX="-10.0" />
-                           <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#endGame" text="Exit" textAlignment="CENTER" translateX="10.0" />
-                        </children>
-                     </HBox>
+                     <Button contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#restartGame" text="Restart" textAlignment="CENTER" translateX="-10.0">
+                        <effect>
+                           <DropShadow />
+                        </effect></Button>
+                     <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#endGame" text="Exit" textAlignment="CENTER" translateX="10.0">
+                        <effect>
+                           <DropShadow />
+                        </effect></Button>
                   </children>
-               </VBox>
-            </content>
-         </DialogPane>
-         <Label fx:id="levelUpLabel" text="Level up!" textFill="WHITE" visible="false">
+               </HBox>
+            </children>
+         </VBox>
+
+         <Label fx:id="levelUpLabel" text="Level up!" textFill="BLACK" visible="false">
             <font>
-               <Font size="18.0" />
-            </font></Label>
+               <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
 
       </children>
    </StackPane>
