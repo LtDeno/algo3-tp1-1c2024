@@ -5,10 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -21,7 +21,7 @@ import java.util.Set;
 public class GameController {
 
     @FXML
-    public DialogPane deathDialog;
+    public VBox deathVBox;
     @FXML
     private Button randomTeleportButton;
     @FXML
@@ -176,7 +176,7 @@ public class GameController {
             double dx = e.getSceneX() - (this.cellSize * (this.game.getCharacter().getCoords().getxCoord() - 0.5));
             double clickAngle = Math.abs(dy) - this.cellSize/2.0 < 0 && Math.abs(dx) - this.cellSize/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
             Set<Double> keys = this.mouseControls.keySet();
-            Double result = clickAngle < Math.PI/8 ? (clickAngle < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > clickAngle - Math.PI/4).sorted().findFirst().get();
+            Double result = clickAngle < Math.PI/8 ? (clickAngle < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > clickAngle - Math.PI/4).sorted().findFirst().orElseThrow();
             Coordinates coordinatesToMove = this.mouseControls.get(result);
             if (coordinatesToMove == null) return;
 
@@ -199,11 +199,13 @@ public class GameController {
             this.update();
         });
     }
+
     private void update() {
         this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacter().getRandomTeleportsLeft() + ")");
         this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
-        if (this.game.hasGameEnded()) deathDialog.setVisible(true);
+        if (this.game.hasGameEnded()) deathVBox.setVisible(true);
     }
+
     private void updateGraphics() {
         this.resetCanvas();
         this.game.getGrid().getGameElements().forEach(this::renderGameElement);
