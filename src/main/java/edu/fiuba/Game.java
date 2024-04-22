@@ -14,6 +14,9 @@ class Game {
     private boolean gameEnded = false;
     private boolean readyForLevelUp = false;
 
+    private int level = 1;
+    private int score = 0;
+
     Game(Configurator c) {
         this.config = c;
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
@@ -63,7 +66,7 @@ class Game {
         this.character.addRandomTP(this.config.getcConfig().getnStepRandomTP());
         this.character.addSafeTP(this.config.getcConfig().getnStepSafeTP());
         this.createEnemiesIntoGridWithStep();
-
+        this.level++;
         return true;
     }
 
@@ -149,4 +152,9 @@ class Game {
     Character getCharacter(){ return this.character; }
 
     Grid getGrid() { return this.grid; }
+
+    boolean isReadyForLevelUp() { return this.readyForLevelUp; }
+
+    int getLevel() { return this.level; }
+    int getScore() { return this.score; }
 }

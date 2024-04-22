@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -20,6 +21,12 @@ import java.util.Set;
 
 public class GameController {
 
+    @FXML
+    private Label levelLabel;
+    @FXML
+    private Label scoreLabel;
+    @FXML
+    private Label levelUpLabel;
     @FXML
     public DialogPane deathDialog;
     @FXML
@@ -45,9 +52,9 @@ public class GameController {
     // fueguito en realidad no tiene animacion, es solo un sprite, asi que puede que cree una clase
     // aparte para los sprites, que tenga como superclase un clase que tambien tenga de subclase Animation
     private final Map<String, Animation> animations = Map.of(
-            Constants.CHARACTERNAME, new Animation(0, spriteSize, 150, 3000),
-            Constants.SLOWROBOTNAME, new Animation(5 * spriteSize, spriteSize, 100, 0),
-            Constants.FASTROBOTNAME, new Animation(9 * spriteSize, spriteSize, 100, 0),
+            Constants.CHARACTERNAME, new Animation(0, spriteSize, 150, 3000, Constants.CHARACTERANIMATIONFRAMES),
+            Constants.SLOWROBOTNAME, new Animation(5 * spriteSize, spriteSize, 100, 0, Constants.SLOWROBOTANIMATIONFRAMES),
+            Constants.FASTROBOTNAME, new Animation(9 * spriteSize, spriteSize, 100, 0, Constants.FASTROBOTANIMATIONFRAMES),
             Constants.FIRENAME, new Animation(13 * spriteSize, spriteSize, 100, 0)
     );
     private final HashMap<KeyCode, Coordinates> keyboardControls = new HashMap<>();
@@ -95,33 +102,7 @@ public class GameController {
 
     void load() {
 
-        //////////////////////////////////////////////////////////////
-        // hay que mover esto de lugar
-        this.animations.get(Constants.CHARACTERNAME).addFrame(0);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(1);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(2);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(3);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(2);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(1);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(0);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(1);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(2);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(3);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(2);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(1);
-        this.animations.get(Constants.CHARACTERNAME).addFrame(0);
-        this.animations.get(Constants.FASTROBOTNAME).addFrame(0);
-        this.animations.get(Constants.FASTROBOTNAME).addFrame(1);
-        this.animations.get(Constants.FASTROBOTNAME).addFrame(2);
-        this.animations.get(Constants.FASTROBOTNAME).addFrame(3);
-        this.animations.get(Constants.SLOWROBOTNAME).addFrame(0);
-        this.animations.get(Constants.SLOWROBOTNAME).addFrame(1);
-        this.animations.get(Constants.SLOWROBOTNAME).addFrame(2);
-        this.animations.get(Constants.SLOWROBOTNAME).addFrame(3);
         this.animations.get(Constants.FIRENAME).addFrame(0);
-
-        //////////////////////////////////////////////////////////////
-
         this.animations.get(Constants.CHARACTERNAME).run();
         this.animations.get(Constants.FASTROBOTNAME).run();
         this.animations.get(Constants.SLOWROBOTNAME).run();
@@ -172,7 +153,7 @@ public class GameController {
         });
 
         this.scene.setOnMouseClicked(e -> {
-            double dy = (this.cellSize * (this.game.getCharacter().getCoords().getyCoord() - 0.5)) - e.getSceneY();
+            double dy = (this.cellSize * (this.game.getCharacter().getCoords().getyCoord() - 0.5)) - (e.getSceneY() - cellSize);
             double dx = e.getSceneX() - (this.cellSize * (this.game.getCharacter().getCoords().getxCoord() - 0.5));
             double clickAngle = Math.abs(dy) - this.cellSize/2.0 < 0 && Math.abs(dx) - this.cellSize/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
             Set<Double> keys = this.mouseControls.keySet();
@@ -202,7 +183,10 @@ public class GameController {
     private void update() {
         this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacter().getRandomTeleportsLeft() + ")");
         this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
+        this.levelLabel.setText("Level: " + this.game.getLevel());
+        this.scoreLabel.setText("Score: " + this.game.getScore());
         if (this.game.hasGameEnded()) deathDialog.setVisible(true);
+        levelUpLabel.setVisible(this.game.isReadyForLevelUp());
     }
     private void updateGraphics() {
         this.resetCanvas();
@@ -227,4 +211,5 @@ public class GameController {
     public void endGame() {
         System.exit(0);
     }
+
 }
