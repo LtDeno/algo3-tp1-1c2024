@@ -52,6 +52,9 @@ public class GameController {
     private final int spriteSize = Constants.SPRITESIZE;
     private double mouseAngle;
 
+    @Deprecated
+    private double previousMouseAngle = 0d;
+
     // fueguito en realidad no tiene animacion, es solo un sprite, asi que puede que cree una clase
     // aparte para los sprites, que tenga como superclase un clase que tambien tenga de subclase Animation
     private final Map<String, Animation> animations = Map.of(
@@ -177,11 +180,14 @@ public class GameController {
             double clickAngle = Math.abs(dy) - this.cellSize/2.0 < 0 && Math.abs(dx) - this.cellSize/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
             Set<Double> keys = this.mouseImages.keySet();
             this.mouseAngle = clickAngle < Math.PI/8 ? (clickAngle < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > clickAngle - Math.PI/4).sorted().findFirst().get();
-            Image mouseImage = this.mouseImages.get(this.mouseAngle);
-            ImageCursor imageCursor = new ImageCursor(mouseImage, mouseImage.getWidth() / 2, mouseImage.getHeight() / 2);
-            scene.setCursor(imageCursor);
 
-
+            // esto va a ser reemplazado por un evento que detecta cuando se cambio el angulo
+            if (this.mouseAngle != this.previousMouseAngle) {
+                Image mouseImage = this.mouseImages.get(this.mouseAngle);
+                ImageCursor imageCursor = new ImageCursor(mouseImage, mouseImage.getWidth() / 2, mouseImage.getHeight() / 2);
+                canvas.setCursor(imageCursor);
+                this.previousMouseAngle = this.mouseAngle;
+            }
 
         });
 
