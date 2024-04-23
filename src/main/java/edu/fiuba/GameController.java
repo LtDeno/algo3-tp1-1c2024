@@ -2,6 +2,8 @@ package edu.fiuba;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -48,6 +50,7 @@ public class GameController {
     private final Color cellColor_2 = Constants.CELLTWOCOLOR;
     private final String spriteSheet = String.valueOf(getClass().getResource(Constants.ELEMENTSPRITESFILE));
     private final int spriteSize = Constants.SPRITESIZE;
+    private double mouseAngle;
 
     // fueguito en realidad no tiene animacion, es solo un sprite, asi que puede que cree una clase
     // aparte para los sprites, que tenga como superclase un clase que tambien tenga de subclase Animation
@@ -91,6 +94,18 @@ public class GameController {
             15*Math.PI/8, Constants.RIGHTCOORDINATES,
             -1.0, Constants.MIDDLECOORDINATES
     );
+    private final Map<Double, Image> mouseImages = Map.of(
+            Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.UPRIGHTCURSORFILE)), 128d, 128d, true, false),
+            3*Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.UPCURSORFILE)), 128d, 128d, true, false),
+            5*Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.UPLEFTCURSORFILE)), 128d, 128d, true, false),
+            7*Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.LEFTCURSORFILE)), 128d, 128d, true, false),
+            9*Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.DOWNLEFTCURSORFILE)), 128d, 128d, true, false),
+            11*Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.DOWNCURSORFILE)), 128d, 128d, true, false),
+            13*Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.DOWNRIGHTCURSORFILE)), 128d, 128d, true, false),
+            15*Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.RIGHTCURSORFILE)), 128d, 128d, true, false),
+            -1.0, new Image(String.valueOf(getClass().getResource(Constants.MIDDLECURSORFILE)), 128d, 128d, true, false)
+    );
+
 
     void setGame(Game game) {
         this.game = game;
@@ -151,14 +166,31 @@ public class GameController {
             this.game.characterMove(coordinatesToMove);
             this.update();
         });
+        this.canvas.setOnMouseExited(event -> {
+            scene.setCursor(Cursor.DEFAULT);
+        });
+
+        this.canvas.setOnMouseMoved(e -> {
+            double dy = (this.cellSize * (this.game.getCharacter().getCoords().getyCoord() - 0.5)) - (e.getSceneY() - cellSize);
+            double dx = e.getSceneX() - (this.cellSize * (this.game.getCharacter().getCoords().getxCoord() - 0.5));
+            double clickAngle = Math.abs(dy) - this.cellSize/2.0 < 0 && Math.abs(dx) - this.cellSize/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
+            Set<Double> keys = this.mouseImages.keySet();
+            this.mouseAngle = clickAngle < Math.PI/8 ? (clickAngle < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > clickAngle - Math.PI/4).sorted().findFirst().get();
+            Image mouseImage = this.mouseImages.get(this.mouseAngle);
+            ImageCursor imageCursor = new ImageCursor(mouseImage, mouseImage.getWidth() / 2, mouseImage.getHeight() / 2);
+            scene.setCursor(imageCursor);
+        });
 
         this.scene.setOnMouseClicked(e -> {
+            /*
             double dy = (this.cellSize * (this.game.getCharacter().getCoords().getyCoord() - 0.5)) - (e.getSceneY() - cellSize);
             double dx = e.getSceneX() - (this.cellSize * (this.game.getCharacter().getCoords().getxCoord() - 0.5));
             double clickAngle = Math.abs(dy) - this.cellSize/2.0 < 0 && Math.abs(dx) - this.cellSize/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
             Set<Double> keys = this.mouseControls.keySet();
             Double result = clickAngle < Math.PI/8 ? (clickAngle < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > clickAngle - Math.PI/4).sorted().findFirst().get();
-            Coordinates coordinatesToMove = this.mouseControls.get(result);
+            */
+            //Coordinates coordinatesToMove = this.mouseControls.get(result);
+            Coordinates coordinatesToMove = this.mouseControls.get(this.mouseAngle);
             if (coordinatesToMove == null) return;
 
             this.game.characterMove(coordinatesToMove);

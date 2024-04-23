@@ -8,9 +8,9 @@
 <?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.fiuba.GameController">
-   <HBox spacing="100.0">
+   <HBox>
       <children>
-         <Label fx:id="levelLabel" text="Level: 1">
+         <Label fx:id="levelLabel" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Level: 1" HBox.hgrow="ALWAYS">
             <font>
                <Font size="14.0" />
             </font>
@@ -18,7 +18,7 @@
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
          </Label>
-         <Label fx:id="scoreLabel" text="Score: 0">
+         <Label fx:id="scoreLabel" alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Score: 0" textAlignment="RIGHT" HBox.hgrow="ALWAYS">
             <font>
                <Font size="14.0" />
             </font>
@@ -64,7 +64,7 @@
          </DialogPane>
          <Label fx:id="levelUpLabel" text="Level up!" textFill="WHITE" visible="false">
             <font>
-               <Font size="18.0" />
+               <Font name="System Bold" size="18.0" />
             </font></Label>
 
       </children>
