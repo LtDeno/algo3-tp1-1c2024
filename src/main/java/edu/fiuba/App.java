@@ -10,7 +10,6 @@ import java.io.IOException;
 public class App extends Application {
 
     private static final Configurator config = new Configurator(Constants.CONFIGURATIONFILE);
-    private static GameController gameController;
     private static Stage stage;
     private static Scene scene;
 
@@ -31,7 +30,7 @@ public class App extends Application {
     public static void changeSceneToGame() throws IOException {
         FXMLLoader gridLoader = getFXMLLoader(Constants.GAMESCENEFXML);
         scene = new Scene(gridLoader.load());
-        gameController = gridLoader.getController();
+        GameController gameController = gridLoader.getController();
 
         gameController.setGame(new Game(config));
         gameController.setScene(scene);

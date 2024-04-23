@@ -78,6 +78,10 @@ class Grid {
         return coords;
     }
 
+    GameElement getElementAtCoordinates(Coordinates coords) {
+        return this.gameElements.get(coords.getAsIndexFromMaxValues(this.nColumns, this.nRows));
+    }
+
     boolean areCoordsOccupied(Coordinates coords) {
         return this.gameElements.containsKey(coords.getAsIndexFromMaxValues(this.nColumns, this.nRows));
     }

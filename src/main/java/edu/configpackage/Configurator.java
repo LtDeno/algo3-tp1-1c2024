@@ -5,7 +5,6 @@ import java.util.*;
 
 import com.google.gson.*;
 
-//falta deshacerse de los numeros magicos de la config default
 public class Configurator {
 
     private final String fileName;

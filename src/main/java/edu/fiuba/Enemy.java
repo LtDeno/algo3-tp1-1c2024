@@ -11,12 +11,19 @@ class Enemy extends GameElement {
         if (this.coords.areCoordsEqual(characterCoords)) return;
 
         Coordinates finalMovement = Coordinates.ZERO;
-        for (int i = 0; i < this.dMove; i++) {
+        if (this.dMove <= 0) {
+            new ActionMove(this, finalMovement, grid).actuate();
+            return;
+        }
+
+        int i = 0;
+        do {
             Coordinates expectedPosition = this.getCoords().getAsSum(finalMovement);
             Coordinates movementVector = new Coordinates(characterCoords.getxCoord() - expectedPosition.getxCoord(), characterCoords.getyCoord() - expectedPosition.getyCoord());
             movementVector.normalizeCoords();
             finalMovement = finalMovement.getAsSum(movementVector);
-        }
+            i++;
+        } while ((i < this.dMove) && !(grid.getElementAtCoordinates(finalMovement) instanceof Character));
 
         new ActionMove(this, finalMovement, grid).actuate();
     }
