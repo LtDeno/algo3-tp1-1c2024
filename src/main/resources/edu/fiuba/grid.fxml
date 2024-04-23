@@ -41,7 +41,7 @@
         <Canvas fx:id="canvas" height="200.0" width="320.0" StackPane.alignment="TOP_LEFT" />
 
         <VBox fx:id="deathVBox" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="202.0" scaleShape="false" visible="false">
-            <Label alignment="CENTER" prefHeight="38.0" prefWidth="306.0" text="Wow you are so dead!" textAlignment="CENTER">
+            <Label alignment="CENTER" prefHeight="38.0" prefWidth="306.0" text="Wow you are so dead!" textAlignment="CENTER" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="18.0" />
                 </font>
@@ -49,7 +49,7 @@
                     <DropShadow />
                 </effect>
             </Label>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="297.0" text="What would you like to do now?" textAlignment="CENTER">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="297.0" text="What would you like to do now?" textAlignment="CENTER" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="18.0" />
                 </font>
@@ -76,7 +76,6 @@
                <Font name="System Bold" size="18.0" />
            </font>
         </Label>
-
     </StackPane>
 
     <HBox alignment="CENTER" prefHeight="70.0">

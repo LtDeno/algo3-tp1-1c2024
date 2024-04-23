@@ -1,8 +1,7 @@
-package edu.configpackage;
+package edu.fiuba.configpackage;
 
 import java.io.*;
 import java.util.*;
-
 import com.google.gson.*;
 
 public class Configurator {

@@ -1,4 +1,4 @@
-package edu.fiuba;
+package edu.fiuba.model;
 
 class ActionTeleportRandomly implements Action {
 

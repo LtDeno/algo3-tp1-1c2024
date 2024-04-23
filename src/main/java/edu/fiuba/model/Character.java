@@ -1,6 +1,6 @@
-package edu.fiuba;
+package edu.fiuba.model;
 
-class Character extends GameElement {
+public class Character extends GameElement {
 
     private int randomTeleportsLeft;
     private int safeTeleportsLeft;
@@ -49,11 +49,11 @@ class Character extends GameElement {
         this.safeTeleportsLeft += nToAdd;
     }
 
-    String getRandomTeleportsLeft() {
+    public String getRandomTeleportsLeft() {
         return (this.randomTeleportsLeft < 0 ? "$.$ " : String.valueOf(this.randomTeleportsLeft));
     }
 
-    String getSafeTeleportsLeft() {
+    public String getSafeTeleportsLeft() {
         return (this.safeTeleportsLeft < 0 ? "$.$ " : String.valueOf(this.safeTeleportsLeft));
     }
 }

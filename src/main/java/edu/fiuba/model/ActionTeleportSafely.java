@@ -1,4 +1,4 @@
-package edu.fiuba;
+package edu.fiuba.model;
 
 class ActionTeleportSafely extends ActionTeleportRandomly {
 

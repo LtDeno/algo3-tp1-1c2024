@@ -1,11 +1,11 @@
-package edu.fiuba;
+package edu.fiuba.model;
 
-import edu.configpackage.Configurator;
-import edu.configpackage.EConfig;
-
+import edu.fiuba.configpackage.Configurator;
+import edu.fiuba.configpackage.EConfig;
+import edu.fiuba.Constants;
 import java.util.ArrayList;
 
-class Game {
+public class Game {
 
     private final Configurator config;
     private final Character character;
@@ -13,23 +13,25 @@ class Game {
     private final ArrayList<Object> enemiesCurrentConfig = new ArrayList<>();
     private boolean gameEnded = false;
     private boolean readyForLevelUp = false;
-
     private int level = 1;
     private int score = 0;
 
-    Game(Configurator c) {
+    public Game(Configurator c) {
         this.config = c;
+        this.listEnemiesAndCurrentAmount();
+        if (this.isGridSizeInvalid()) System.exit(-1);
+
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
         this.character = this.createCharacterFromConfig();
         this.grid.addGameElement(this.character);
-        this.createEnemiesIntoGridAndListThem();
+        this.createEnemiesIntoGrid();
     }
 
-    boolean hasGameEnded() {
+    public boolean hasGameEnded() {
         return this.gameEnded;
     }
 
-    void characterMove(Coordinates characterMoveDirection) {
+    public void characterMove(Coordinates characterMoveDirection) {
         if (this.gameEnded) return;
         if (this.levelUp()) return;
 
@@ -38,7 +40,7 @@ class Game {
         this.attemptToLevelUp();
     }
 
-    void characterTeleport() {
+    public void characterTeleport() {
         if (this.gameEnded) return;
         if (this.levelUp()) return;
         if (!this.character.teleport(this.grid)) return;
@@ -47,7 +49,7 @@ class Game {
         this.attemptToLevelUp();
     }
 
-    void characterTeleportSafely() {
+    public void characterTeleportSafely() {
         if (this.gameEnded) return;
         if (this.levelUp()) return;
         if (!this.character.teleportSafely(this.grid)) return;
@@ -58,15 +60,20 @@ class Game {
 
     boolean levelUp() {
         if (!readyForLevelUp) return false;
-
         this.readyForLevelUp = false;
+        this.stepUpNumberOfEnemies();
+        if (this.isGridSizeInvalid()) System.exit(-1);
+
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
+
         this.character.setCoords(this.grid.getMiddleCoords());
-        this.grid.addGameElement(this.character);
         this.character.addRandomTP(this.config.getcConfig().getnStepRandomTP());
         this.character.addSafeTP(this.config.getcConfig().getnStepSafeTP());
-        this.createEnemiesIntoGridWithStep();
+        this.grid.addGameElement(this.character);
+
+        this.createEnemiesIntoGrid();
         this.level++;
+
         return true;
     }
 
@@ -80,16 +87,14 @@ class Game {
        );
     }
 
-    private void createEnemiesIntoGridAndListThem() {
-        for (EConfig eConfig : config.geteConfigs()) {
-            this.enemiesCurrentConfig.add(eConfig);
-            this.enemiesCurrentConfig.add(eConfig.getnEnemy());
-
-            for (int i = 0; i < eConfig.getnEnemy(); i++) {
+    private void createEnemiesIntoGrid() {
+        for (int i = 0; i < this.enemiesCurrentConfig.size(); i+=2){
+            for (int j = 0; j < ((int) this.enemiesCurrentConfig.get(i+1)); j++){
                 this.grid.addGameElement(new Enemy(
-                        eConfig.getName(),
+                        ((EConfig) this.enemiesCurrentConfig.get(i)).getName(),
                         this.grid.getUnoccupiedValidCoords(),
-                        eConfig.getdEnemyMove()));
+                        ((EConfig) this.enemiesCurrentConfig.get(i)).getdEnemyMove()
+                ));
             }
         }
     }
@@ -127,7 +132,7 @@ class Game {
     private void attemptToLevelUp() {
         boolean successful = true;
         for (GameElement gameElement : this.getGrid().getGameElements()) {
-            if (!(gameElement instanceof Character || gameElement.getName().equalsIgnoreCase("fueguito"))) {
+            if (!(gameElement instanceof Character || gameElement.getName().equalsIgnoreCase(Constants.FIRENAME))) {
                 successful = false;
                 break;
             }
@@ -136,25 +141,42 @@ class Game {
         this.readyForLevelUp = successful;
     }
 
-    private void createEnemiesIntoGridWithStep() {
-        for (int i = 0; i < this.enemiesCurrentConfig.size(); i+=2) {
-            this.enemiesCurrentConfig.set(i+1, (int) this.enemiesCurrentConfig.get(i+1) + ((EConfig) this.enemiesCurrentConfig.get(i)).getnStepEnemy());
-
-            for (int j = 0; j < (int) this.enemiesCurrentConfig.get(i+1); j++) {
-                this.grid.addGameElement(new Enemy(
-                        ((EConfig) this.enemiesCurrentConfig.get(i)).getName(),
-                        this.grid.getUnoccupiedValidCoords(),
-                        ((EConfig) this.enemiesCurrentConfig.get(i)).getdEnemyMove()));
-            }
+    private void listEnemiesAndCurrentAmount() {
+        for (EConfig eConfig : this.config.geteConfigs()) {
+            this.enemiesCurrentConfig.add(eConfig);
+            this.enemiesCurrentConfig.add(eConfig.getnEnemy());
         }
     }
 
-    Character getCharacter(){ return this.character; }
+    private void stepUpNumberOfEnemies() {
+        for (int i = 0; i < this.enemiesCurrentConfig.size(); i+=2) this.enemiesCurrentConfig.set(i + 1, (int) this.enemiesCurrentConfig.get(i + 1) + ((EConfig) this.enemiesCurrentConfig.get(i)).getnStepEnemy());
+    }
 
-    Grid getGrid() { return this.grid; }
+    private boolean isGridSizeInvalid() {
+        int cellCount = this.config.getnCol() * this.config.getnRow();
+        int elementsCount = 1;
+        for (int i = 0; i < this.enemiesCurrentConfig.size(); i+=2) elementsCount += ((int) this.enemiesCurrentConfig.get(i+1));
 
-    boolean isReadyForLevelUp() { return this.readyForLevelUp; }
+        return cellCount < elementsCount;
+    }
 
-    int getLevel() { return this.level; }
-    int getScore() { return this.score; }
+    public Character getCharacter() {
+        return this.character;
+    }
+
+    public Grid getGrid() {
+        return this.grid;
+    }
+
+    public boolean isReadyForLevelUp() {
+        return this.readyForLevelUp;
+    }
+
+    public int getLevel() {
+        return this.level;
+    }
+
+    public int getScore() {
+        return this.score;
+    }
 }

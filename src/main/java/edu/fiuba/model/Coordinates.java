@@ -1,4 +1,4 @@
-package edu.fiuba;
+package edu.fiuba.model;
 
 public class Coordinates {
 
@@ -6,7 +6,7 @@ public class Coordinates {
     private int xCoord;
     private int yCoord;
 
-    Coordinates(int xCoord, int yCoord) {
+    public Coordinates(int xCoord, int yCoord) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
     }
@@ -16,11 +16,11 @@ public class Coordinates {
         this.yCoord = newCoords.getyCoord();
     }
 
-    int getxCoord() {
+    public int getxCoord() {
         return this.xCoord;
     }
 
-    int getyCoord() {
+    public int getyCoord() {
         return this.yCoord;
     }
 

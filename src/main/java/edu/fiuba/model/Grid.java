@@ -1,9 +1,9 @@
-package edu.fiuba;
+package edu.fiuba.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class Grid {
+public class Grid {
 
     private final int nColumns;
     private final int nRows;
@@ -16,11 +16,11 @@ class Grid {
         this.nColumns = nColumns;
     }
 
-    int getnColumns() {
+    public int getnColumns() {
         return this.nColumns;
     }
 
-    int getnRows() {
+    public int getnRows() {
         return this.nRows;
     }
 
@@ -42,7 +42,7 @@ class Grid {
         gameElement.setKiller(killer);
     }
 
-    ArrayList<GameElement> getGameElements() {
+    public ArrayList<GameElement> getGameElements() {
         ArrayList<GameElement> copiedElements = new ArrayList<>();
         this.gameElements.forEach((key, gameElement) -> copiedElements.add(gameElement));
         return copiedElements;
@@ -57,13 +57,13 @@ class Grid {
     }
 
     Coordinates getMiddleCoords() {
-        return new Coordinates(this.nColumns/2, this.nRows/2);
+        return new Coordinates((this.nColumns/2) + 1, (this.nRows/2) + 1);
     }
 
     Coordinates getRandomValidCoords() {
         Coordinates coords;
         do  {
-            coords = new Coordinates((int) (Math.random() * this.nColumns), (int) (Math.random() * this.nRows));
+            coords = new Coordinates((int) ((Math.random() * this.nColumns) + 1), (int) ((Math.random() * this.nRows) + 1));
         } while (!this.areCoordsInsideGrid(coords));
 
         return coords;
@@ -78,16 +78,16 @@ class Grid {
         return coords;
     }
 
-    GameElement getElementAtCoordinates(Coordinates coords) {
-        return this.gameElements.get(coords.getAsIndexFromMaxValues(this.nColumns, this.nRows));
-    }
-
-    boolean areCoordsOccupied(Coordinates coords) {
+    private boolean areCoordsOccupied(Coordinates coords) {
         return this.gameElements.containsKey(coords.getAsIndexFromMaxValues(this.nColumns, this.nRows));
     }
 
     boolean areCoordsInsideGrid(Coordinates coords) {
         return (coords.getxCoord() <= this.nColumns && coords.getxCoord() > 0 && coords.getyCoord() <= this.nRows && coords.getyCoord() > 0);
+    }
+
+    GameElement getElementAtCoordinates(Coordinates coords) {
+        return this.gameElements.get(coords.getAsIndexFromMaxValues(this.nColumns, this.nRows));
     }
 
     void repositionElement(GameElement gameElement, Coordinates coords) {

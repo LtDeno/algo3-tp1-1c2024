@@ -4,5 +4,10 @@ module edu.fiuba {
     requires com.google.gson;
 
     opens edu.fiuba to javafx.fxml;
+    opens edu.fiuba.model to javafx.fxml;
+    opens edu.fiuba.view to javafx.fxml;
     exports edu.fiuba;
+    exports edu.fiuba.model;
+    exports edu.fiuba.view;
+    exports edu.fiuba.configpackage;
 }

@@ -1,9 +1,12 @@
 package edu.fiuba;
 
+import edu.fiuba.model.Coordinates;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Constants {
     public static final String GAMENAME = "Robots Chasing You Until You Pass Out";
@@ -29,6 +32,39 @@ public class Constants {
     public static final Coordinates DOWNRIGHTCOORDINATES = new Coordinates(1, 1);
     public static final Coordinates DOWNCOORDINATES = new Coordinates(0, 1);
     public static final Coordinates DOWNLEFTCOORDINATES = new Coordinates(-1, 1);
+    public static final Map<KeyCode, Coordinates> NUMERICCONTROLS = Map.of(
+            KeyCode.NUMPAD1, Constants.DOWNLEFTCOORDINATES,
+            KeyCode.NUMPAD2, Constants.DOWNCOORDINATES,
+            KeyCode.NUMPAD3, Constants.DOWNRIGHTCOORDINATES,
+            KeyCode.NUMPAD4, Constants.LEFTCOORDINATES,
+            KeyCode.NUMPAD5, Constants.MIDDLECOORDINATES,
+            KeyCode.NUMPAD6, Constants.RIGHTCOORDINATES,
+            KeyCode.NUMPAD7, Constants.UPLEFTCOORDINATES,
+            KeyCode.NUMPAD8, Constants.UPCOORDINATES,
+            KeyCode.NUMPAD9, Constants.UPRIGHTCOORDINATES
+    );
+    public static final Map<KeyCode, Coordinates> ALPHACONTROLS = Map.of(
+            KeyCode.W, Constants.UPCOORDINATES,
+            KeyCode.A, Constants.LEFTCOORDINATES,
+            KeyCode.S, Constants.DOWNCOORDINATES,
+            KeyCode.D, Constants.RIGHTCOORDINATES,
+            KeyCode.Q, Constants.UPLEFTCOORDINATES,
+            KeyCode.E, Constants.UPRIGHTCOORDINATES,
+            KeyCode.Z, Constants.DOWNLEFTCOORDINATES,
+            KeyCode.C, Constants.DOWNRIGHTCOORDINATES,
+            KeyCode.X, Constants.MIDDLECOORDINATES
+    );
+    public static final Map<Double, Coordinates> MOUSECONTROLS = Map.of(
+            Math.PI/8, Constants.UPRIGHTCOORDINATES,
+            3*Math.PI/8, Constants.UPCOORDINATES,
+            5*Math.PI/8, Constants.UPLEFTCOORDINATES,
+            7*Math.PI/8, Constants.LEFTCOORDINATES,
+            9*Math.PI/8, Constants.DOWNLEFTCOORDINATES,
+            11*Math.PI/8, Constants.DOWNCOORDINATES,
+            13*Math.PI/8, Constants.DOWNRIGHTCOORDINATES,
+            15*Math.PI/8, Constants.RIGHTCOORDINATES,
+            -1.0, Constants.MIDDLECOORDINATES
+    );
     public static final ArrayList<Integer> CHARACTERANIMATIONFRAMES = new ArrayList<>(List.of(0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 2, 1, 0));
     public static final ArrayList<Integer> SLOWROBOTANIMATIONFRAMES = new ArrayList<>(List.of(0, 1, 2, 3));
     public static final ArrayList<Integer> FASTROBOTANIMATIONFRAMES = new ArrayList<>(List.of(0, 1, 2, 3));

@@ -1,4 +1,4 @@
-package edu.fiuba;
+package edu.fiuba.view;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -31,7 +31,7 @@ public class Animation {
 
 
 
-    Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops) {
+    public Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops) {
         this.timeBetweenFrames = timeBetweenFrames;
         this.startingX = startingX;
         this.spriteSize = spriteSize;
@@ -39,40 +39,25 @@ public class Animation {
         this.timeBetweenLoops = timeBetweenLoops;
 
     }
-    Animation(int startingX, int spriteSize, int timeBetweenFrames) {
-        this.timeBetweenFrames = timeBetweenFrames;
-        this.startingX = startingX;
-        this.spriteSize = spriteSize;
-        this.onLoop = false;
-        this.timeBetweenLoops = 0;
 
-    }
-    Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops, ArrayList<Integer> frames) {
+    public Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops, ArrayList<Integer> frames) {
         this.timeBetweenFrames = timeBetweenFrames;
         this.frames.addAll(frames);
         this.startingX = startingX;
         this.spriteSize = spriteSize;
         this.onLoop = true;
         this.timeBetweenLoops = timeBetweenLoops;
-
-    }
-
-    Animation(int startingX, int spriteSize, int timeBetweenFrames, ArrayList<Integer> frames) {
-        this.timeBetweenFrames = timeBetweenFrames;
-        this.frames.addAll(frames);
-        this.startingX = startingX;
-        this.spriteSize = spriteSize;
-        this.onLoop = false;
-        this.timeBetweenLoops = 0;
 
     }
 
     public void addFrame(int n) {
         frames.add(n);
     }
+
     private void next() {
         currentFrame++;
     }
+
     private boolean loopFinished() {
         return currentFrame+1 >= frames.toArray().length;
     }

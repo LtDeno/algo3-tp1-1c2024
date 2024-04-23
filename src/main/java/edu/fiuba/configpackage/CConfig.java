@@ -1,4 +1,4 @@
-package edu.configpackage;
+package edu.fiuba.configpackage;
 
 public class CConfig {
 

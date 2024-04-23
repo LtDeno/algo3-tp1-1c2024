@@ -1,6 +1,6 @@
-package edu.fiuba;
+package edu.fiuba.model;
 
-abstract class GameElement {
+public abstract class GameElement {
 
     protected final String name;
     protected final Coordinates coords;
@@ -14,11 +14,11 @@ abstract class GameElement {
         this.dMove = dMove;
     }
 
-    String getName() {
+    public String getName() {
         return this.name;
     }
 
-    Coordinates getCoords() {
+    public Coordinates getCoords() {
         return this.coords;
     }
 
