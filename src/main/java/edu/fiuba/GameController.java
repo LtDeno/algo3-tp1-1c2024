@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -30,7 +31,7 @@ public class GameController {
     @FXML
     private Label levelUpLabel;
     @FXML
-    public DialogPane deathDialog;
+    public VBox deathVBox;
     @FXML
     private Button randomTeleportButton;
     @FXML
@@ -182,14 +183,6 @@ public class GameController {
         });
 
         this.scene.setOnMouseClicked(e -> {
-            /*
-            double dy = (this.cellSize * (this.game.getCharacter().getCoords().getyCoord() - 0.5)) - (e.getSceneY() - cellSize);
-            double dx = e.getSceneX() - (this.cellSize * (this.game.getCharacter().getCoords().getxCoord() - 0.5));
-            double clickAngle = Math.abs(dy) - this.cellSize/2.0 < 0 && Math.abs(dx) - this.cellSize/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
-            Set<Double> keys = this.mouseControls.keySet();
-            Double result = clickAngle < Math.PI/8 ? (clickAngle < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > clickAngle - Math.PI/4).sorted().findFirst().get();
-            */
-            //Coordinates coordinatesToMove = this.mouseControls.get(result);
             Coordinates coordinatesToMove = this.mouseControls.get(this.mouseAngle);
             if (coordinatesToMove == null) return;
 
@@ -217,7 +210,7 @@ public class GameController {
         this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
         this.levelLabel.setText("Level: " + this.game.getLevel());
         this.scoreLabel.setText("Score: " + this.game.getScore());
-        if (this.game.hasGameEnded()) deathDialog.setVisible(true);
+        if (this.game.hasGameEnded()) deathVBox.setVisible(true);
         levelUpLabel.setVisible(this.game.isReadyForLevelUp());
     }
     private void updateGraphics() {

@@ -32,5 +32,13 @@ public class Constants {
     public static final ArrayList<Integer> CHARACTERANIMATIONFRAMES = new ArrayList<>(List.of(0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 2, 1, 0));
     public static final ArrayList<Integer> SLOWROBOTANIMATIONFRAMES = new ArrayList<>(List.of(0, 1, 2, 3));
     public static final ArrayList<Integer> FASTROBOTANIMATIONFRAMES = new ArrayList<>(List.of(0, 1, 2, 3));
-
+    public static String UPRIGHTCURSORFILE = "uprightcursor.png";
+    public static String UPCURSORFILE = "upcursor.png";
+    public static String UPLEFTCURSORFILE = "upleftcursor.png";
+    public static String LEFTCURSORFILE = "leftcursor.png";
+    public static String DOWNLEFTCURSORFILE = "downleftcursor.png";
+    public static String DOWNCURSORFILE = "downcursor.png";
+    public static String DOWNRIGHTCURSORFILE = "downrightcursor.png";
+    public static String RIGHTCURSORFILE = "rightcursor.png";
+    public static String MIDDLECURSORFILE = "middlecursor.png";
 }
