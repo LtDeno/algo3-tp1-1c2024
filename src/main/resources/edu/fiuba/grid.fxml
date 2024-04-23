@@ -40,7 +40,7 @@
 
         <Canvas fx:id="canvas" height="200.0" width="320.0" StackPane.alignment="TOP_LEFT" />
 
-        <VBox fx:id="deathVBox" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="202.0" scaleShape="false">
+        <VBox fx:id="deathVBox" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="202.0" scaleShape="false" visible="false">
             <Label alignment="CENTER" prefHeight="38.0" prefWidth="306.0" text="Wow you are so dead!" textAlignment="CENTER">
                 <font>
                     <Font name="System Bold" size="18.0" />
