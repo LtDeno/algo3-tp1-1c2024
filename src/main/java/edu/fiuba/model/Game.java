@@ -4,6 +4,8 @@ import edu.fiuba.configpackage.Configurator;
 import edu.fiuba.configpackage.EConfig;
 import edu.fiuba.Constants;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game {
 
@@ -100,12 +102,18 @@ public class Game {
     }
 
     private void moveEnemiesTowardsCharacter() {
-        this.grid.getGameElements().forEach(gameElement -> {
-            if ( !(gameElement instanceof Character) && !gameElement.isCollided() ) gameElement.moveInDirection(this.character.getCoords(), this.grid);
-        });
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                grid.getGameElements().forEach(gameElement -> {
+                    if ( !(gameElement instanceof Character) && !gameElement.isCollided() ) gameElement.moveInDirection(character.getCoords(), grid);
+                });
 
-        this.grid.reviseChangedElements();
-        this.checkCollisions();
+                grid.reviseChangedElements();
+                checkCollisions();
+            }
+        }, 150);
     }
 
     private void checkCollisions() {

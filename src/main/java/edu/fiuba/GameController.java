@@ -182,8 +182,8 @@ public class GameController {
         this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
         this.levelLabel.setText("Level: " + this.game.getLevel());
         this.scoreLabel.setText("Score: " + this.game.getScore());
-        if (this.game.hasGameEnded()) deathVBox.setVisible(true);
-        levelUpLabel.setVisible(this.game.isReadyForLevelUp());
+        this.deathVBox.setVisible(this.game.hasGameEnded());
+        this.levelUpLabel.setVisible(this.game.isReadyForLevelUp());
     }
 
     private void renderGameElement(GameElement E) {
@@ -198,6 +198,8 @@ public class GameController {
     }
 
     private void updateGraphics() {
+        this.deathVBox.setVisible(this.game.hasGameEnded());
+        this.levelUpLabel.setVisible(this.game.isReadyForLevelUp());
         this.resetCanvas();
         this.game.getGrid().getGameElements().forEach(this::renderGameElement);
     }
