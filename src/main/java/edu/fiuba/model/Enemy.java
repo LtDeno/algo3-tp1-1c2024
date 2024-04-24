@@ -1,5 +1,7 @@
 package edu.fiuba.model;
 
+import edu.fiuba.Constants;
+
 class Enemy extends GameElement {
 
     Enemy(String name, Coordinates coords, int dMove) {
@@ -8,20 +10,19 @@ class Enemy extends GameElement {
 
     @Override
     void moveInDirection(Coordinates characterCoords, Grid grid) {
-        if (this.coords.areCoordsEqual(characterCoords)) return;
+        if (this.coords.areCoordsEqual(characterCoords) || (this.dMove <= 0)) return;
 
         Coordinates finalMovement = Coordinates.ZERO;
-        if (this.dMove <= 0) {
-            new ActionMove(this, finalMovement, grid).actuate();
-            return;
-        }
 
         int i = 0;
         do {
-            Coordinates expectedPosition = this.getCoords().getAsSum(finalMovement);
+            Coordinates expectedPosition = this.coords.getAsSum(finalMovement);
+            if ((grid.getElementAtCoordinates(expectedPosition) != null) && (grid.getElementAtCoordinates(expectedPosition).getName().equalsIgnoreCase(Constants.FIRENAME))) break;
+
             Coordinates movementVector = new Coordinates(characterCoords.getxCoord() - expectedPosition.getxCoord(), characterCoords.getyCoord() - expectedPosition.getyCoord());
             movementVector.normalizeCoords();
             finalMovement = finalMovement.getAsSum(movementVector);
+
             i++;
         } while ((i < this.dMove) && !(grid.getElementAtCoordinates(finalMovement) instanceof Character));
 
