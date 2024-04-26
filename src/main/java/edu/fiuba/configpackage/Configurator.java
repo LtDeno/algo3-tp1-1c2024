@@ -3,6 +3,7 @@ package edu.fiuba.configpackage;
 import java.io.*;
 import java.util.*;
 import com.google.gson.*;
+import edu.fiuba.Constants;
 
 public class Configurator {
 
@@ -59,7 +60,8 @@ public class Configurator {
             list.addLast(new EConfig(k,
                     enemy.get("startingAmount").getAsInt(),
                     enemy.get("addOnLevelUpAmount").getAsInt(),
-                    enemy.get("moveDistance").getAsInt()
+                    enemy.get("moveDistance").getAsInt(),
+                    enemy.get("scoreOnKill").getAsInt()
             ));
         }
     }
@@ -110,18 +112,19 @@ public class Configurator {
 
     private JsonObject createDefaultEnemiesConfig() {
         JsonObject enemiesConfig = new JsonObject();
-        enemiesConfig.add("1x", this.createEnemyConfig(4, 2, 1));
-        enemiesConfig.add("2x", this.createEnemyConfig(2, 1, 2));
-        enemiesConfig.add("fueguito", this.createEnemyConfig(0, 0, 0));
+        enemiesConfig.add(Constants.SLOWROBOTNAME, this.createEnemyConfig(4, 2, 1, 1));
+        enemiesConfig.add(Constants.FASTROBOTNAME, this.createEnemyConfig(2, 1, 2, 2));
+        enemiesConfig.add(Constants.FIRENAME, this.createEnemyConfig(0, 0, 0, 0));
 
         return enemiesConfig;
     }
 
-    private JsonObject createEnemyConfig(int startingAmount, int addOnLevelUpAmount, int moveDistance) {
+    private JsonObject createEnemyConfig(int startingAmount, int addOnLevelUpAmount, int moveDistance, int scoreOnKill) {
         JsonObject enemyConfig = new JsonObject();
         enemyConfig.addProperty("startingAmount", startingAmount);
         enemyConfig.addProperty("addOnLevelUpAmount", addOnLevelUpAmount);
         enemyConfig.addProperty("moveDistance", moveDistance);
+        enemyConfig.addProperty("scoreOnKill", scoreOnKill);
 
         return enemyConfig;
     }

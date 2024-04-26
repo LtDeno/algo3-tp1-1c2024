@@ -95,7 +95,8 @@ public class Game {
                 this.grid.addGameElement(new Enemy(
                         ((EConfig) this.enemiesCurrentConfig.get(i)).getName(),
                         this.grid.getUnoccupiedValidCoords(),
-                        ((EConfig) this.enemiesCurrentConfig.get(i)).getdEnemyMove()
+                        ((EConfig) this.enemiesCurrentConfig.get(i)).getdEnemyMove(),
+                        ((EConfig) this.enemiesCurrentConfig.get(i)).getScoreOnKill()
                 ));
             }
         }
@@ -129,17 +130,22 @@ public class Game {
                 this.grid.addGameElement(gameElement.getKiller());
                 this.gameEnded = true;
                 break;
-            } else if (!(gameElement.getKiller() instanceof Character) && fueguitoConfig != null) this.grid.addGameElement(new Enemy(
-                    fueguitoConfig.getName(),
-                    gameElement.getCoords(),
-                    fueguitoConfig.getdEnemyMove()));
+            } else if (!(gameElement.getKiller() instanceof Character) && fueguitoConfig != null) {
+                this.score += ((Enemy) gameElement).getScoreOnKill();
+                this.grid.addGameElement(new Enemy(
+                        fueguitoConfig.getName(),
+                        gameElement.getCoords(),
+                        fueguitoConfig.getdEnemyMove(),
+                        fueguitoConfig.getScoreOnKill()));
+            }
+
         }
         this.grid.clearCollidedElements();
     }
 
     private void attemptToLevelUp() {
         boolean successful = true;
-        for (GameElement gameElement : this.getGrid().getGameElements()) {
+        for (GameElement gameElement : this.grid.getGameElements()) {
             if (!(gameElement instanceof Character || gameElement.getName().equalsIgnoreCase(Constants.FIRENAME))) {
                 successful = false;
                 break;

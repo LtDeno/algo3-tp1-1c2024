@@ -6,12 +6,14 @@ public class EConfig {
     private final int nEnemy;
     private final int nStepEnemy;
     private final int dEnemyMove;
+    private final int scoreOnKill;
 
-    EConfig(String name, int nEnemy, int nStepEnemy, int dEnemyMove) {
+    EConfig(String name, int nEnemy, int nStepEnemy, int dEnemyMove, int scoreOnKill) {
         this.name = name;
         this.nEnemy = nEnemy;
         this.nStepEnemy = nStepEnemy;
         this.dEnemyMove = dEnemyMove;
+        this.scoreOnKill = scoreOnKill;
     }
 
     public String getName() {
@@ -28,5 +30,9 @@ public class EConfig {
 
     public int getdEnemyMove() {
         return this.dEnemyMove;
+    }
+
+    public int getScoreOnKill() {
+        return this.scoreOnKill;
     }
 }

@@ -4,8 +4,11 @@ import edu.fiuba.Constants;
 
 class Enemy extends GameElement {
 
-    Enemy(String name, Coordinates coords, int dMove) {
+    private final int scoreOnKill;
+
+    Enemy(String name, Coordinates coords, int dMove, int scoreOnKill) {
         super(name, coords, dMove);
+        this.scoreOnKill = scoreOnKill;
     }
 
     @Override
@@ -27,5 +30,9 @@ class Enemy extends GameElement {
         } while ((i < this.dMove) && !(grid.getElementAtCoordinates(finalMovement) instanceof Character));
 
         new ActionMove(this, finalMovement, grid).actuate();
+    }
+
+    int getScoreOnKill() {
+        return this.scoreOnKill;
     }
 }
