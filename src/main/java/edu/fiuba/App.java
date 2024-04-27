@@ -1,6 +1,7 @@
 package edu.fiuba;
 
 import edu.fiuba.configpackage.Configurator;
+import edu.fiuba.controller.GameController;
 import edu.fiuba.model.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

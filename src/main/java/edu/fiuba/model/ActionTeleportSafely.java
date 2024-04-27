@@ -1,18 +1,22 @@
 package edu.fiuba.model;
 
-class ActionTeleportSafely extends ActionTeleportRandomly {
+class ActionTeleportSafely implements Action {
 
-    ActionTeleportSafely(GameElement element, Grid grid) {
-        super(element, grid);
+    private final GameElement element;
+    private final Grid grid;
+    private final Coordinates selectedCell;
+
+    ActionTeleportSafely(GameElement element, Grid grid, Coordinates selectedCell) {
+        this.element = element;
+        this.grid = grid;
+        this.selectedCell = selectedCell;
     }
 
-    @Override
     public void actuate() {
         this.teleport();
     }
 
     private void teleport() {
-        Coordinates newCoords = this.grid.getUnoccupiedValidCoords();
-        this.grid.repositionElement(this.element, newCoords);
+        this.grid.repositionElement(this.element, this.selectedCell);
     }
 }

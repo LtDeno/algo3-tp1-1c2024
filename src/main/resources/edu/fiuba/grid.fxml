@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.fiuba.GameController">
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.fiuba.controller.GameController">
     <HBox>
         <Label fx:id="levelLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Level: 1" HBox.hgrow="ALWAYS">
            <font>
@@ -27,7 +27,7 @@
         </Label>
     </HBox>
 
-    <StackPane>
+    <StackPane fx:id="gridContainer">
         <GridPane fx:id="grid">
            <columnConstraints>
                <ColumnConstraints />
@@ -71,10 +71,13 @@
             </HBox>
         </VBox>
 
-        <Label fx:id="levelUpLabel" text="Level up!" textFill="BLACK" visible="false">
+        <Label fx:id="levelUpLabel" text="Level up!" textFill="WHITE" visible="false">
            <font>
                <Font name="System Bold" size="18.0" />
            </font>
+         <effect>
+            <DropShadow />
+         </effect>
         </Label>
     </StackPane>
 

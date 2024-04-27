@@ -32,9 +32,9 @@ public class Character extends GameElement {
         return false;
     }
 
-    boolean teleportSafely(Grid grid) {
+    boolean teleportSafely(Grid grid, Coordinates selectedCell) {
         if (this.safeTeleportsLeft != 0) {
-            new ActionTeleportSafely(this, grid).actuate();
+            new ActionTeleportSafely(this, grid, selectedCell).actuate();
             if (this.safeTeleportsLeft > 0) safeTeleportsLeft--;
             return true;
         }
@@ -56,4 +56,6 @@ public class Character extends GameElement {
     public String getSafeTeleportsLeft() {
         return (this.safeTeleportsLeft < 0 ? "$.$ " : String.valueOf(this.safeTeleportsLeft));
     }
+
+
 }

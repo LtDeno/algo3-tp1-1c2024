@@ -51,10 +51,10 @@ public class Game {
         this.attemptToLevelUp();
     }
 
-    public void characterTeleportSafely() {
+    public void characterTeleportSafely(Coordinates selectedCell) {
         if (this.gameEnded) return;
         if (this.levelUp()) return;
-        if (!this.character.teleportSafely(this.grid)) return;
+        if (!this.character.teleportSafely(this.grid, selectedCell)) return;
 
         this.moveEnemiesTowardsCharacter();
         this.attemptToLevelUp();

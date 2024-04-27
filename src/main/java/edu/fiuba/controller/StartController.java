@@ -1,4 +1,6 @@
-package edu.fiuba;
+package edu.fiuba.controller;
+
+import edu.fiuba.App;
 
 import java.io.IOException;
 

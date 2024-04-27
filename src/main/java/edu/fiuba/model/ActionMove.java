@@ -1,6 +1,7 @@
 package edu.fiuba.model;
 
-class ActionMove implements Action{
+class
+ActionMove implements Action{
 
     private final GameElement element;
     private final Grid grid;

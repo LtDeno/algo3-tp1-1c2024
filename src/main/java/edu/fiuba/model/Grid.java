@@ -43,9 +43,7 @@ public class Grid {
     }
 
     public ArrayList<GameElement> getGameElements() {
-        ArrayList<GameElement> copiedElements = new ArrayList<>();
-        this.gameElements.forEach((key, gameElement) -> copiedElements.add(gameElement));
-        return copiedElements;
+        return new ArrayList<>(this.gameElements.values());
     }
 
     ArrayList<GameElement> getCollidedElements() {

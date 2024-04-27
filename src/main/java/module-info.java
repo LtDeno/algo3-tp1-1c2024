@@ -10,4 +10,6 @@ module edu.fiuba {
     exports edu.fiuba.model;
     exports edu.fiuba.view;
     exports edu.fiuba.configpackage;
+    exports edu.fiuba.controller;
+    opens edu.fiuba.controller to javafx.fxml;
 }
