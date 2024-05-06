@@ -75,8 +75,6 @@ public class Configurator {
 
             fileWriter.append("\n").append(String.valueOf(defaultConfig));
         } catch (IOException e) {
-            System.out.println("\nCould not write 'config.json'." +
-                    "\nProcess will be terminated.");
             return false;
         }
         return true;
@@ -129,11 +127,7 @@ public class Configurator {
         return enemyConfig;
     }
 
-    private void readWriteError(IOException e) {
-        System.out.printf("\nConfig file could not be opened, read or written." +
-                "\nCause: %s." +
-                "\nIf the cause is unknown, please relaunch the app." +
-                "\nIf error continues please proceed to deleting file 'config.json'.", e.getCause());
+    private void readWriteError(IOException ignoredException) {
         System.exit(-1);
     }
 
