@@ -205,6 +205,7 @@ public class GameController {
 
     private void renderLevelUp() {
         if (this.game.hasLeveledUp() && !this.levelUpLabel.isVisible()) {
+            this.update();
             this.levelUpLabel.setVisible(true);
 
             levelUpLabelTimer.schedule(new TimerTask() {
