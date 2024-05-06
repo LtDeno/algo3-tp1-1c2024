@@ -78,4 +78,6 @@ public class Constants {
     public static final String DOWNRIGHTCURSORFILE = "downrightcursor.png";
     public static final String RIGHTCURSORFILE = "rightcursor.png";
     public static final String MIDDLECURSORFILE = "middlecursor.png";
+    public static final int DEFAULTGRIDWIDTH = 25;
+    public static final int DEFAULTGRIDHEIGHT = 20;
 }

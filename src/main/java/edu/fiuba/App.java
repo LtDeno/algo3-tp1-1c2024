@@ -2,6 +2,7 @@ package edu.fiuba;
 
 import edu.fiuba.configpackage.Configurator;
 import edu.fiuba.controller.GameController;
+import edu.fiuba.controller.StartController;
 import edu.fiuba.model.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,8 @@ public class App extends Application {
 
         FXMLLoader startLoader = getFXMLLoader(Constants.STARTSCENEFXML);
         scene = new Scene(startLoader.load());
+        StartController startController = startLoader.getController();
+        startController.load(config);
 
         stage.setTitle(Constants.GAMENAME);
         stage.setResizable(false);
@@ -36,9 +39,9 @@ public class App extends Application {
     }
 
     public static void changeSceneToGame() throws IOException {
-        FXMLLoader gridLoader = getFXMLLoader(Constants.GAMESCENEFXML);
-        scene = new Scene(gridLoader.load());
-        GameController gameController = gridLoader.getController();
+        FXMLLoader gameLoader = getFXMLLoader(Constants.GAMESCENEFXML);
+        scene = new Scene(gameLoader.load());
+        GameController gameController = gameLoader.getController();
 
         gameController.setGame(new Game(config));
         gameController.setScene(scene);

@@ -12,6 +12,7 @@ public class Configurator {
     private int nCol;
     private CConfig cConfig;
     private final LinkedList<EConfig> eConfigs = new LinkedList<>();
+    private int nElements;
 
     public Configurator(String configFileName) {
         this.fileName = configFileName;
@@ -30,6 +31,7 @@ public class Configurator {
 
             JsonObject enemiesConfig =  fileConfig.getAsJsonObject("game").getAsJsonObject("enemies");
             this.addEnemiesToList(enemiesConfig, this.eConfigs);
+            this.countElements();
 
         } catch (IOException e) {
             if (this.createDefaultConfigFile()) {
@@ -91,8 +93,8 @@ public class Configurator {
 
     private JsonObject createDefaultGridConfig() {
         JsonObject gridConfig = new JsonObject();
-        gridConfig.addProperty("height", 20);
-        gridConfig.addProperty("width", 25);
+        gridConfig.addProperty("height", Constants.DEFAULTGRIDHEIGHT);
+        gridConfig.addProperty("width", Constants.DEFAULTGRIDWIDTH);
 
         return gridConfig;
     }
@@ -139,8 +141,16 @@ public class Configurator {
         return this.nRow;
     }
 
+    public void setnRow(int nRow) {
+        this.nRow = nRow;
+    }
+
     public int getnCol() {
         return this.nCol;
+    }
+
+    public void setnCol(int nCol) {
+        this.nCol = nCol;
     }
 
     public CConfig getcConfig() {
@@ -149,5 +159,21 @@ public class Configurator {
 
     public LinkedList<EConfig> geteConfigs() {
         return this.eConfigs;
+    }
+
+    public boolean isGridSizeValid() {
+        if (this.nRow == 0 || this.nCol == 0) return false;
+        return (((this.nRow * this.nCol) - this.nElements) > 0);
+    }
+
+    private void countElements() {
+        this.nElements = 1;
+        for (EConfig eConfig : this.eConfigs) {
+            this.nElements += eConfig.getnEnemy();
+        }
+    }
+
+    public int getnElements() {
+        return this.nElements;
     }
 }

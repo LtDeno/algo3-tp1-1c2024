@@ -36,6 +36,10 @@ public class GameController {
     @FXML
     private VBox deathVBox;
     @FXML
+    private Label deadLabel;
+    @FXML
+    private Label gridFilledLabel;
+    @FXML
     private Button randomTeleportButton;
     @FXML
     private Button safeTeleportButton;
@@ -49,13 +53,12 @@ public class GameController {
     private Game game;
     private GameView gameView;
     private Scene scene;
+
     private final HashMap<KeyCode, Coordinates> keyboardControls = new HashMap<>();
 
     private final int cellSize = Constants.CELLSIZE;
-
     private double cursorDirectionAngle;
     private double previousCursorDirectionAngle= 0d;
-
     private boolean playerChoosingCellToTeleport = false;
     private final Timer levelUpLabelTimer = new Timer();
 
@@ -140,6 +143,7 @@ public class GameController {
             Coordinates selectedCell = new Coordinates((int)(event.getX()  / cellSize) + 1, (int)(event.getY() / cellSize) + 1);
             this.game.characterTeleportSafely(selectedCell);
             Image mouseImage = this.cursorImages.get(this.cursorDirectionAngle);
+            assert mouseImage != null;
             ImageCursor imageCursor = new ImageCursor(mouseImage, mouseImage.getWidth() / 2, mouseImage.getHeight() / 2);
             canvas.setCursor(imageCursor);
             this.update();
@@ -191,7 +195,9 @@ public class GameController {
     }
 
     private void updateGraphics() {
-        this.deathVBox.setVisible(this.game.hasGameEnded());
+        this.deathVBox.setVisible(this.game.isGameEnded());
+        this.deadLabel.setVisible(!this.game.isGridFilled());
+        this.gridFilledLabel.setVisible(this.game.isGridFilled());
         this.renderLevelUp();
         gameView.resetCanvas();
         this.game.getGameElements().forEach(E -> gameView.renderGameElement(E));

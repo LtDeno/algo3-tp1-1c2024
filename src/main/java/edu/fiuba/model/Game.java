@@ -14,6 +14,7 @@ public class Game {
     private Grid grid;
     private final ArrayList<Object> enemiesCurrentConfig = new ArrayList<>();
     private boolean gameEnded = false;
+    private boolean gridFilled = false;
     private boolean hasLeveledUp = false;
     private boolean hasMovedInLevel = false;
     private int level = 1;
@@ -22,17 +23,12 @@ public class Game {
     public Game(Configurator c) {
         this.config = c;
         this.listEnemiesAndCurrentAmount();
-        if (this.isGridSizeInvalid()) System.exit(-1);
 
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
         this.character = this.createCharacterFromConfig();
         this.grid.addGameElement(this.character);
         this.createEnemiesIntoGrid();
         this.startLevelUpAttemptTimer();
-    }
-
-    public boolean hasGameEnded() {
-        return this.gameEnded;
     }
 
     public void characterMove(Coordinates characterMoveDirection) {
@@ -94,7 +90,6 @@ public class Game {
                 grid.reviseChangedElements();
                 checkCollisions();
 
-
                 timer.cancel();
             }
         }, 150);
@@ -137,7 +132,10 @@ public class Game {
     private void levelUp() {
         this.hasLeveledUp = true;
         this.stepUpNumberOfEnemies();
-        if (this.isGridSizeInvalid()) System.exit(-1);
+        if (this.isGridSizeInvalid()) {
+            this.gridFilled = true;
+            this.gameEnded = true;
+        }
 
         this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
 
@@ -213,6 +211,14 @@ public class Game {
 
     public boolean hasLeveledUp() {
         return (this.hasLeveledUp && !this.hasMovedInLevel);
+    }
+
+    public boolean isGameEnded() {
+        return this.gameEnded;
+    }
+
+    public boolean isGridFilled() {
+        return this.gridFilled;
     }
 
     public int getLevel() {

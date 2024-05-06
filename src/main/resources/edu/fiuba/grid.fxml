@@ -41,14 +41,24 @@
         <Canvas fx:id="canvas" height="200.0" width="320.0" StackPane.alignment="TOP_LEFT" />
 
         <VBox fx:id="deathVBox" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="72.0" prefWidth="202.0" scaleShape="false" visible="false">
-            <Label alignment="CENTER" prefHeight="38.0" prefWidth="306.0" text="Wow you are so dead!" textAlignment="CENTER" textFill="WHITE">
-                <font>
-                    <Font name="System Bold" size="18.0" />
-                </font>
-                <effect>
-                    <DropShadow />
-                </effect>
-            </Label>
+            <StackPane>
+                <Label fx:id="deadLabel" alignment="CENTER" prefHeight="38.0" prefWidth="306.0" text="Wow you are so dead!" textAlignment="CENTER" textFill="WHITE" visible="false">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Label>
+                <Label fx:id="gridFilledLabel" alignment="CENTER" prefHeight="38.0" prefWidth="306.0" text="Can't spawn more enemies. Game ended!" textAlignment="CENTER" textFill="WHITE" visible="false">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </Label>
+            </StackPane>
             <Label alignment="CENTER" prefHeight="27.0" prefWidth="297.0" text="What would you like to do now?" textAlignment="CENTER" textFill="WHITE">
                 <font>
                     <Font name="System Bold" size="18.0" />
@@ -57,6 +67,7 @@
                     <DropShadow />
                 </effect>
             </Label>
+
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="309.0">
                 <Button contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#restartGame" text="Restart" textAlignment="CENTER" translateX="-10.0">
                     <effect>
