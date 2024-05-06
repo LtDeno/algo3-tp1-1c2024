@@ -56,9 +56,7 @@ public class GameView {
 
 
     public void setAnimations() {
-        animations.values().forEach(animation -> {
-            animation.run();
-        });
+        animations.values().forEach(Animation::run);
     }
 
     public void resetCanvas() {

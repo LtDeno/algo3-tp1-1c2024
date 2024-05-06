@@ -50,11 +50,11 @@ public class Character extends GameElement {
     }
 
     public String getRandomTeleportsLeft() {
-        return (this.randomTeleportsLeft < 0 ? "$.$ " : String.valueOf(this.randomTeleportsLeft));
+        return (this.randomTeleportsLeft < 0 ? "infinite" : String.valueOf(this.randomTeleportsLeft));
     }
 
     public String getSafeTeleportsLeft() {
-        return (this.safeTeleportsLeft < 0 ? "$.$ " : String.valueOf(this.safeTeleportsLeft));
+        return (this.safeTeleportsLeft < 0 ? "infinite" : String.valueOf(this.safeTeleportsLeft));
     }
 
 

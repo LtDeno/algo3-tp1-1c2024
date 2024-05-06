@@ -14,7 +14,8 @@ public class Game {
     private Grid grid;
     private final ArrayList<Object> enemiesCurrentConfig = new ArrayList<>();
     private boolean gameEnded = false;
-    private boolean readyForLevelUp = false;
+    private boolean hasLeveledUp = false;
+    private boolean hasMovedInLevel = false;
     private int level = 1;
     private int score = 0;
 
@@ -27,6 +28,7 @@ public class Game {
         this.character = this.createCharacterFromConfig();
         this.grid.addGameElement(this.character);
         this.createEnemiesIntoGrid();
+        this.startLevelUpAttemptTimer();
     }
 
     public boolean hasGameEnded() {
@@ -35,48 +37,26 @@ public class Game {
 
     public void characterMove(Coordinates characterMoveDirection) {
         if (this.gameEnded) return;
-        if (this.levelUp()) return;
-
         this.character.moveInDirection(characterMoveDirection, this.grid);
+
+        this.hasMovedInLevel = true;
         this.moveEnemiesTowardsCharacter();
-        this.attemptToLevelUp();
     }
 
     public void characterTeleport() {
         if (this.gameEnded) return;
-        if (this.levelUp()) return;
         if (!this.character.teleport(this.grid)) return;
 
+        this.hasMovedInLevel = true;
         this.moveEnemiesTowardsCharacter();
-        this.attemptToLevelUp();
     }
 
     public void characterTeleportSafely(Coordinates selectedCell) {
         if (this.gameEnded) return;
-        if (this.levelUp()) return;
         if (!this.character.teleportSafely(this.grid, selectedCell)) return;
 
+        this.hasMovedInLevel = true;
         this.moveEnemiesTowardsCharacter();
-        this.attemptToLevelUp();
-    }
-
-    boolean levelUp() {
-        if (!readyForLevelUp) return false;
-        this.readyForLevelUp = false;
-        this.stepUpNumberOfEnemies();
-        if (this.isGridSizeInvalid()) System.exit(-1);
-
-        this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
-
-        this.character.setCoords(this.grid.getMiddleCoords());
-        this.character.addRandomTP(this.config.getcConfig().getnStepRandomTP());
-        this.character.addSafeTP(this.config.getcConfig().getnStepSafeTP());
-        this.grid.addGameElement(this.character);
-
-        this.createEnemiesIntoGrid();
-        this.level++;
-
-        return true;
     }
 
     private Character createCharacterFromConfig() {
@@ -113,6 +93,9 @@ public class Game {
 
                 grid.reviseChangedElements();
                 checkCollisions();
+
+
+                timer.cancel();
             }
         }, 150);
     }
@@ -132,18 +115,14 @@ public class Game {
                 break;
             } else if (!(gameElement.getKiller() instanceof Character) && fueguitoConfig != null) {
                 this.score += ((Enemy) gameElement).getScoreOnKill();
-                this.grid.addGameElement(new Enemy(
-                        fueguitoConfig.getName(),
-                        gameElement.getCoords(),
-                        fueguitoConfig.getdEnemyMove(),
-                        fueguitoConfig.getScoreOnKill()));
+                this.grid.addGameElement(new Enemy(fueguitoConfig.getName(), gameElement.getCoords(), fueguitoConfig.getdEnemyMove(), fueguitoConfig.getScoreOnKill()));
             }
 
         }
         this.grid.clearCollidedElements();
     }
 
-    private void attemptToLevelUp() {
+    private boolean isReadyForLevelUp() {
         boolean successful = true;
         for (GameElement gameElement : this.grid.getGameElements()) {
             if (!(gameElement instanceof Character || gameElement.getName().equalsIgnoreCase(Constants.FIRENAME))) {
@@ -152,7 +131,37 @@ public class Game {
             }
         }
 
-        this.readyForLevelUp = successful;
+        return successful;
+    }
+
+    private void levelUp() {
+        this.hasLeveledUp = true;
+        this.stepUpNumberOfEnemies();
+        if (this.isGridSizeInvalid()) System.exit(-1);
+
+        this.grid = new Grid(this.config.getnRow(), this.config.getnCol());
+
+        this.character.setCoords(this.grid.getMiddleCoords());
+        this.character.addRandomTP(this.config.getcConfig().getnStepRandomTP());
+        this.character.addSafeTP(this.config.getcConfig().getnStepSafeTP());
+        this.grid.addGameElement(this.character);
+
+        this.createEnemiesIntoGrid();
+        this.level++;
+        this.hasMovedInLevel = false;
+    }
+
+    private void startLevelUpAttemptTimer() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (isReadyForLevelUp()) {
+                    levelUp();
+                } else {
+                    hasLeveledUp = false;
+                }
+            }
+        }, 0, 145);
     }
 
     private void listEnemiesAndCurrentAmount() {
@@ -174,16 +183,36 @@ public class Game {
         return cellCount < elementsCount;
     }
 
-    public Character getCharacter() {
-        return this.character;
+    public int getCharacterPosX() {
+        return this.character.getCoords().getxCoord();
     }
 
-    public Grid getGrid() {
-        return this.grid;
+    public int getCharacterPosY() {
+        return this.character.getCoords().getyCoord();
     }
 
-    public boolean isReadyForLevelUp() {
-        return this.readyForLevelUp;
+    public String getCharacterRandomTeleportLeft() {
+        return this.character.getRandomTeleportsLeft();
+    }
+
+    public String getCharacterSafeTeleportLeft() {
+        return this.character.getSafeTeleportsLeft();
+    }
+
+    public int getGameWidth() {
+        return this.grid.getnColumns();
+    }
+
+    public int getGameHeight() {
+        return this.grid.getnRows();
+    }
+
+    public ArrayList<GameElement> getGameElements() {
+        return this.grid.getGameElements();
+    }
+
+    public boolean hasLeveledUp() {
+        return (this.hasLeveledUp && !this.hasMovedInLevel);
     }
 
     public int getLevel() {

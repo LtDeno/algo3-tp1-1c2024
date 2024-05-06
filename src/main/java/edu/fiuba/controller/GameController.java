@@ -6,6 +6,7 @@ import edu.fiuba.model.Coordinates;
 import edu.fiuba.model.Game;
 import edu.fiuba.view.GameView;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
@@ -15,14 +16,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 public class GameController {
@@ -45,8 +45,6 @@ public class GameController {
     private GridPane grid;
     @FXML
     private Canvas canvas;
-    @FXML
-    private StackPane gridContainer;
 
     private Game game;
     private GameView gameView;
@@ -58,7 +56,8 @@ public class GameController {
     private double cursorDirectionAngle;
     private double previousCursorDirectionAngle= 0d;
 
-    private boolean PlayerChoosingCellToTeleport = false;
+    private boolean playerChoosingCellToTeleport = false;
+    private final Timer levelUpLabelTimer = new Timer();
 
     private final Map<Double, Image> cursorImages = Map.of(
             Math.PI/8, new Image(String.valueOf(getClass().getResource(Constants.UPRIGHTCURSORFILE)), 128d, 128d, true, false),
@@ -81,10 +80,9 @@ public class GameController {
     }
 
     public void load() {
-
         this.gameView = new GameView(canvas, grid);
         gameView.setAnimations();
-        gameView.renderGrid(this.game.getGrid().getnColumns(), this.game.getGrid().getnRows());
+        gameView.renderGrid(this.game.getGameWidth(), this.game.getGameHeight());
 
         new AnimationTimer() {
             @Override
@@ -94,92 +92,122 @@ public class GameController {
         }.start();
 
         this.assignEvents();
-        this.keyboardControls.putAll(Constants.NUMERICCONTROLS);
-        this.keyboardControls.putAll(Constants.ALPHACONTROLS);
         this.update();
     }
 
     private void assignEvents() {
+        this.keyboardControls.putAll(Constants.NUMERICCONTROLS);
+        this.keyboardControls.putAll(Constants.ALPHACONTROLS);
 
-        this.canvas.setOnMouseExited(event -> scene.setCursor(Cursor.DEFAULT));
+        this.canvas.setOnMouseExited(this::handleMouseExited);
 
-        this.canvas.setOnMouseMoved(e -> {
-            if (PlayerChoosingCellToTeleport) { return; }
-            double dy = (this.cellSize * (this.game.getCharacter().getCoords().getyCoord() - 0.5)) - (e.getY());
-            double dx = e.getX() - (this.cellSize * (this.game.getCharacter().getCoords().getxCoord() - 0.5));
-            double cursorAngleToCharacter = Math.abs(dy) - this.cellSize/2.0 < 0 && Math.abs(dx) - this.cellSize/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
-            Set<Double> keys = this.cursorImages.keySet();
-            this.cursorDirectionAngle = cursorAngleToCharacter < Math.PI/8 ? (cursorAngleToCharacter < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > cursorAngleToCharacter - Math.PI/4).sorted().findFirst().get();
+        this.canvas.setOnMouseMoved(this::handleMouseMoved);
 
-            if (this.cursorDirectionAngle != this.previousCursorDirectionAngle) {
-                Image mouseImage = this.cursorImages.get(this.cursorDirectionAngle);
-                ImageCursor imageCursor = new ImageCursor(mouseImage, mouseImage.getWidth() / 2, mouseImage.getHeight() / 2);
-                canvas.setCursor(imageCursor);
-                this.previousCursorDirectionAngle = this.cursorDirectionAngle;
-            }
-        });
+        this.canvas.setOnMouseClicked(this::handleMouseClicked);
 
-        this.canvas.setOnMouseClicked(e -> {
-            if (PlayerChoosingCellToTeleport) {
-                PlayerChoosingCellToTeleport = false;
-                Coordinates selectedCell = new Coordinates((int)(e.getX()  / cellSize) + 1, (int)(e.getY() / cellSize) + 1);
-                this.game.characterTeleportSafely(selectedCell);
-                Image mouseImage = this.cursorImages.get(this.cursorDirectionAngle);
-                ImageCursor imageCursor = new ImageCursor(mouseImage, mouseImage.getWidth() / 2, mouseImage.getHeight() / 2);
-                canvas.setCursor(imageCursor);
-                this.update();
-                return;
-            }
-            Coordinates coordinatesToMove = Constants.MOUSECONTROLS.get(this.cursorDirectionAngle);
-            if (coordinatesToMove == null) return;
-            this.game.characterMove(coordinatesToMove);
+        this.scene.setOnKeyPressed(this::handleKeyPressed);
+
+        this.randomTeleportButton.setOnAction(this::handleRandomTeleport);
+
+        this.safeTeleportButton.setOnAction(this::handleSafeTeleport);
+
+        this.waitForRobotsButton.setOnAction(this::handleWaitForRobots);
+    }
+
+    private void handleMouseExited(MouseEvent ignoredEvent) {
+        scene.setCursor(Cursor.DEFAULT);
+    }
+
+    private void handleMouseMoved(MouseEvent event) {
+        if (playerChoosingCellToTeleport) { return; }
+        double dy = (this.cellSize * (this.game.getCharacterPosY() - 0.5)) - (event.getY());
+        double dx = event.getX() - (this.cellSize * (this.game.getCharacterPosX() - 0.5));
+        double cursorAngleToCharacter = Math.abs(dy) - this.cellSize/2.0 < 0 && Math.abs(dx) - this.cellSize/2.0 < 0  ? -1.0 : (dy < 0 ? Math.atan2(-dy, -dx) + Math.PI : Math.atan2(dy, dx));
+        Set<Double> keys = this.cursorImages.keySet();
+        this.cursorDirectionAngle = cursorAngleToCharacter < Math.PI/8 ? (cursorAngleToCharacter < 0 ? -1.0 : 15 * Math.PI/8) : keys.stream().filter(key -> key > cursorAngleToCharacter - Math.PI/4).sorted().findFirst().get();
+
+        if (this.cursorDirectionAngle != this.previousCursorDirectionAngle) {
+            Image mouseImage = this.cursorImages.get(this.cursorDirectionAngle);
+            ImageCursor imageCursor = new ImageCursor(mouseImage, mouseImage.getWidth() / 2, mouseImage.getHeight() / 2);
+            canvas.setCursor(imageCursor);
+            this.previousCursorDirectionAngle = this.cursorDirectionAngle;
+        }
+    }
+
+    private void handleMouseClicked(MouseEvent event) {
+        if (playerChoosingCellToTeleport) {
+            playerChoosingCellToTeleport = false;
+            Coordinates selectedCell = new Coordinates((int)(event.getX()  / cellSize) + 1, (int)(event.getY() / cellSize) + 1);
+            this.game.characterTeleportSafely(selectedCell);
+            Image mouseImage = this.cursorImages.get(this.cursorDirectionAngle);
+            ImageCursor imageCursor = new ImageCursor(mouseImage, mouseImage.getWidth() / 2, mouseImage.getHeight() / 2);
+            canvas.setCursor(imageCursor);
             this.update();
-        });
+            return;
+        }
+        Coordinates coordinatesToMove = Constants.MOUSECONTROLS.get(this.cursorDirectionAngle);
+        if (coordinatesToMove == null) return;
+        this.game.characterMove(coordinatesToMove);
+        this.update();
+    }
 
-        this.scene.setOnKeyPressed(e -> {
-            KeyCode keyPressed = e.getCode();
-            Coordinates coordinatesToMove = this.keyboardControls.get(keyPressed);
-            if (coordinatesToMove == null) return;
+    private void handleKeyPressed(KeyEvent event) {
+        KeyCode keyPressed = event.getCode();
+        Coordinates coordinatesToMove = this.keyboardControls.get(keyPressed);
+        if (coordinatesToMove == null) return;
 
-            this.game.characterMove(coordinatesToMove);
-            this.update();
-        });
+        this.game.characterMove(coordinatesToMove);
+        this.update();
+    }
 
-        this.randomTeleportButton.setOnAction(event -> {
-            this.game.characterTeleport();
-            this.update();
-        });
+    private void handleRandomTeleport(ActionEvent ignoredEvent) {
+        this.game.characterTeleport();
+        this.update();
+    }
 
-        this.safeTeleportButton.setOnAction(event -> {
-            int tp;
-            try {
-                tp = Integer.parseInt(this.game.getCharacter().getSafeTeleportsLeft());
-            } catch (Exception e) {
-                tp = -1;
-            }
-            if (tp == 0) return;
-            this.PlayerChoosingCellToTeleport = true;
-            canvas.setCursor(Cursor.HAND);
-        });
+    private void handleSafeTeleport(ActionEvent ignoredEvent) {
+        int tp;
+        try {
+            tp = Integer.parseInt(this.game.getCharacterSafeTeleportLeft());
+        } catch (Exception e) {
+            tp = -1;
+        }
+        if (tp == 0) return;
+        this.playerChoosingCellToTeleport = true;
+        canvas.setCursor(Cursor.HAND);
+        this.update();
+    }
 
-        this.waitForRobotsButton.setOnAction(event -> {
-            this.game.characterMove(Constants.MIDDLECOORDINATES);
-            this.update();
-        });
+    private void handleWaitForRobots(ActionEvent ignoredEvent) {
+        this.game.characterMove(Constants.MIDDLECOORDINATES);
+        this.update();
     }
 
     private void update() {
-        this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacter().getRandomTeleportsLeft() + ")");
-        this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacter().getSafeTeleportsLeft() + ")");
+        this.randomTeleportButton.setText("Teleport Randomly\n(Remaining: " + this.game.getCharacterRandomTeleportLeft() + ")");
+        this.safeTeleportButton.setText("Teleport Safely\n(Remaining: " + this.game.getCharacterSafeTeleportLeft() + ")");
         this.levelLabel.setText("Level: " + this.game.getLevel());
         this.scoreLabel.setText("Score: " + this.game.getScore());
     }
 
     private void updateGraphics() {
         this.deathVBox.setVisible(this.game.hasGameEnded());
-        this.levelUpLabel.setVisible(this.game.isReadyForLevelUp());
+        this.renderLevelUp();
         gameView.resetCanvas();
-        this.game.getGrid().getGameElements().forEach(E -> gameView.renderGameElement(E));
+        this.game.getGameElements().forEach(E -> gameView.renderGameElement(E));
+    }
+
+    private void renderLevelUp() {
+        if (this.game.hasLeveledUp() && !this.levelUpLabel.isVisible()) {
+            this.levelUpLabel.setVisible(true);
+
+            levelUpLabelTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    levelUpLabel.setVisible(false);
+                }
+            }, 1200);
+        }
     }
 
     public void restartGame() throws IOException {
@@ -189,5 +217,4 @@ public class GameController {
     public void endGame() {
         System.exit(0);
     }
-
 }

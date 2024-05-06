@@ -29,6 +29,12 @@ public class App extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        System.exit(0);
+    }
+
     public static void changeSceneToGame() throws IOException {
         FXMLLoader gridLoader = getFXMLLoader(Constants.GAMESCENEFXML);
         scene = new Scene(gridLoader.load());
@@ -50,5 +56,6 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+
     }
 }

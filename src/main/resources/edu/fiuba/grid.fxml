@@ -27,7 +27,7 @@
         </Label>
     </HBox>
 
-    <StackPane fx:id="gridContainer">
+    <StackPane>
         <GridPane fx:id="grid">
            <columnConstraints>
                <ColumnConstraints />
