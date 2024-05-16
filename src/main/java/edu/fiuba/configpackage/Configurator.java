@@ -10,6 +10,8 @@ public class Configurator {
     private final String fileName;
     private int nRow;
     private int nCol;
+    private int maxWidth = Constants.DEFAULTGRIDWIDTH;
+    private int maxHeight = Constants.DEFAULTGRIDHEIGHT;
     private CConfig cConfig;
     private final LinkedList<EConfig> eConfigs = new LinkedList<>();
     private int nElements;
@@ -147,6 +149,14 @@ public class Configurator {
         this.nCol = nCol;
     }
 
+    public void setMaxWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
+    }
+
+    public void setMaxHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+    }
+
     public CConfig getcConfig() {
         return this.cConfig;
     }
@@ -157,12 +167,12 @@ public class Configurator {
 
     public Exception checkGridSizeValidity() {
         Exception e = null;
-        if (this.nRow == 0 || this.nCol == 0) {
+        if (this.nCol == 0 || this.nRow == 0) {
             e = new Exception("Width or height can't be zero");
-        } else if (((this.nRow * this.nCol) - this.nElements) < 0) {
+        } else if (((this.nCol * this.nRow) - this.nElements) < 0) {
             e = new Exception(this.nCol + " columns and " + this.nRow + " rows can't contain " + this.nElements + " elements.");
-        } else if ((this.nRow > Constants.MAXGRIDHEIGHT) || (this.nCol > Constants.MAXGRIDWIDTH)) {
-            e = new Exception("Maximum values for width and height should be " + Constants.MAXGRIDWIDTH + " and " + Constants.MAXGRIDHEIGHT);
+        } else if ((this.nCol > this.maxWidth) || (this.nRow > this.maxHeight)) {
+            e = new Exception("Maximum values for width and height should be " + this.maxWidth + " and " + this.maxHeight);
         }
         return e;
     }

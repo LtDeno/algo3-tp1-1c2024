@@ -55,14 +55,14 @@ public class Constants {
             KeyCode.X, Constants.MIDDLECOORDINATES
     );
     public static final Map<Double, Coordinates> MOUSECONTROLS = Map.of(
-            Math.PI/8, Constants.UPRIGHTCOORDINATES,
-            3*Math.PI/8, Constants.UPCOORDINATES,
-            5*Math.PI/8, Constants.UPLEFTCOORDINATES,
-            7*Math.PI/8, Constants.LEFTCOORDINATES,
-            9*Math.PI/8, Constants.DOWNLEFTCOORDINATES,
-            11*Math.PI/8, Constants.DOWNCOORDINATES,
-            13*Math.PI/8, Constants.DOWNRIGHTCOORDINATES,
-            15*Math.PI/8, Constants.RIGHTCOORDINATES,
+            Math.PI / 8, Constants.UPRIGHTCOORDINATES,
+            3 * Math.PI / 8, Constants.UPCOORDINATES,
+            5 * Math.PI / 8, Constants.UPLEFTCOORDINATES,
+            7 * Math.PI / 8, Constants.LEFTCOORDINATES,
+            9 * Math.PI / 8, Constants.DOWNLEFTCOORDINATES,
+            11 * Math.PI / 8, Constants.DOWNCOORDINATES,
+            13 * Math.PI / 8, Constants.DOWNRIGHTCOORDINATES,
+            15 * Math.PI / 8, Constants.RIGHTCOORDINATES,
             -1.0, Constants.MIDDLECOORDINATES
     );
     public static final ArrayList<Integer> CHARACTERANIMATIONFRAMES = new ArrayList<>(List.of(0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 2, 1, 0));
@@ -80,6 +80,4 @@ public class Constants {
     public static final String MIDDLECURSORFILE = "middlecursor.png";
     public static final int DEFAULTGRIDWIDTH = 25;
     public static final int DEFAULTGRIDHEIGHT = 20;
-    public static final int MAXGRIDWIDTH = 320;
-    public static final int MAXGRIDHEIGHT = 200;
 }
