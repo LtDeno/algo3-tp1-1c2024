@@ -155,9 +155,16 @@ public class Configurator {
         return this.eConfigs;
     }
 
-    public boolean isGridSizeValid() {
-        if (this.nRow == 0 || this.nCol == 0) return false;
-        return (((this.nRow * this.nCol) - this.nElements) > 0);
+    public Exception checkGridSizeValidity() {
+        Exception e = null;
+        if (this.nRow == 0 || this.nCol == 0) {
+            e = new Exception("Width or height can't be zero");
+        } else if (((this.nRow * this.nCol) - this.nElements) < 0) {
+            e = new Exception(this.nCol + " columns and " + this.nRow + " rows can't contain " + this.nElements + " elements.");
+        } else if ((this.nRow > Constants.MAXGRIDHEIGHT) || (this.nCol > Constants.MAXGRIDWIDTH)) {
+            e = new Exception("Maximum values for width and height should be " + Constants.MAXGRIDWIDTH + " and " + Constants.MAXGRIDHEIGHT);
+        }
+        return e;
     }
 
     private void countElements() {
@@ -165,9 +172,5 @@ public class Configurator {
         for (EConfig eConfig : this.eConfigs) {
             this.nElements += eConfig.getnEnemy();
         }
-    }
-
-    public int getnElements() {
-        return this.nElements;
     }
 }

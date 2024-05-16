@@ -2,13 +2,13 @@ package edu.fiuba.model;
 
 public abstract class GameElement {
 
-    protected final String name;
+    private final String name;
     protected final Coordinates coords;
     protected final int dMove;
-    protected boolean collided = false;
-    protected GameElement killer;
+    private boolean collided = false;
+    private GameElement killer;
 
-    GameElement(String name, Coordinates coords, int dMove) {
+    protected GameElement(String name, Coordinates coords, int dMove) {
         this.name = name;
         this.coords = coords;
         this.dMove = dMove;
@@ -22,23 +22,23 @@ public abstract class GameElement {
         return this.coords;
     }
 
-    void setCoords(Coordinates newCoords) {
+    protected void setCoords(Coordinates newCoords) {
         this.coords.setCoords(newCoords);
     }
 
-    void setCollided() {
+    protected void setCollided() {
         this.collided = true;
     }
 
-    boolean isCollided() {
+    protected boolean isCollided() {
         return this.collided;
     }
 
-    void setKiller(GameElement killer) {
+    protected void setKiller(GameElement killer) {
         this.killer = killer;
     }
 
-    GameElement getKiller() {
+    protected GameElement getKiller() {
         return this.killer;
     }
 

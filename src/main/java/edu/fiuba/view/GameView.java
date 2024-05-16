@@ -32,7 +32,6 @@ public class GameView {
         this.gridPane = gridPane;
     }
 
-
     public void renderGrid(int columns, int rows) {
         this.canvas.setWidth(this.cellSize * columns);
         this.canvas.setHeight(this.cellSize * rows);
@@ -54,7 +53,6 @@ public class GameView {
         gc.drawImage(sprite, this.animations.get(E.getName()).getCurrentX(), 0, this.spriteSize, this.spriteSize, (E.getCoords().getxCoord() - 1) * this.cellSize, (E.getCoords().getyCoord() - 1) * this.cellSize, this.cellSize, this.cellSize);
     }
 
-
     public void setAnimations() {
         animations.values().forEach(Animation::run);
     }
@@ -63,5 +61,4 @@ public class GameView {
         var gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
-
 }

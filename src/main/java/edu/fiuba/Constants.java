@@ -80,4 +80,6 @@ public class Constants {
     public static final String MIDDLECURSORFILE = "middlecursor.png";
     public static final int DEFAULTGRIDWIDTH = 25;
     public static final int DEFAULTGRIDHEIGHT = 20;
+    public static final int MAXGRIDWIDTH = 320;
+    public static final int MAXGRIDHEIGHT = 200;
 }

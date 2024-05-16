@@ -30,20 +30,14 @@ public class StartController {
             this.config.setnRow(Integer.parseInt(this.heightTextField.getText()));
         } catch (NumberFormatException ignoredException) {
         } finally {
-            if (config.isGridSizeValid()) {
+            Exception gridSizeValidity = this.config.checkGridSizeValidity();
+            if (gridSizeValidity == null) {
                 App.changeSceneToGame();
             } else {
-                gridSizeInvalid.setText(this.constructGridSizeError());
-                gridSizeInvalid.setVisible(true);
+                this.gridSizeInvalid.setText(gridSizeValidity.getMessage());
+                this.gridSizeInvalid.setVisible(true);
+                this.gridSizeInvalid.setWrapText(true);
             }
         }
-    }
-
-    private String constructGridSizeError() {
-        return "Width or height invalid. " +
-                (config.getnRow() * config.getnCol()) +
-                " cells can't contain " +
-                (config.getnElements()) +
-                " elements.";
     }
 }

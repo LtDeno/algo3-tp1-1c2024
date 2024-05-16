@@ -2,7 +2,7 @@ package edu.fiuba.model;
 
 public class Coordinates {
 
-    static final Coordinates ZERO = new Coordinates(0, 0);
+    public static final Coordinates ZERO = new Coordinates(0, 0);
     private int xCoord;
     private int yCoord;
 

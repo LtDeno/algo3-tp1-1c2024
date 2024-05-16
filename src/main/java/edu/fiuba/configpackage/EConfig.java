@@ -8,7 +8,7 @@ public class EConfig {
     private final int dEnemyMove;
     private final int scoreOnKill;
 
-    EConfig(String name, int nEnemy, int nStepEnemy, int dEnemyMove, int scoreOnKill) {
+    protected EConfig(String name, int nEnemy, int nStepEnemy, int dEnemyMove, int scoreOnKill) {
         this.name = name;
         this.nEnemy = nEnemy;
         this.nStepEnemy = nStepEnemy;

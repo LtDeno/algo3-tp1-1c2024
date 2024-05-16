@@ -1,13 +1,12 @@
 package edu.fiuba.model;
 
-class
-ActionMove implements Action{
+class ActionMove implements Action{
 
     private final GameElement element;
     private final Grid grid;
     private final Coordinates vectorToMove;
 
-    ActionMove(GameElement element, Coordinates vectorToMove, Grid grid) {
+    protected ActionMove(GameElement element, Coordinates vectorToMove, Grid grid) {
         this.element = element;
         this.grid = grid;
         this.vectorToMove = vectorToMove;

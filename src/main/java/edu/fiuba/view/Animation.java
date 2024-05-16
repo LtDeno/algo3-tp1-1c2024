@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Animation {
+class Animation {
 
     private final int startingX;
     private final ArrayList<Integer> frames = new ArrayList<>();
@@ -15,7 +15,6 @@ public class Animation {
     private int currentFrame = 0;
 
     private Timer timer = new Timer();
-
     private TimerTask task = new TimerTask() {
         @Override
         public void run() {
@@ -29,18 +28,7 @@ public class Animation {
         }
     };
 
-
-
-    public Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops) {
-        this.timeBetweenFrames = timeBetweenFrames;
-        this.startingX = startingX;
-        this.spriteSize = spriteSize;
-        this.onLoop = true;
-        this.timeBetweenLoops = timeBetweenLoops;
-
-    }
-
-    public Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops, ArrayList<Integer> frames) {
+    protected Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops, ArrayList<Integer> frames) {
         this.timeBetweenFrames = timeBetweenFrames;
         this.frames.addAll(frames);
         this.startingX = startingX;
@@ -48,10 +36,6 @@ public class Animation {
         this.onLoop = true;
         this.timeBetweenLoops = timeBetweenLoops;
 
-    }
-
-    public void addFrame(int n) {
-        frames.add(n);
     }
 
     private void next() {
@@ -62,7 +46,7 @@ public class Animation {
         return currentFrame+1 >= frames.toArray().length;
     }
 
-    public int getCurrentX() {
+    protected int getCurrentX() {
         return startingX + frames.get(currentFrame) * spriteSize;
     }
 
@@ -78,7 +62,7 @@ public class Animation {
         this.timer = new Timer();
     }
 
-    public void run() {
+    protected void run() {
         timer.scheduleAtFixedRate(task, timeBetweenFrames, timeBetweenFrames);
     }
 

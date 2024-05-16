@@ -2,10 +2,10 @@ package edu.fiuba.model;
 
 class ActionTeleportRandomly implements Action {
 
-    protected final GameElement element;
-    protected final Grid grid;
+    private final GameElement element;
+    private final Grid grid;
 
-    ActionTeleportRandomly(GameElement element, Grid grid) {
+    protected ActionTeleportRandomly(GameElement element, Grid grid) {
         this.element = element;
         this.grid = grid;
     }

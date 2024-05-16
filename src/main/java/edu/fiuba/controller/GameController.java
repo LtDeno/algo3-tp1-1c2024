@@ -74,30 +74,6 @@ public class GameController {
             -1.0, new Image(String.valueOf(getClass().getResource(Constants.MIDDLECURSORFILE)), 128d, 128d, true, false)
     );
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
-
-    public void load() {
-        this.gameView = new GameView(canvas, grid);
-        gameView.setAnimations();
-        gameView.renderGrid(this.game.getGameWidth(), this.game.getGameHeight());
-
-        new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                updateGraphics();
-            }
-        }.start();
-
-        this.assignEvents();
-        this.update();
-    }
-
     private void assignEvents() {
         this.keyboardControls.putAll(Constants.NUMERICCONTROLS);
         this.keyboardControls.putAll(Constants.ALPHACONTROLS);
@@ -199,7 +175,7 @@ public class GameController {
         this.deadLabel.setVisible(!this.game.isGridFilled());
         this.gridFilledLabel.setVisible(this.game.isGridFilled());
         this.renderLevelUp();
-        gameView.resetCanvas();
+        this.gameView.resetCanvas();
         this.game.getGameElements().forEach(E -> gameView.renderGameElement(E));
     }
 
@@ -215,6 +191,30 @@ public class GameController {
                 }
             }, 1200);
         }
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public void load() {
+        this.gameView = new GameView(canvas, grid);
+        gameView.setAnimations();
+        gameView.renderGrid(this.game.getGameWidth(), this.game.getGameHeight());
+
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                updateGraphics();
+            }
+        }.start();
+
+        this.assignEvents();
+        this.update();
     }
 
     public void restartGame() throws IOException {
