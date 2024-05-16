@@ -20,8 +20,10 @@ public class App extends Application {
     @Override
     public void start(Stage newStage) throws IOException {
         stage = newStage;
+
         config.setMaxWidth((int) (Screen.getPrimary().getBounds().getMaxX() / Constants.CELLSIZE));
         config.setMaxHeight((int) (Screen.getPrimary().getBounds().getMaxY() / Constants.CELLSIZE) - 8);
+
         FXMLLoader startLoader = getFXMLLoader(Constants.STARTSCENEFXML);
         scene = new Scene(startLoader.load());
         StartController startController = startLoader.getController();
