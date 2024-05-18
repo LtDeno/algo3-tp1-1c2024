@@ -6,7 +6,7 @@ class ActionMove implements Action{
     private final Grid grid;
     private final Coordinates vectorToMove;
 
-    protected ActionMove(GameElement element, Coordinates vectorToMove, Grid grid) {
+    public ActionMove(GameElement element, Coordinates vectorToMove, Grid grid) {
         this.element = element;
         this.grid = grid;
         this.vectorToMove = vectorToMove;

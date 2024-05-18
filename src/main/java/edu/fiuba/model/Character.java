@@ -5,14 +5,14 @@ class Character extends GameElement {
     private int randomTeleportsLeft;
     private int safeTeleportsLeft;
 
-    protected Character(String name, Coordinates coords, int dMove, int initialnRandomTP, int initialnSafeTP) {
+    public Character(String name, Coordinates coords, int dMove, int initialnRandomTP, int initialnSafeTP) {
         super(name, coords, dMove);
         this.randomTeleportsLeft = initialnRandomTP;
         this.safeTeleportsLeft = initialnSafeTP;
     }
 
     @Override
-    protected void moveInDirection(Coordinates movementVector, Grid grid) {
+    public void moveInDirection(Coordinates movementVector, Grid grid) {
         if (movementVector.getxCoord() == 0 && movementVector.getyCoord() == 0) return;
         movementVector.normalizeCoords();
 
@@ -23,7 +23,7 @@ class Character extends GameElement {
         new ActionMove(this, movementVector, grid).actuate();
     }
 
-    protected boolean teleport(Grid grid) {
+    public boolean teleport(Grid grid) {
         if (this.randomTeleportsLeft != 0) {
             new ActionTeleportRandomly(this, grid).actuate();
             if (this.randomTeleportsLeft > 0) randomTeleportsLeft--;
@@ -32,7 +32,7 @@ class Character extends GameElement {
         return false;
     }
 
-    protected boolean teleportSafely(Grid grid, Coordinates selectedCell) {
+    public boolean teleportSafely(Grid grid, Coordinates selectedCell) {
         if (this.safeTeleportsLeft != 0) {
             new ActionTeleportSafely(this, grid, selectedCell).actuate();
             if (this.safeTeleportsLeft > 0) safeTeleportsLeft--;
@@ -41,11 +41,11 @@ class Character extends GameElement {
         return false;
     }
 
-    protected void addRandomTP(int nToAdd) {
+    public void addRandomTP(int nToAdd) {
         this.randomTeleportsLeft += nToAdd;
     }
 
-    protected void addSafeTP(int nToAdd) {
+    public void addSafeTP(int nToAdd) {
         this.safeTeleportsLeft += nToAdd;
     }
 

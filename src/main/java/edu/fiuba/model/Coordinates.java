@@ -11,7 +11,7 @@ public class Coordinates {
         this.yCoord = yCoord;
     }
 
-    void setCoords(Coordinates newCoords) {
+    public void setCoords(Coordinates newCoords) {
         this.xCoord = newCoords.getxCoord();
         this.yCoord = newCoords.getyCoord();
     }
@@ -24,7 +24,7 @@ public class Coordinates {
         return this.yCoord;
     }
 
-    String getAsIndexFromMaxValues(int maxX, int maxY) {
+    public String getAsIndexFromMaxValues(int maxX, int maxY) {
         String index = "";
 
         for (int i = 0; i < (String.valueOf(maxX).length() - String.valueOf(this.xCoord).length()); i++) {
@@ -40,16 +40,16 @@ public class Coordinates {
         return index;
     }
 
-    Coordinates getAsSum(Coordinates coordsToAdd) {
+    public Coordinates getAsSum(Coordinates coordsToAdd) {
         return new Coordinates(this.xCoord + coordsToAdd.getxCoord(), this.yCoord + coordsToAdd.getyCoord());
     }
 
-    void normalizeCoords() {
+    public void normalizeCoords() {
         if (this.xCoord != 0) this.xCoord /= Math.abs(this.xCoord);
         if (this.yCoord != 0) this.yCoord /= Math.abs(this.yCoord);
     }
 
-    boolean areCoordsEqual(Coordinates coords) {
+    public boolean areCoordsEqual(Coordinates coords) {
         return (this.xCoord == coords.getxCoord() && this.yCoord == coords.getyCoord());
     }
 }

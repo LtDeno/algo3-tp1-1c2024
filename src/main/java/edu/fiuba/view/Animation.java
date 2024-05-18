@@ -28,7 +28,7 @@ class Animation {
         }
     };
 
-    protected Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops, ArrayList<Integer> frames) {
+    public Animation(int startingX, int spriteSize, int timeBetweenFrames, int timeBetweenLoops, ArrayList<Integer> frames) {
         this.timeBetweenFrames = timeBetweenFrames;
         this.frames.addAll(frames);
         this.startingX = startingX;
@@ -46,7 +46,7 @@ class Animation {
         return currentFrame+1 >= frames.toArray().length;
     }
 
-    protected int getCurrentX() {
+    public int getCurrentX() {
         return startingX + frames.get(currentFrame) * spriteSize;
     }
 
@@ -62,7 +62,7 @@ class Animation {
         this.timer = new Timer();
     }
 
-    protected void run() {
+    public void run() {
         timer.scheduleAtFixedRate(task, timeBetweenFrames, timeBetweenFrames);
     }
 

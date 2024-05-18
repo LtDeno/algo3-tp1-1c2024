@@ -11,20 +11,20 @@ class Grid {
     private final ArrayList<GameElement> elementsToReposition = new ArrayList<>();
     private final ArrayList<GameElement> collidedElements = new ArrayList<>();
 
-    protected Grid(int nRows, int nColumns) {
+    public Grid(int nRows, int nColumns) {
         this.nRows = nRows;
         this.nColumns = nColumns;
     }
 
-    protected int getnColumns() {
+    public int getnColumns() {
         return this.nColumns;
     }
 
-    protected int getnRows() {
+    public int getnRows() {
         return this.nRows;
     }
 
-    protected void addGameElement(GameElement element) {
+    public void addGameElement(GameElement element) {
         this.gameElements.put(element.getCoords().getAsIndexFromMaxValues(this.nColumns, this.nRows), element);
     }
 
@@ -42,23 +42,23 @@ class Grid {
         gameElement.setKiller(killer);
     }
 
-    protected ArrayList<GameElement> getGameElements() {
+    public ArrayList<GameElement> getGameElements() {
         return new ArrayList<>(this.gameElements.values());
     }
 
-    protected ArrayList<GameElement> getCollidedElements() {
+    public ArrayList<GameElement> getCollidedElements() {
         return this.collidedElements;
     }
 
-    protected void clearCollidedElements() {
+    public void clearCollidedElements() {
         this.collidedElements.clear();
     }
 
-    protected Coordinates getMiddleCoords() {
+    public Coordinates getMiddleCoords() {
         return new Coordinates((this.nColumns/2) + 1, (this.nRows/2) + 1);
     }
 
-    protected Coordinates getRandomValidCoords() {
+    public Coordinates getRandomValidCoords() {
         Coordinates coords;
         do  {
             coords = new Coordinates((int) ((Math.random() * this.nColumns) + 1), (int) ((Math.random() * this.nRows) + 1));
@@ -67,7 +67,7 @@ class Grid {
         return coords;
     }
 
-    protected Coordinates getUnoccupiedValidCoords() {
+    public Coordinates getUnoccupiedValidCoords() {
         Coordinates coords;
         do {
             coords = this.getRandomValidCoords();
@@ -80,15 +80,15 @@ class Grid {
         return this.gameElements.containsKey(coords.getAsIndexFromMaxValues(this.nColumns, this.nRows));
     }
 
-    protected boolean areCoordsInsideGrid(Coordinates coords) {
+    public boolean areCoordsInsideGrid(Coordinates coords) {
         return (coords.getxCoord() <= this.nColumns && coords.getxCoord() > 0 && coords.getyCoord() <= this.nRows && coords.getyCoord() > 0);
     }
 
-    protected GameElement getElementAtCoordinates(Coordinates coords) {
+    public GameElement getElementAtCoordinates(Coordinates coords) {
         return this.gameElements.get(coords.getAsIndexFromMaxValues(this.nColumns, this.nRows));
     }
 
-    protected void repositionElement(GameElement gameElement, Coordinates coords) {
+    public void repositionElement(GameElement gameElement, Coordinates coords) {
         GameElement elementToReposition = this.gameElements.remove(gameElement.getCoords().getAsIndexFromMaxValues(this.nColumns, this.nRows));
 
         this.elementsToReposition.add(elementToReposition);
@@ -100,7 +100,7 @@ class Grid {
         }
     }
 
-    protected void reviseChangedElements() {
+    public void reviseChangedElements() {
         for (GameElement gameElement : this.elementsToReposition) {
             this.addGameElementWithCollision(gameElement);
         }

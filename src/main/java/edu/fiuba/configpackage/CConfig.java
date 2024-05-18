@@ -8,7 +8,7 @@ public class CConfig {
     private final int nStepSTP;
     private final int dCharacterMove;
 
-    protected CConfig(int nRandomTP, int nStepRTP, int nSafeTP, int nStepSTP, int dCharacterMove) {
+    public CConfig(int nRandomTP, int nStepRTP, int nSafeTP, int nStepSTP, int dCharacterMove) {
         this.nRandomTP = nRandomTP;
         this.nStepRTP = nStepRTP;
         this.nSafeTP = nSafeTP;

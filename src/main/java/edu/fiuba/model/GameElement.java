@@ -22,23 +22,23 @@ public abstract class GameElement {
         return this.coords;
     }
 
-    protected void setCoords(Coordinates newCoords) {
+    public void setCoords(Coordinates newCoords) {
         this.coords.setCoords(newCoords);
     }
 
-    protected void setCollided() {
+    public void setCollided() {
         this.collided = true;
     }
 
-    protected boolean isCollided() {
+    public boolean isCollided() {
         return this.collided;
     }
 
-    protected void setKiller(GameElement killer) {
+    public void setKiller(GameElement killer) {
         this.killer = killer;
     }
 
-    protected GameElement getKiller() {
+    public GameElement getKiller() {
         return this.killer;
     }
 

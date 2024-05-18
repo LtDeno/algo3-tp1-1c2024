@@ -6,7 +6,7 @@ class ActionTeleportSafely implements Action {
     private final Grid grid;
     private final Coordinates selectedCell;
 
-    protected ActionTeleportSafely(GameElement element, Grid grid, Coordinates selectedCell) {
+    public ActionTeleportSafely(GameElement element, Grid grid, Coordinates selectedCell) {
         this.element = element;
         this.grid = grid;
         this.selectedCell = selectedCell;

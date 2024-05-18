@@ -5,7 +5,7 @@ class ActionTeleportRandomly implements Action {
     private final GameElement element;
     private final Grid grid;
 
-    protected ActionTeleportRandomly(GameElement element, Grid grid) {
+    public ActionTeleportRandomly(GameElement element, Grid grid) {
         this.element = element;
         this.grid = grid;
     }

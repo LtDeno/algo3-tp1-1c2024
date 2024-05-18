@@ -6,13 +6,13 @@ class Enemy extends GameElement {
 
     private final int scoreOnKill;
 
-    protected Enemy(String name, Coordinates coords, int dMove, int scoreOnKill) {
+    public Enemy(String name, Coordinates coords, int dMove, int scoreOnKill) {
         super(name, coords, dMove);
         this.scoreOnKill = scoreOnKill;
     }
 
     @Override
-    protected void moveInDirection(Coordinates characterCoords, Grid grid) {
+    public void moveInDirection(Coordinates characterCoords, Grid grid) {
         if (super.coords.areCoordsEqual(characterCoords) || (this.dMove <= 0)) return;
 
         Coordinates finalMovement = Coordinates.ZERO;
@@ -32,7 +32,7 @@ class Enemy extends GameElement {
         new ActionMove(this, finalMovement, grid).actuate();
     }
 
-    protected int getScoreOnKill() {
+    public int getScoreOnKill() {
         return this.scoreOnKill;
     }
 }
